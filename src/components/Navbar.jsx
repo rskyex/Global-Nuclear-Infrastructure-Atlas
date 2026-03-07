@@ -1,19 +1,33 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Atom, Globe, Zap, AlertTriangle, BookOpen, Info } from 'lucide-react';
+import { Atom, Globe, Zap, Clock, Activity, Info, FlaskConical } from 'lucide-react';
 
 const NAV_LINKS = [
-  { to: '/', label: 'Global Map', icon: Globe, exact: true },
-  { to: '/fuel-cycle', label: 'Fuel Cycle', icon: Zap },
-  { to: '/accidents', label: 'Accidents & Events', icon: AlertTriangle },
-  { to: '/methodology', label: 'Methodology', icon: BookOpen },
+  { to: '/', label: 'Map', icon: Globe, exact: true },
+  { to: '/history', label: 'History', icon: Clock },
+  { to: '/fusion', label: 'Fusion', icon: FlaskConical },
+  { to: '/radar', label: 'Radar', icon: Activity },
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
+  const handleMethodologyClick = () => {
+    // If already on home page, scroll to anchor; otherwise navigate then scroll
+    if (window.location.pathname === '/') {
+      document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
+      }, 400);
+    }
+  };
+
   return (
     <nav className="h-14 flex-shrink-0 flex items-center justify-between px-4 md:px-6"
       style={{
-        background: 'rgba(7,13,26,0.95)',
+        background: 'rgba(7,13,26,0.97)',
         borderBottom: '1px solid rgba(26,48,80,0.8)',
         backdropFilter: 'blur(12px)',
         zIndex: 1000,
@@ -56,10 +70,17 @@ export default function Navbar() {
           </NavLink>
         ))}
 
-        {/* Disclaimer badge */}
-        <div className="ml-2 hidden lg:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-500 border border-slate-800"
+        {/* Methodology anchor link */}
+        <button
+          onClick={handleMethodologyClick}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/40">
+          <Info size={13} />
+          <span className="hidden md:inline">Methodology</span>
+        </button>
+
+        {/* Data badge */}
+        <div className="ml-2 hidden lg:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-          <Info size={10} />
           Public data only
         </div>
       </div>
