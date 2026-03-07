@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "author": "Risa Koyanagi",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
