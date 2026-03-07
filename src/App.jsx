@@ -1,12 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
 import HomePage from './pages/HomePage';
-import FuelCyclePage from './pages/FuelCyclePage';
+import InfrastructurePage from './pages/InfrastructurePage';
+import NuclearBasicsPage from './pages/NuclearBasicsPage';
 import AccidentsPage from './pages/AccidentsPage';
-import RadarPage from './pages/RadarPage';
-
-// MethodologyPage removed as a standalone route – methodology content now lives in the
-// bottom section of HomePage (anchor: #methodology). See HomePage.jsx.
+import ArsenalsPage from './pages/ArsenalsPage';
+import RadiationHealthPage from './pages/RadiationHealthPage';
+import MethodologyPage from './pages/MethodologyPage';
 
 export default function App() {
   return (
@@ -14,13 +14,17 @@ export default function App() {
       <AppLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/history" element={<AccidentsPage />} />
-          {/* /accidents kept as alias so old links still work */}
+          <Route path="/infrastructure" element={<InfrastructurePage />} />
+          <Route path="/basics" element={<NuclearBasicsPage />} />
           <Route path="/accidents" element={<AccidentsPage />} />
-          <Route path="/fusion" element={<FuelCyclePage />} />
-          {/* /fuel-cycle kept as alias */}
-          <Route path="/fuel-cycle" element={<FuelCyclePage />} />
-          <Route path="/radar" element={<RadarPage />} />
+          <Route path="/arsenals" element={<ArsenalsPage />} />
+          <Route path="/radiation" element={<RadiationHealthPage />} />
+          <Route path="/methodology" element={<MethodologyPage />} />
+          {/* Legacy aliases for old routes */}
+          <Route path="/history" element={<Navigate to="/accidents" replace />} />
+          <Route path="/fusion" element={<Navigate to="/basics" replace />} />
+          <Route path="/fuel-cycle" element={<Navigate to="/basics" replace />} />
+          <Route path="/radar" element={<Navigate to="/infrastructure" replace />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

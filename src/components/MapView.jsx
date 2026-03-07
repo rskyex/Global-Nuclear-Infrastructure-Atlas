@@ -55,7 +55,10 @@ export default function MapView({ items, onFacilitySelect }) {
         <Marker
           key={facility.id}
           position={[facility.lat, facility.lng]}
-          icon={getMarkerIcon(facility)}>
+          icon={getMarkerIcon(facility)}
+          eventHandlers={{
+            click: () => onFacilitySelect && onFacilitySelect(facility),
+          }}>
           <Popup
             maxWidth={310}
             minWidth={270}

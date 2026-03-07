@@ -1,82 +1,63 @@
 import { useState, useMemo } from 'react';
-import facilities from '../data/facilities';
-import accidentSites from '../data/accidents';
-import historicalEvents from '../data/historicalEvents';
+import commercialPlants from '../data/commercialPlants';
 
-export const ALL_ITEMS = [...facilities, ...accidentSites, ...historicalEvents];
-
-export const DEFAULT_LAYERS = {
-  power_plant: true,
-  research_reactor: true,
-  fuel_cycle: true,
-  accident_site: true,
-  historical_event: false, // Historical events off by default for cleaner initial view
-};
+export { commercialPlants as ALL_PLANTS };
 
 export default function useFilters() {
-  const [layers, setLayers] = useState(DEFAULT_LAYERS);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedCountry, setSelectedCountry] = useState('all');
+  const [selectedReactorType, setSelectedReactorType] = useState('all');
 
   const countries = useMemo(() => {
-    const set = new Set(ALL_ITEMS.map(f => f.country));
+    const set = new Set(commercialPlants.map(p => p.country));
     return ['all', ...Array.from(set).sort()];
   }, []);
 
-  const filteredItems = useMemo(() => {
-    return ALL_ITEMS.filter(item => {
-      // Layer toggle
-      if (!layers[item.category]) return false;
+  const reactorTypes = useMemo(() => {
+    const set = new Set(commercialPlants.map(p => p.reactorType).filter(Boolean));
+    return ['all', ...Array.from(set).sort()];
+  }, []);
 
-      // Search
+  const filteredPlants = useMemo(() => {
+    return commercialPlants.filter(plant => {
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
         const searchable = [
-          item.name,
-          item.country,
-          item.operator,
-          item.reactorType,
-          item.facilityType,
-          item.overview,
+          plant.name,
+          plant.country,
+          plant.region,
+          plant.operator,
+          plant.reactorType,
+          plant.overview,
         ].filter(Boolean).join(' ').toLowerCase();
         if (!searchable.includes(q)) return false;
       }
-
-      // Status filter
-      if (selectedStatus !== 'all' && item.status !== selectedStatus) return false;
-
-      // Country filter
-      if (selectedCountry !== 'all' && item.country !== selectedCountry) return false;
-
+      if (selectedStatus !== 'all' && plant.status !== selectedStatus) return false;
+      if (selectedCountry !== 'all' && plant.country !== selectedCountry) return false;
+      if (selectedReactorType !== 'all' && plant.reactorType !== selectedReactorType) return false;
       return true;
     });
-  }, [layers, searchQuery, selectedStatus, selectedCountry]);
+  }, [searchQuery, selectedStatus, selectedCountry, selectedReactorType]);
 
-  const toggleLayer = (layerKey) => {
-    setLayers(prev => ({ ...prev, [layerKey]: !prev[layerKey] }));
-  };
-
-  const summary = useMemo(() => {
-    const all = ALL_ITEMS;
-    return {
-      operatingPlants: all.filter(f => f.category === 'power_plant' && f.status === 'operating').length,
-      accidentSites: all.filter(f => f.category === 'accident_site').length,
-      countries: new Set(all.map(f => f.country)).size,
-      fuelCycleFacilities: all.filter(f => f.category === 'fuel_cycle').length,
-      researchReactors: all.filter(f => f.category === 'research_reactor').length,
-      totalItems: all.length,
-    };
-  }, []);
+  const summary = useMemo(() => ({
+    total: commercialPlants.length,
+    operating: commercialPlants.filter(p => p.status === 'operating').length,
+    underConstruction: commercialPlants.filter(p => p.status === 'under_construction').length,
+    shutdown: commercialPlants.filter(p => p.status === 'shutdown' || p.status === 'decommissioned').length,
+    suspended: commercialPlants.filter(p => p.status === 'suspended').length,
+    countries: new Set(commercialPlants.map(p => p.country)).size,
+  }), []);
 
   return {
-    layers, toggleLayer,
     searchQuery, setSearchQuery,
     selectedStatus, setSelectedStatus,
     selectedCountry, setSelectedCountry,
+    selectedReactorType, setSelectedReactorType,
     countries,
-    filteredItems,
+    reactorTypes,
+    filteredPlants,
     summary,
-    allItems: ALL_ITEMS,
+    allPlants: commercialPlants,
   };
 }

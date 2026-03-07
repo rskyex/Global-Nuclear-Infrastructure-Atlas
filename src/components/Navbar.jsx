@@ -1,29 +1,17 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Atom, Globe, Zap, Clock, Activity, Info, FlaskConical } from 'lucide-react';
+import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText } from 'lucide-react';
 
 const NAV_LINKS = [
-  { to: '/', label: 'Map', icon: Globe, exact: true },
-  { to: '/history', label: 'History', icon: Clock },
-  { to: '/fusion', label: 'Fusion', icon: FlaskConical },
-  { to: '/radar', label: 'Radar', icon: Activity },
+  { to: '/infrastructure', label: 'Infrastructure', icon: Globe },
+  { to: '/basics', label: 'Nuclear Basics', icon: BookOpen },
+  { to: '/accidents', label: 'Accidents', icon: Clock },
+  { to: '/arsenals', label: 'Arsenals', icon: Shield },
+  { to: '/radiation', label: 'Radiation & Health', icon: Activity },
+  { to: '/methodology', label: 'Methodology', icon: FileText },
 ];
 
 export default function Navbar() {
-  const navigate = useNavigate();
-
-  const handleMethodologyClick = () => {
-    // If already on home page, scroll to anchor; otherwise navigate then scroll
-    if (window.location.pathname === '/') {
-      document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      navigate('/');
-      setTimeout(() => {
-        document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
-      }, 400);
-    }
-  };
-
   return (
     <nav className="h-14 flex-shrink-0 flex items-center justify-between px-4 md:px-6"
       style={{
@@ -33,7 +21,7 @@ export default function Navbar() {
         zIndex: 1000,
       }}>
       {/* Logo */}
-      <NavLink to="/" className="flex items-center gap-2 group no-underline">
+      <NavLink to="/" className="flex items-center gap-2 group no-underline flex-shrink-0">
         <motion.div
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
@@ -42,44 +30,37 @@ export default function Navbar() {
           <Atom size={22} />
         </motion.div>
         <div className="leading-tight">
-          <div className="text-xs font-semibold tracking-widest text-blue-400 uppercase hidden sm:block"
+          <div className="text-xs font-semibold tracking-widest text-blue-400 uppercase hidden lg:block"
             style={{ letterSpacing: '0.18em' }}>
             Global Nuclear Infrastructure
           </div>
-          <div className="text-sm font-bold text-white hidden sm:block" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          <div className="text-sm font-bold text-white hidden lg:block" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
             Atlas
           </div>
-          <div className="text-sm font-bold text-white sm:hidden" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          <div className="text-sm font-bold text-white lg:hidden" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
             NI Atlas
           </div>
         </div>
       </NavLink>
 
       {/* Nav links */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5 overflow-x-auto">
         {NAV_LINKS.map(({ to, label, icon: Icon }) => (
-          <NavLink key={to} to={to} end={to === '/'}
+          <NavLink key={to} to={to}
             className={({ isActive }) =>
-              `flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all no-underline
+              `flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-medium transition-all no-underline whitespace-nowrap
               ${isActive
                 ? 'text-blue-400 bg-blue-950/50 border border-blue-800/50'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'}`
             }>
-            <Icon size={13} />
-            <span className="hidden md:inline">{label}</span>
+            <Icon size={13} className="flex-shrink-0" />
+            <span className="hidden xl:inline">{label}</span>
+            <span className="hidden md:inline xl:hidden">{label.split(' ')[0]}</span>
           </NavLink>
         ))}
 
-        {/* Methodology anchor link */}
-        <button
-          onClick={handleMethodologyClick}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/40">
-          <Info size={13} />
-          <span className="hidden md:inline">Methodology</span>
-        </button>
-
         {/* Data badge */}
-        <div className="ml-2 hidden lg:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60"
+        <div className="ml-2 hidden xl:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60 flex-shrink-0"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           Public data only
         </div>
