@@ -1,37 +1,69 @@
 # Global Nuclear Infrastructure Atlas
 
-An interactive, educational, and policy-oriented world map visualizing **civilian nuclear infrastructure**, **accident sites**, **fuel cycle facilities**, and **historical nuclear events** using officially published public information only.
+A governance-grade infrastructure mapping platform for civilian nuclear facilities worldwide. Part of the **Faultline** strategic infrastructure suite.
 
-## Purpose
+**Live:** [globalnuclearinfrastructureatlas.vercel.app](https://globalnuclearinfrastructureatlas.vercel.app)
 
-This platform is designed for:
-- Education
-- Policy analysis
-- Journalism
-- Public understanding of civilian nuclear infrastructure
+## Analytical Framework
 
-**This is not a surveillance tool.** All data is based on officially published public information only.
+The Atlas enriches each facility with governance, safeguards, post-Fukushima policy, and cyber-nuclear intersection data, enabling multi-layer risk analysis.
 
-## Data Policy
+### Core Analytical Layers
 
-- Only officially published public information is included
-- No classified, speculative, leaked, or security-sensitive information
-- No military facility profiles or vulnerability assessments
-- "Latest status" means latest public reporting, not real-time surveillance
-- Live feeds are embedded only from official or publicly authorized sources
+1. **Safeguards Coverage** — IAEA agreement type per facility (CSA, Additional Protocol, VOA)
+2. **Decommissioning Risk** — Facilities in decommissioning/suspended with governance risk score
+3. **Conflict Proximity** — 200km radius around facilities near active armed conflict
+4. **Treaty Adherence** — Country-level NPT/TPNW/Additional Protocol status
+5. **Post-Fukushima Policy** — Country-level policy trajectory since March 2011
+6. **Cyber-Nuclear Intersection** — Digital I&C, reported incidents, infrastructure overlap
+7. **Post-Soviet Sub-Atlas** — Dedicated view for former Soviet state facilities
+
+### Governance Risk Score (1–5)
+
+Composite score derived from: regulatory opacity, safeguards gaps, conflict proximity, decommissioning status, policy instability, and seismic risk.
+
+## Data Sources
+
+- [IAEA PRIS](https://pris.iaea.org/) — Power reactor information
+- [IAEA CNPP](https://cnpp.iaea.org/) — Country nuclear power profiles
+- [SIPRI](https://www.sipri.org/) — Arsenal estimates
+- [NTI Nuclear Security Index](https://www.ntiindex.org/) — Security governance
+- [ENSREG](https://www.ensreg.eu/) — EU stress test results
+- [USGS](https://www.usgs.gov/) — Seismic hazard maps
+- [ACLED](https://acleddata.com/) — Conflict data for proximity analysis
+- [UNODA](https://treaties.unoda.org/) — Treaty databases
+- National regulatory bodies (NRC, ASN, ONR, NRA, etc.)
+
+See [data/sources.md](data/sources.md) for full source documentation.
+See [data/schema.md](data/schema.md) for data schema.
+
+## Faultline Suite Integration
+
+| Module | URL |
+|--------|-----|
+| Faultline Landing | faultline-nqmm.vercel.app |
+| Nuclear Infrastructure Atlas | globalnuclearinfrastructureatlas.vercel.app |
+| Orbital Risk Tracker | faultline-nqmm.vercel.app/orbital |
+| Cyber Escalation Atlas | faultline-nqmm.vercel.app/cyber |
+
+Cross-module links surface Cyber Atlas entries for facilities with critical infrastructure overlap.
 
 ## Pages
 
-1. **Global Map Dashboard** – Interactive world map with filtering, search, and layer controls
-2. **Nuclear Fuel Cycle Basics** – Educational overview of the civilian nuclear fuel cycle
-3. **Accidents & Events** – Major civilian accidents and historical nuclear events
-4. **Methodology** – Data sources, limitations, and platform principles
+1. **Home** — Overview map with layer toggles
+2. **Infrastructure** — Full governance map with 7 overlay layers, timeline, risk bar, filters
+3. **Policy Intelligence** — Sortable/filterable country policy table with CSV export
+4. **Nuclear Basics** — Educational content
+5. **Accidents & History** — Major civilian accidents and historical events
+6. **Arsenals** — Country-level warhead estimates
+7. **Radiation & Health** — Dose units, health effects
+8. **Methodology** — Data sources and editorial principles
 
 ## Tech Stack
 
-- React 18 + Vite
-- Tailwind CSS
-- React Leaflet (OpenStreetMap / CartoDB Dark Matter)
+- React 19 + Vite 7
+- Tailwind CSS 3
+- React Leaflet (CartoDB Dark Matter tiles)
 - Recharts
 - Framer Motion
 - Lucide Icons
@@ -43,37 +75,10 @@ npm install
 npm run dev
 ```
 
-## Building for Production
+## Data Policy
 
-```bash
-npm run build
-npm run preview
-```
-
-## Deploying
-
-### Vercel (recommended)
-Connect the repository to Vercel. Build command: `npm run build`. Output: `dist/`.
-
-### GitHub Pages
-1. Set `base` in `vite.config.js` to your repo name: `base: '/your-repo-name/'`
-2. Run `npm run build`
-3. Deploy `dist/` to your `gh-pages` branch
-
-## Data Sources
-
-- [IAEA PRIS](https://pris.iaea.org/) – Power reactor information
-- [IAEA RRDB](https://nucleus.iaea.org/RRDB/) – Research reactors
-- [NRC](https://www.nrc.gov/) – US regulatory information
-- National regulators (ONR, ASN, STUK, etc.)
-- Official operator websites
-- [UNSCEAR](https://www.unscear.org/) – Radiation health data
-- [IAEA INES](https://www.iaea.org/topics/ines) – Event scale reference
-
-## Future API Integration
-
-Code is structured for future live API integration. Comments in `src/data/` indicate where static JSON files can be replaced with live API calls when official public endpoints become available (e.g., IAEA PRIS public API).
+All data from officially published public sources. No classified, speculative, or security-sensitive information. See Methodology page for full details.
 
 ## License
 
-Educational and public interest use. Data sourced from officially published public records. See Methodology page for full attribution and limitations.
+All rights reserved. Risa Koyanagi.

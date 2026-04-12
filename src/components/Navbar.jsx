@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText } from 'lucide-react';
+import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText, BarChart3, ChevronRight } from 'lucide-react';
+import { suiteModules } from '../shared/tokens';
 
 const NAV_LINKS = [
   { to: '/infrastructure', label: 'Infrastructure', icon: Globe },
+  { to: '/policy', label: 'Policy Intel', icon: BarChart3 },
   { to: '/basics', label: 'Nuclear Basics', icon: BookOpen },
   { to: '/accidents', label: 'Accidents', icon: Clock },
   { to: '/arsenals', label: 'Arsenals', icon: Shield },
@@ -20,7 +22,12 @@ export default function Navbar() {
         backdropFilter: 'blur(12px)',
         zIndex: 1000,
       }}>
-      {/* Logo */}
+      {/* Suite breadcrumb + Logo */}
+      <div className="flex items-center gap-1.5 flex-shrink-0">
+        <a href={suiteModules.landing.url} target="_blank" rel="noopener noreferrer"
+          className="text-xs text-slate-600 hover:text-slate-400 no-underline hidden lg:inline">Faultline</a>
+        <ChevronRight size={10} className="text-slate-700 hidden lg:inline" />
+      </div>
       <NavLink to="/" className="flex items-center gap-2 group no-underline flex-shrink-0">
         <motion.div
           animate={{ rotate: [0, 360] }}

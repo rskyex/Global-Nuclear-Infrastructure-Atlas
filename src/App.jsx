@@ -7,6 +7,7 @@ import AccidentsPage from './pages/AccidentsPage';
 import ArsenalsPage from './pages/ArsenalsPage';
 import RadiationHealthPage from './pages/RadiationHealthPage';
 import MethodologyPage from './pages/MethodologyPage';
+import PolicyPage from './pages/PolicyPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/infrastructure" element={<InfrastructurePage />} />
+          <Route path="/policy" element={<PolicyPage />} />
           <Route path="/basics" element={<NuclearBasicsPage />} />
           <Route path="/accidents" element={<AccidentsPage />} />
           <Route path="/arsenals" element={<ArsenalsPage />} />
