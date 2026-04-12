@@ -96,6 +96,72 @@ export default function FacilityDetailPanel({ facility, onClose }) {
             </div>
           </div>
 
+          {/* Governance fields */}
+          {facility.governance_risk_score && (
+            <div>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Governance Assessment</h3>
+              <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
+                <InfoRow label="Risk Score" value={`${facility.governance_risk_score} / 5`} mono />
+                <InfoRow label="Regulatory Body" value={facility.regulatory_body} />
+                <InfoRow label="Safeguards" value={facility.safeguards_status} />
+                <InfoRow label="Seismic Zone" value={facility.seismic_zone} />
+                <InfoRow label="Operational Status" value={facility.operational_status} />
+                <InfoRow label="Evacuation Plan" value={facility.evacuation_plan_status} />
+              </div>
+              {/* Treaty badges */}
+              {facility.treaty_obligations && facility.treaty_obligations.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {facility.treaty_obligations.map(t => (
+                    <span key={t} className="text-xs px-2 py-0.5 rounded-full"
+                      style={{ background: 'rgba(59,130,246,0.15)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.3)' }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Post-Fukushima */}
+          {facility.post_fukushima_policy_change !== undefined && (
+            <div>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Post-Fukushima Status</h3>
+              <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
+                <InfoRow label="Policy Change" value={facility.post_fukushima_policy_change ? 'Yes' : 'No'} />
+                <InfoRow label="Stress Test" value={facility.stress_test_conducted === true ? 'Completed' : facility.stress_test_conducted === false ? 'No' : 'Data not available'} />
+                <InfoRow label="Community Consent" value={facility.community_consent_mechanism || 'Data not available'} />
+              </div>
+            </div>
+          )}
+
+          {/* Cyber-nuclear */}
+          {facility.digital_i_and_c !== undefined && (
+            <div>
+              <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Cyber-Nuclear Intersection</h3>
+              <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
+                <InfoRow label="Digital I&C" value={facility.digital_i_and_c ? 'Yes' : 'No / Unknown'} />
+                <InfoRow label="Cyber Incident" value={facility.reported_cyber_incident ? 'Reported' : 'None reported'} />
+                <InfoRow label="Infra Overlap" value={facility.critical_infrastructure_overlap ? 'Yes' : 'No'} />
+              </div>
+            </div>
+          )}
+
+          {/* Governance Flags */}
+          {facility.governance_flags && facility.governance_flags.length > 0 && (
+            <div>
+              <h3 className="text-xs font-semibold text-red-400 uppercase tracking-wider mb-2">Governance Flags</h3>
+              <div className="space-y-1.5">
+                {facility.governance_flags.map((flag, i) => (
+                  <div key={i} className="flex items-start gap-2 text-xs px-2.5 py-1.5 rounded-md"
+                    style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                    <AlertCircle size={11} className="text-red-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-red-300">{flag}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Electricity role (for power plants) */}
           {facility.electricityRole && (
             <div>

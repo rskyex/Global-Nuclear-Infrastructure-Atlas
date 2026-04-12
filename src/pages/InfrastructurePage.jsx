@@ -2,15 +2,20 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, X, Filter, ChevronDown, ExternalLink,
-  Globe, Zap, Building2, Info, BarChart3,
+  Globe, Zap, Building2, Info, BarChart3, Download,
 } from 'lucide-react';
 import {
   BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis,
   Tooltip, ResponsiveContainer, Legend,
 } from 'recharts';
 import MapView from '../components/MapView';
+import LayerPanel from '../components/LayerPanel';
+import GlobalRiskBar from '../components/GlobalRiskBar';
 import useFilters from '../hooks/useFilters';
 import { STATUS_COLORS, getStatusLabel } from '../utils/categoryHelpers';
+import { enrichedFacilities, facilitySummary } from '../data/enrichedFacilities';
+import { countryPolicies } from '../data/countryPolicies';
+import TimelineSlider from '../components/TimelineSlider';
 
 const STATUS_OPTIONS = [
   { value: 'all', label: 'All Statuses' },
@@ -139,15 +144,24 @@ export default function InfrastructurePage() {
     searchQuery, setSearchQuery,
     selectedStatus, setSelectedStatus,
     selectedCountry, setSelectedCountry,
+    quickFilter, setQuickFilter,
     countries,
     filteredPlants,
     summary,
     allPlants,
-  } = useFilters();
+  } = useFilters({ useEnriched: true });
 
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [activeOverlay, setActiveOverlay] = useState(null);
+  const [showConflictRadius, setShowConflictRadius] = useState(false);
+  const [timelineYear, setTimelineYear] = useState(2024);
+  const [showTimeline, setShowTimeline] = useState(false);
+  const [timelineEvent, setTimelineEvent] = useState(null);
+
+  const policyFluxCount = useMemo(() =>
+    countryPolicies.filter(c => c.policy_flux).length, []);
 
   // Analytics data
   const statusData = useMemo(() => {
@@ -264,6 +278,34 @@ export default function InfrastructurePage() {
           <BarChart3 size={12} />
           Analytics
         </button>
+        {/* Timeline toggle */}
+        <button
+          onClick={() => setShowTimeline(v => !v)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex-shrink-0
+            ${showTimeline ? 'text-blue-400 bg-blue-950/50 border border-blue-800/50' : 'text-slate-400 hover:text-slate-200 border border-slate-800/50'}`}
+        >
+          <ChevronDown size={12} />
+          Timeline
+        </button>
+        {/* CSV Export */}
+        <button
+          onClick={() => {
+            const keys = ['id','name','country','status','reactorType','units','netCapacityMW','operator',
+              'governance_risk_score','safeguards_status','seismic_zone','proximity_conflict',
+              'digital_i_and_c','reported_cyber_incident','post_fukushima_policy_change'];
+            const rows = filteredPlants.map(p => keys.map(k => {
+              const v = p[k]; return `"${String(v ?? '').replace(/"/g,'""')}"`;
+            }).join(','));
+            const csv = [keys.join(','), ...rows].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = 'nuclear_facilities.csv'; a.click();
+          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 border border-slate-800/50 flex-shrink-0"
+        >
+          <Download size={12} />
+          CSV
+        </button>
       </div>
 
       {/* Summary pill row */}
@@ -283,8 +325,39 @@ export default function InfrastructurePage() {
         ))}
       </div>
 
+      {/* Global Risk Summary Bar */}
+      <GlobalRiskBar summary={facilitySummary} policyFluxCount={policyFluxCount} />
+
+      {/* Quick filters */}
+      <div className="flex-shrink-0 px-4 py-1.5 flex items-center gap-2 border-b overflow-x-auto"
+        style={{ borderColor: 'rgba(30,50,80,0.4)' }}>
+        <span className="text-xs text-slate-500 flex-shrink-0">Quick:</span>
+        {[
+          { key: null, label: 'All' },
+          { key: 'highRisk', label: 'High Risk (4+)' },
+          { key: 'policyFlux', label: 'Policy Flux' },
+          { key: 'cyber', label: 'Cyber Intersection' },
+        ].map(qf => (
+          <button key={qf.key ?? 'all'} onClick={() => setQuickFilter(qf.key)}
+            className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all border flex-shrink-0 ${
+              quickFilter === qf.key ? 'text-blue-400 bg-blue-950/50 border-blue-800/50' : 'text-slate-500 border-slate-800/40 hover:text-slate-300'
+            }`}>
+            {qf.label}
+          </button>
+        ))}
+      </div>
+
       {/* Main content */}
       <div className="flex-1 flex overflow-hidden">
+        {/* Layer panel sidebar */}
+        <div className="w-52 flex-shrink-0 border-r p-3 overflow-y-auto hidden lg:block"
+          style={{ borderColor: 'rgba(30,50,80,0.6)', background: 'rgba(4,13,26,0.9)' }}>
+          <LayerPanel
+            activeOverlay={activeOverlay} setActiveOverlay={setActiveOverlay}
+            showConflictRadius={showConflictRadius} setShowConflictRadius={setShowConflictRadius}
+          />
+        </div>
+
         {/* Map */}
         <div className="flex-1 relative">
           {filteredPlants.length === 0 ? (
@@ -298,7 +371,7 @@ export default function InfrastructurePage() {
               </div>
             </div>
           ) : (
-            <MapView items={mapItems} onFacilitySelect={setSelectedPlant} />
+            <MapView items={mapItems} onFacilitySelect={setSelectedPlant} activeOverlay={activeOverlay} showConflictRadius={showConflictRadius} />
           )}
           {/* Hint badge */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
@@ -388,6 +461,15 @@ export default function InfrastructurePage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Timeline slider */}
+      {showTimeline && (
+        <TimelineSlider
+          selectedYear={timelineYear}
+          onYearChange={setTimelineYear}
+          onEventSelect={setTimelineEvent}
+        />
+      )}
     </div>
   );
 }
