@@ -636,97 +636,92 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FAULTLINE SUITE ── */}
-      <section className="px-6 pb-10 max-w-5xl mx-auto">
-        <div className="flex items-center gap-2 mb-4">
-          <Globe size={13} className="text-slate-400" />
-          <h2 className="text-sm font-semibold text-slate-200">Part of Faultline</h2>
-          <div className="flex-1 h-px" style={{ background: 'rgba(30,50,80,0.7)' }} />
-        </div>
-        <div className="rounded-xl border overflow-hidden" style={{ background: 'rgba(10,20,40,0.6)', borderColor: 'rgba(59,130,246,0.2)' }}>
-          {/* Faultline OG banner */}
-          <div className="relative w-full" style={{ height: 160 }}>
-            <img src="/faultline-og.png" alt="Faultline" className="w-full h-full object-cover" style={{ opacity: 0.7 }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 40%, rgba(10,20,40,0.95))' }} />
-            <div className="absolute bottom-3 left-5">
-              <h3 className="text-lg font-bold text-white">Faultline</h3>
-              <span className="text-xs text-slate-400">Strategic Infrastructure Risk Platform</span>
-            </div>
-          </div>
-          <div className="p-5">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <p className="text-xs text-slate-400 leading-relaxed mb-3">
-                  Faultline is a public-facing research platform on strategic infrastructure risk, AI governance, and interpretive systems.
-                  It houses multiple research modules — including this Nuclear Infrastructure Atlas — designed to make complex
-                  dual-use systems and authority architectures legible to researchers, policymakers, and the public.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <a href="https://faultline-nqmm.vercel.app" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium no-underline transition-all hover:brightness-110"
-                    style={{ background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', color: '#3b82f6' }}>
-                    <ExternalLink size={10} />
-                    Visit Faultline
-                  </a>
-                </div>
-              </div>
-              <div className="sm:w-56 flex flex-col gap-1.5">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Suite Modules</span>
-                {[
-                  { name: 'Nuclear Infrastructure Atlas', desc: 'Civil nuclear mapping', color: '#3b82f6', url: 'https://globalnuclearinfrastructureatlas.vercel.app', current: true },
-                  { name: 'Orbital Risk Tracker', desc: 'Space & satellite risk', color: '#8b5cf6', url: 'https://orbitalrisktracker.vercel.app' },
-                  { name: 'Cyber Escalation Atlas', desc: 'Cyber conflict mapping', color: '#ec4899', url: 'https://cyber-escalation-atlas.vercel.app' },
-                  { name: 'Space Mandate Atlas', desc: 'Space governance & mandates', color: '#06b6d4', url: 'https://space-mandate-atlas.vercel.app' },
-                ].map(m => (
-                  <a key={m.name} href={m.current ? undefined : m.url} target={m.current ? undefined : '_blank'} rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs no-underline transition-all hover:brightness-110"
-                    style={{ background: m.current ? m.color + '10' : 'rgba(7,13,26,0.5)', border: `1px solid ${m.current ? m.color + '30' : 'rgba(30,50,80,0.4)'}`, cursor: m.current ? 'default' : 'pointer' }}>
-                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: m.color }} />
-                    <div className="flex-1 min-w-0">
-                      <div style={{ color: m.current ? m.color : '#94a3b8' }} className="font-medium truncate">{m.name}</div>
-                      <div className="text-slate-600 truncate">{m.desc}</div>
-                    </div>
-                    {!m.current && <ExternalLink size={9} className="text-slate-600 flex-shrink-0" />}
-                    {m.current && <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: m.color + '20', color: m.color, fontSize: '0.6rem' }}>YOU ARE HERE</span>}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CREATOR ── */}
+      {/* ── FAULTLINE & CREATOR (side by side) ── */}
       <section className="px-6 pb-12 max-w-5xl mx-auto">
-        <div className="flex items-center gap-2 mb-4">
-          <User size={13} className="text-slate-400" />
-          <h2 className="text-sm font-semibold text-slate-200">About the Creator</h2>
-          <div className="flex-1 h-px" style={{ background: 'rgba(30,50,80,0.7)' }} />
-        </div>
-        <div className="rounded-xl border overflow-hidden" style={{ background: 'rgba(10,20,40,0.6)', borderColor: 'rgba(30,50,80,0.5)' }}>
-          {/* Portfolio OG banner */}
-          <div className="relative w-full" style={{ height: 120 }}>
-            <img src="/risa-koyanagi-og.png" alt="Risa Koyanagi" className="w-full h-full object-cover" style={{ opacity: 0.6 }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 30%, rgba(10,20,40,0.95))' }} />
-          </div>
-          <div className="px-5 pb-5 -mt-8 relative">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-shrink-0">
-                <img src="/profile.jpg" alt="Risa Koyanagi"
-                  className="w-16 h-16 rounded-full object-cover"
-                  style={{ border: '3px solid rgba(10,20,40,0.9)', boxShadow: '0 0 16px rgba(59,130,246,0.15)' }} />
+        <div className="grid md:grid-cols-2 gap-4">
+
+          {/* Faultline card */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Globe size={13} className="text-slate-400" />
+              <h2 className="text-sm font-semibold text-slate-200">Part of Faultline</h2>
+              <div className="flex-1 h-px" style={{ background: 'rgba(30,50,80,0.7)' }} />
+            </div>
+            <div className="rounded-xl border overflow-hidden h-[calc(100%-2rem)]" style={{ background: 'rgba(10,20,40,0.6)', borderColor: 'rgba(59,130,246,0.2)' }}>
+              {/* Faultline OG banner */}
+              <div className="relative w-full" style={{ height: 120 }}>
+                <img src="/faultline-og.png" alt="Faultline" className="w-full h-full object-cover" style={{ opacity: 0.7 }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 30%, rgba(10,20,40,0.95))' }} />
+                <div className="absolute bottom-3 left-4">
+                  <h3 className="text-sm font-bold text-white">Faultline</h3>
+                  <span className="text-xs text-slate-400">Strategic Infrastructure Risk Platform</span>
+                </div>
               </div>
-              <div className="flex-1 pt-2">
-                <h3 className="text-sm font-bold text-white mb-1">Risa Koyanagi</h3>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs mb-3"
-                  style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', color: '#a78bfa' }}>
-                  Cambridge Future Scholar
+              <div className="p-4">
+                <p className="text-xs text-slate-400 leading-relaxed mb-3">
+                  A public-facing research platform on strategic infrastructure risk, AI governance, and interpretive systems.
+                  Multiple research modules designed to make complex dual-use systems and authority architectures legible to researchers, policymakers, and the public.
+                </p>
+                <div className="space-y-1.5 mb-3">
+                  {[
+                    { name: 'Nuclear Infrastructure Atlas', desc: 'Civil nuclear mapping', color: '#3b82f6', url: 'https://globalnuclearinfrastructureatlas.vercel.app', current: true },
+                    { name: 'Orbital Risk Tracker', desc: 'Space & satellite risk', color: '#8b5cf6', url: 'https://orbitalrisktracker.vercel.app' },
+                    { name: 'Cyber Escalation Atlas', desc: 'Cyber conflict mapping', color: '#ec4899', url: 'https://cyber-escalation-atlas.vercel.app' },
+                    { name: 'Lunar Mandate Atlas', desc: 'Lunar governance & mandates', color: '#06b6d4', url: 'https://space-mandate-atlas.vercel.app' },
+                  ].map(m => (
+                    <a key={m.name} href={m.current ? undefined : m.url} target={m.current ? undefined : '_blank'} rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs no-underline transition-all hover:brightness-110"
+                      style={{ background: m.current ? m.color + '10' : 'rgba(7,13,26,0.5)', border: `1px solid ${m.current ? m.color + '30' : 'rgba(30,50,80,0.4)'}`, cursor: m.current ? 'default' : 'pointer' }}>
+                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: m.color }} />
+                      <div className="flex-1 min-w-0">
+                        <div style={{ color: m.current ? m.color : '#94a3b8' }} className="font-medium truncate">{m.name}</div>
+                        <div className="text-slate-600 truncate">{m.desc}</div>
+                      </div>
+                      {!m.current && <ExternalLink size={9} className="text-slate-600 flex-shrink-0" />}
+                      {m.current && <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: m.color + '20', color: m.color, fontSize: '0.6rem' }}>HERE</span>}
+                    </a>
+                  ))}
+                </div>
+                <a href="https://faultline-nqmm.vercel.app" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium no-underline transition-all hover:brightness-110"
+                  style={{ background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', color: '#3b82f6' }}>
+                  <ExternalLink size={10} />
+                  Visit Faultline
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Creator card */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <User size={13} className="text-slate-400" />
+              <h2 className="text-sm font-semibold text-slate-200">About the Creator</h2>
+              <div className="flex-1 h-px" style={{ background: 'rgba(30,50,80,0.7)' }} />
+            </div>
+            <div className="rounded-xl border overflow-hidden h-[calc(100%-2rem)]" style={{ background: 'rgba(10,20,40,0.6)', borderColor: 'rgba(30,50,80,0.5)' }}>
+              {/* Portfolio OG banner */}
+              <div className="relative w-full" style={{ height: 120 }}>
+                <img src="/risa-koyanagi-og.png" alt="Risa Koyanagi" className="w-full h-full object-cover" style={{ opacity: 0.6 }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 30%, rgba(10,20,40,0.95))' }} />
+              </div>
+              <div className="px-4 pb-4 -mt-7 relative">
+                <div className="flex items-end gap-3 mb-3">
+                  <img src="/profile.jpg" alt="Risa Koyanagi"
+                    className="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                    style={{ border: '3px solid rgba(10,20,40,0.9)', boxShadow: '0 0 16px rgba(59,130,246,0.15)' }} />
+                  <div className="pb-0.5">
+                    <h3 className="text-sm font-bold text-white leading-tight">Risa Koyanagi</h3>
+                    <div className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs mt-0.5"
+                      style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', color: '#a78bfa', fontSize: '0.65rem' }}>
+                      Cambridge Future Scholar
+                    </div>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed mb-3">
-                  Risa Koyanagi is a Cambridge Future Scholar and researcher working across space, nuclear,
-                  and emerging technology governance and strategic risk. Her work focuses on legitimation,
-                  dual-use systems, and authority architecture. She also designs public-facing research
-                  platforms on AI governance, strategic infrastructure risk, and interpretive systems.
+                  Researcher working across space, nuclear, and emerging technology governance and strategic risk.
+                  Her work focuses on legitimation, dual-use systems, and authority architecture.
+                  She designs public-facing research platforms on AI governance, strategic infrastructure risk, and interpretive systems.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <a href="https://risakoyanagi.com" target="_blank" rel="noopener noreferrer"
@@ -745,6 +740,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
         </div>
       </section>
     </div>
