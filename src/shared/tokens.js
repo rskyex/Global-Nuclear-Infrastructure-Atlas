@@ -34,8 +34,9 @@ export const spacing = {
 export const suiteModules = {
   landing: { name: 'Faultline', url: 'https://faultline-nqmm.vercel.app' },
   nuclear: { name: 'Global Nuclear Infrastructure Atlas', url: 'https://globalnuclearinfrastructureatlas.vercel.app' },
-  orbital: { name: 'Orbital Risk Tracker', url: 'https://faultline-nqmm.vercel.app/orbital' },
-  cyber: { name: 'Cyber Escalation Atlas', url: 'https://faultline-nqmm.vercel.app/cyber' },
+  orbital: { name: 'Orbital Risk Tracker', url: 'https://orbitalrisktracker.vercel.app' },
+  cyber: { name: 'Cyber Escalation Atlas', url: 'https://cyber-escalation-atlas.vercel.app' },
+  space: { name: 'Space Mandate Atlas', url: 'https://space-mandate-atlas.vercel.app' },
 };
 
 export default { colors, fonts, spacing, suiteModules };
