@@ -216,27 +216,29 @@ const arsenalLayer = {
   defaultSettings: { sources: null },
   legend: [{ color: ARSENAL_COLOR, label: 'Warhead estimate (size ≈ mid-range)' }],
   Controls: function ArsenalControls({ settings, setSetting }) {
-    const sel = selected(settings.sources, ESTIMATE_SOURCES);
+    const allIds = ESTIMATE_SOURCES.map((s) => s.id);
+    const sel = selected(settings.sources, allIds);
     return (
       <div className="flex flex-col gap-1 mt-1.5">
         {ESTIMATE_SOURCES.map((s) => (
-          <label key={s} className="flex items-center gap-1.5 text-[10px] text-slate-400 cursor-pointer">
+          <label key={s.id} className="flex items-center gap-1.5 text-[10px] text-slate-400 cursor-pointer">
             <input
               type="checkbox"
-              checked={sel.includes(s)}
-              onChange={() => setSetting('sources', toggleIn(settings.sources, s, ESTIMATE_SOURCES))}
+              checked={sel.includes(s.id)}
+              onChange={() => setSetting('sources', toggleIn(settings.sources, s.id, allIds))}
               className="accent-orange-500"
             />
-            {s}
+            {s.label}
           </label>
         ))}
       </div>
     );
   },
   renderMap: ({ opacity, onSelect, settings }) => {
-    const sel = selected(settings?.sources, ESTIMATE_SOURCES);
+    const allIds = ESTIMATE_SOURCES.map((s) => s.id);
+    const sel = selected(settings?.sources, allIds);
     return getArsenalEstimates().map((rec) => {
-      const ests = rec.estimates.filter((e) => sel.includes(e.source));
+      const ests = rec.estimates.filter((e) => sel.includes(e.sourceId));
       if (ests.length === 0) return null;
       const low = Math.min(...ests.map((e) => e.low));
       const high = Math.max(...ests.map((e) => e.high));

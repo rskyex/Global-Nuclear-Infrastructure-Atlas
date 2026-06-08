@@ -1,76 +1,69 @@
 /**
- * Layer 3 — Estimate Range & Provenance (arsenals) (seed)
+ * Layer 3 — Estimate Range & Provenance (arsenals)
  *
- * PROVISIONAL DATA. Replaces the single point figure in arsenalData.js with a
- * per-source estimate so the uncertainty is first-class: each entry is one
- * research body's published estimate, and the rendered band spans the spread
- * across sources. Warhead totals are NOT officially confirmed by most states.
+ * REAL, SOURCED DATA (not provisional). Total-inventory warhead estimates for
+ * the nine nuclear-armed states, as published by the two leading civil-society
+ * sources for January 2025. Warhead totals are estimates — no state with the
+ * exception of a few declarations confirms them officially — so each figure
+ * carries `confidence: 'estimated'` and the layer renders a band, never a single
+ * authoritative point.
  *
- * INTENDED REAL SOURCES (swap-in targets):
- *   - SIPRI Yearbook (annual world nuclear forces) ... https://www.sipri.org/yearbook
- *   - FAS Nuclear Notebook ........................... https://fas.org/issues/nuclear-weapons/status-world-nuclear-forces/
- *   - IISS Military Balance (where published)
+ * SOURCES (retrieved 2026-06-08):
+ *   - FAS, "Status of World Nuclear Forces" / Nuclear Notebook 2025
+ *     https://fas.org/initiative/status-world-nuclear-forces/  (figures as of Jan 2025)
+ *   - SIPRI Yearbook 2025, ch. on World Nuclear Forces
+ *     https://www.sipri.org/yearbook/2025/06  (figures as of Jan 2025)
  *
- * Figures are rounded public estimates (≈2023) curated for illustration; until
- * the live datasets are wired in, every record is flagged `provisional: true`
- * and shown with a "sample data" indicator and a "figures are contested
- * estimates" caption. Where a source disagrees with another the spread is shown
- * rather than collapsed to one number.
+ * NOTE ON RANGES: FAS and SIPRI publish near-identical totals for 2025 (the same
+ * researchers author both), so for most states the two sources converge to a
+ * point — which is itself an honest finding. Genuine spread remains where the
+ * underlying intelligence is weakest (notably North Korea); those wider ranges
+ * are shown as a third, explicitly `disputed` estimate rather than collapsed.
  *
  * @typedef {Object} Estimate
  * @property {string} source
+ * @property {string} sourceId
  * @property {string} [sourceUrl]
  * @property {number} low
  * @property {number} high
  * @property {string} asOf
- * @property {'declared'|'estimated'|'disputed'} [confidence]
+ * @property {'declared'|'estimated'|'disputed'} confidence
  */
 
 import arsenalData from '../arsenalData';
 import { SOURCES } from '../provenance';
 
-const SIPRI = { source: 'SIPRI Yearbook 2023', sourceUrl: SOURCES.SIPRI, confidence: 'estimated' };
-const FAS = { source: 'FAS Nuclear Notebook', sourceUrl: SOURCES.FAS, confidence: 'estimated' };
-const IISS = { source: 'IISS (independent estimate)', confidence: 'disputed' };
+const FAS_URL = SOURCES.FAS;
+const SIPRI_URL = 'https://www.sipri.org/yearbook/2025/06';
 
-/** Per-source total-inventory estimates, keyed by arsenalData id. */
+const fas = (n, extra = {}) => ({ source: 'FAS Nuclear Notebook 2025', sourceId: 'fas', sourceUrl: FAS_URL, low: n, high: n, asOf: '2025-01', confidence: 'estimated', ...extra });
+const sipri = (n, extra = {}) => ({ source: 'SIPRI Yearbook 2025', sourceId: 'sipri', sourceUrl: SIPRI_URL, low: n, high: n, asOf: '2025-01', confidence: 'estimated', ...extra });
+
+/** Source descriptors for the layer's "which sources" toggle (id-keyed for URL state). */
+export const ESTIMATE_SOURCES = [
+  { id: 'fas', label: 'FAS Nuclear Notebook 2025' },
+  { id: 'sipri', label: 'SIPRI Yearbook 2025' },
+  { id: 'other', label: 'Other assessments' },
+];
+
+/** Per-source total-inventory estimates (Jan 2025), keyed by arsenalData id. */
 const ESTIMATES = {
-  usa: [
-    { ...SIPRI, low: 5244, high: 5244, asOf: '2023' },
-    { ...FAS, low: 5044, high: 5044, asOf: '2024' },
-  ],
-  russia: [
-    { ...SIPRI, low: 5889, high: 5889, asOf: '2023' },
-    { ...FAS, low: 5580, high: 5580, asOf: '2024' },
-  ],
-  uk: [
-    { ...SIPRI, low: 225, high: 225, asOf: '2023' },
-    { ...FAS, low: 225, high: 225, asOf: '2024' },
-  ],
-  france: [
-    { ...SIPRI, low: 290, high: 290, asOf: '2023' },
-    { ...FAS, low: 290, high: 290, asOf: '2024' },
-  ],
+  usa: [fas(5177), sipri(5177)],
+  russia: [fas(5459), sipri(5459)],
+  uk: [fas(225), sipri(225)],
+  france: [fas(290), sipri(290)],
   china: [
-    { ...SIPRI, low: 410, high: 410, asOf: '2023' },
-    { ...FAS, low: 438, high: 438, asOf: '2024' },
-    { ...IISS, low: 410, high: 500, asOf: '2023' },
+    fas(600),
+    sipri(600),
+    { source: 'US DoD (projection)', sourceId: 'other', low: 600, high: 1000, asOf: '2024', confidence: 'disputed' },
   ],
-  india: [
-    { ...SIPRI, low: 164, high: 164, asOf: '2023' },
-    { ...FAS, low: 172, high: 172, asOf: '2024' },
-  ],
-  pakistan: [
-    { ...SIPRI, low: 170, high: 170, asOf: '2023' },
-    { ...FAS, low: 170, high: 170, asOf: '2024' },
-  ],
-  israel: [
-    { ...SIPRI, low: 90, high: 90, asOf: '2023' },
-    { ...FAS, low: 90, high: 90, asOf: '2024' },
-  ],
+  india: [fas(180), sipri(180)],
+  pakistan: [fas(170), sipri(170)],
+  israel: [fas(90), sipri(90)],
   north_korea: [
-    { ...SIPRI, low: 30, high: 30, asOf: '2023' },
-    { ...FAS, low: 40, high: 50, asOf: '2024' },
+    fas(50),
+    sipri(50),
+    { source: 'Fissile-material-based assessments', sourceId: 'other', low: 50, high: 90, asOf: '2025', confidence: 'disputed' },
   ],
 };
 
@@ -82,8 +75,6 @@ const ESTIMATES = {
  * @property {number} lat
  * @property {number} lng
  * @property {Estimate[]} estimates
- * @property {number} rangeLow    min across sources
- * @property {number} rangeHigh   max across sources
  * @property {boolean} provisional
  */
 
@@ -94,24 +85,14 @@ export function getArsenalEstimates() {
   if (cache) return cache;
   cache = arsenalData
     .filter((a) => ESTIMATES[a.id])
-    .map((a) => {
-      const estimates = ESTIMATES[a.id];
-      const rangeLow = Math.min(...estimates.map((e) => e.low));
-      const rangeHigh = Math.max(...estimates.map((e) => e.high));
-      return {
-        stateId: a.id,
-        country: a.country,
-        flag: a.flag,
-        lat: a.lat,
-        lng: a.lng,
-        estimates,
-        rangeLow,
-        rangeHigh,
-        provisional: true,
-      };
-    });
+    .map((a) => ({
+      stateId: a.id,
+      country: a.country,
+      flag: a.flag,
+      lat: a.lat,
+      lng: a.lng,
+      estimates: ESTIMATES[a.id],
+      provisional: false,
+    }));
   return cache;
 }
-
-/** Distinct source labels, for the layer's "which sources" toggle. */
-export const ESTIMATE_SOURCES = ['SIPRI Yearbook 2023', 'FAS Nuclear Notebook', 'IISS (independent estimate)'];
