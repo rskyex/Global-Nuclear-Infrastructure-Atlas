@@ -26,7 +26,7 @@ function FitOnce({ points }) {
  * Renders each active layer (ascending zOrder) by calling its `renderMap`.
  * Layers compose on one shared, never-remounted map instance.
  */
-export default function AnalysisMapView({ registry, activeIds, getOpacity, settings, centroids, fitPoints, onSelect }) {
+export default function AnalysisMapView({ registry, activeIds, getOpacity, settings, centroids, fitPoints, onSelect, year, timeActive }) {
   const activeLayers = registry
     .filter((l) => activeIds.includes(l.id))
     .sort((a, b) => a.zOrder - b.zOrder);
@@ -46,6 +46,8 @@ export default function AnalysisMapView({ registry, activeIds, getOpacity, setti
             opacity: getOpacity(layer.id),
             settings: settings[layer.id] || layer.defaultSettings || {},
             onSelect,
+            year,
+            timeActive,
           })}
         </Fragment>
       ))}

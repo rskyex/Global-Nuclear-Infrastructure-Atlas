@@ -124,6 +124,7 @@ export function getOversightData() {
       lat: f.lat,
       lng: f.lng,
       status: f.status,
+      firstPower: Number.isFinite(f.firstPower) ? f.firstPower : null,
       safeguardsStatus: classify(f),
       additionalProtocol: Boolean(f.country_governance?.additional_protocol),
       countrySafeguardsText: f.safeguards_status || null,

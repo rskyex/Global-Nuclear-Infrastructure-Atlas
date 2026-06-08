@@ -3,6 +3,7 @@ import { Network, Info } from 'lucide-react';
 import AnalysisMapView from '../components/AnalysisMapView';
 import AnalysisLayerPanel from '../components/AnalysisLayerPanel';
 import LayerLegend from '../components/LayerLegend';
+import TimelineSlider from '../components/TimelineSlider';
 import useLayerState from '../hooks/useLayerState';
 import { LAYER_REGISTRY } from '../layers/registry';
 import { enrichedFacilities } from '../data/enrichedFacilities';
@@ -17,7 +18,8 @@ import { enrichedFacilities } from '../data/enrichedFacilities';
  */
 export default function AnalysisPage() {
   const layerState = useLayerState(LAYER_REGISTRY);
-  const { activeIds, isActive, toggleLayer, getOpacity, setLayerOpacity } = layerState;
+  const { activeIds, isActive, toggleLayer, getOpacity, setLayerOpacity, year, setYear } = layerState;
+  const timeActive = isActive('temporal');
 
   // Layer-scoped UI settings (e.g. the legal layer's focused regime).
   const [settings, setSettings] = useState({});
@@ -92,7 +94,16 @@ export default function AnalysisPage() {
             settings={settings}
             centroids={centroids}
             fitPoints={fitPoints}
+            year={year}
+            timeActive={timeActive}
           />
+
+          {timeActive && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 px-2.5 py-1 rounded-full text-xs font-bold pointer-events-none"
+              style={{ background: 'rgba(7,13,26,0.9)', border: '1px solid rgba(59,130,246,0.4)', color: '#93c5fd', fontFamily: 'JetBrains Mono, monospace' }}>
+              {year}
+            </div>
+          )}
 
           {/* Legend */}
           <div className="absolute bottom-4 left-4 z-20 max-w-xs">
@@ -125,6 +136,14 @@ export default function AnalysisPage() {
           )}
         </div>
       </div>
+
+      {/* Temporal slider — only when the temporal layer is active */}
+      {timeActive && (
+        <TimelineSlider
+          selectedYear={year}
+          onYearChange={(v) => setYear(typeof v === 'function' ? v(year) : v)}
+        />
+      )}
     </div>
   );
 }
