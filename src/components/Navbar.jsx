@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText, BarChart3, ChevronRight } from 'lucide-react';
+import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText, BarChart3, Network, ChevronRight } from 'lucide-react';
 import { suiteModules } from '../shared/tokens';
 
 const NAV_LINKS = [
   { to: '/infrastructure', label: 'Infrastructure', icon: Globe },
+  { to: '/analysis', label: 'Analysis Layers', icon: Network },
   { to: '/policy', label: 'Policy Intel', icon: BarChart3 },
   { to: '/basics', label: 'Nuclear Basics', icon: BookOpen },
   { to: '/accidents', label: 'Accidents', icon: Clock },
