@@ -8,6 +8,7 @@ import { useSearchParams } from 'react-router-dom';
  *   ?layers=legal,oversight        active layer ids (comma separated)
  *   &op=oversight:60,legal:80       per-layer opacity as integer percent (omitted when 100)
  *   &t=2011                         time position (year) for the temporal layer
+ *   &cfg={...}                      per-layer UI settings (regime, filters…) as JSON
  *
  * Toggling a layer or changing opacity only rewrites these params; the map
  * instance is never remounted, so the view and other layers are preserved.
@@ -48,6 +49,19 @@ export default function useLayerState(registry, { defaultYear = 2024 } = {}) {
     const n = Number(raw);
     return raw !== null && Number.isFinite(n) ? n : defaultYear;
   }, [params, defaultYear]);
+
+  // Per-layer UI settings (e.g. legal.regime, fuelcycle.stages) as JSON in `cfg`,
+  // so filters and selectors are shareable and restore on reload.
+  const settings = useMemo(() => {
+    const raw = params.get('cfg');
+    if (!raw) return {};
+    try {
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
+  }, [params]);
 
   const getOpacity = useCallback((id) => (id in opacity ? opacity[id] : 1), [opacity]);
 
@@ -90,6 +104,23 @@ export default function useLayerState(registry, { defaultYear = 2024 } = {}) {
     });
   }, [patch, defaultYear]);
 
+  // Read current cfg from a params instance (so updates never use a stale closure).
+  const readCfg = (p) => {
+    const raw = p.get('cfg');
+    if (!raw) return {};
+    try { return JSON.parse(raw) || {}; } catch { return {}; }
+  };
+
+  const setSetting = useCallback((layerId, key, value) => {
+    patch((p) => {
+      const cur = readCfg(p);
+      const next = { ...cur, [layerId]: { ...cur[layerId], [key]: value } };
+      const serial = JSON.stringify(next);
+      if (serial === '{}') p.delete('cfg');
+      else p.set('cfg', serial);
+    });
+  }, [patch]);
+
   return {
     activeIds,
     activeSet,
@@ -99,5 +130,7 @@ export default function useLayerState(registry, { defaultYear = 2024 } = {}) {
     setLayerOpacity,
     year,
     setYear,
+    settings,
+    setSetting,
   };
 }

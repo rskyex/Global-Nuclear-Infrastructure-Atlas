@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Network, Info } from 'lucide-react';
 import AnalysisMapView from '../components/AnalysisMapView';
 import AnalysisLayerPanel from '../components/AnalysisLayerPanel';
@@ -18,13 +18,11 @@ import { enrichedFacilities } from '../data/enrichedFacilities';
  */
 export default function AnalysisPage() {
   const layerState = useLayerState(LAYER_REGISTRY);
-  const { activeIds, isActive, toggleLayer, getOpacity, setLayerOpacity, year, setYear } = layerState;
+  const {
+    activeIds, isActive, toggleLayer, getOpacity, setLayerOpacity,
+    year, setYear, settings, setSetting,
+  } = layerState;
   const timeActive = isActive('temporal');
-
-  // Layer-scoped UI settings (e.g. the legal layer's focused regime).
-  const [settings, setSettings] = useState({});
-  const setSetting = (layerId, key, value) =>
-    setSettings((prev) => ({ ...prev, [layerId]: { ...prev[layerId], [key]: value } }));
 
   // Country centroids from facility coordinates — used by country-level layers
   // so we never need a separate world-GeoJSON dependency.
