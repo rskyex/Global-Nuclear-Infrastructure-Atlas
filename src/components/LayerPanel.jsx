@@ -14,9 +14,16 @@ const OVERLAY_LAYERS = [
   { key: 'fukushima', label: 'Post-Fukushima Policy', icon: Zap, color: '#3b82f6',
     description: 'Policy trajectory since March 2011 by country' },
   { key: 'cyber', label: 'Cyber-Nuclear Intersection', icon: Cpu, color: '#ec4899',
-    description: 'Digital I&C, reported incidents, and infrastructure overlap' },
+    description: 'Digital I&C, documented incidents, and host states targeted in the Cyber Escalation Atlas' },
   { key: 'postsoviet', label: 'Post-Soviet Sub-Atlas', icon: MapPin, color: '#06b6d4',
     description: 'Facilities in former Soviet states with design and liability data' },
+];
+
+// Digital I&C sites only; colours match the cyber overlay markers in MapView
+const CYBER_LEGEND = [
+  { color: '#ef4444', label: 'Documents leaked from operator network; no control-system compromise reported' },
+  { color: '#f59e0b', label: 'Host state is a target in the Cyber Escalation Atlas' },
+  { color: '#8b5cf6', label: 'Digital I&C' },
 ];
 
 export const SAFEGUARDS_LEGEND = [
@@ -114,6 +121,17 @@ export default function LayerPanel({ activeOverlay, setActiveOverlay, showConfli
           {FUKUSHIMA_LEGEND.map(l => (
             <div key={l.color} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: l.color }} />
+              <span className="text-slate-400">{l.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {activeOverlay === 'cyber' && (
+        <div data-testid="cyber-legend" className="mt-2 p-2 rounded-md text-xs space-y-1" style={{ background: 'rgba(13,27,46,0.8)', border: '1px solid rgba(26,48,80,0.5)' }}>
+          <div className="text-slate-500 font-medium mb-1">Cyber-Nuclear Legend</div>
+          {CYBER_LEGEND.map(l => (
+            <div key={l.color} className="flex items-start gap-2">
+              <div className="w-3 h-3 rounded-full flex-shrink-0 mt-0.5" style={{ background: l.color }} />
               <span className="text-slate-400">{l.label}</span>
             </div>
           ))}

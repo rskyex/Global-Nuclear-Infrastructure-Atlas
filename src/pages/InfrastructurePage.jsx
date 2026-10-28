@@ -101,6 +101,19 @@ function PlantDetailPanel({ plant, onClose }) {
             </div>
           )}
 
+          {plant.cyber_incident && (
+            <div data-testid="plant-cyber-incident">
+              <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">{plant.cyber_incident.label}</div>
+              <p className="text-xs text-slate-300 leading-relaxed">{plant.cyber_incident.detail}</p>
+            </div>
+          )}
+
+          {plant.critical_infrastructure_overlap && (
+            <p data-testid="plant-cyber-overlap" className="text-xs text-slate-400">
+              Host state is a target in the Cyber Escalation Atlas
+            </p>
+          )}
+
           {/* Sources */}
           <div data-testid="plant-sources">
             <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">Sources</div>

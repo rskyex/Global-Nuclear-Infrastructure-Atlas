@@ -10,6 +10,7 @@
 
 import { commercialPlants } from './commercialPlants';
 import countryGovernance from './countryGovernance';
+import { cyberTargetCountries } from './generated/cyberTargetCountries';
 
 // ── Status mapping ──────────────────────────────────────────────────────────
 function mapOperationalStatus(status) {
@@ -103,20 +104,25 @@ const digitalICNotes = {
 };
 
 // ── Reported cyber incidents ────────────────────────────────────────────────
-// Only documented public incidents
-const cyberIncidentFacilities = new Set([
+// Only documented public incidents that name the site, with the source attached
+const cyberIncidentFacilities = {
   // 2003 — Davis-Besse Slammer worm (US) — no specific ID in our data but illustrative
   // 2010 — Stuxnet affected Iran's enrichment, not Bushehr reactor directly
   // 2016 — Gundremmingen malware found (Germany) — plant shut down 2021
-  // South Korea — 2014 Korea Hydro & Nuclear Power hack (Shin-Wolsong is not in the plant dataset)
-  'kr-kori', 'kr-hanbit', 'kr-hanul',
-]);
+  // South Korea — 2014 KHNP breach named Gori-2 (Kori) and Wolsong-1; Wolsong is not in
+  // the plant dataset. Hanbit and Hanul are not named in any source found.
+  'kr-kori': {
+    year: 2014,
+    label: 'Documents leaked from operator network; no control-system compromise reported',
+    detail: 'In December 2014 design documents and manuals for Kori-2 ("Gori-2") were leaked from Korea Hydro & Nuclear Power\'s corporate network. No control-system compromise was reported.',
+    source: { name: 'Nextgov – Hacker Leaks S. Korea Nuke Plant Blueprints (23 Dec 2014)', url: 'https://nextgov.com/cybersecurity/2014/12/breach/143556', type: 'news' },
+  },
+};
 
 // ── Critical infrastructure overlap with Cyber Atlas ────────────────────────
-const criticalInfraOverlapCountries = new Set([
-  'United States', 'United Kingdom', 'France', 'Germany', 'Ukraine',
-  'Japan', 'South Korea', 'Russia', 'China', 'India',
-]);
+// Host state is named as a target in at least one Cyber Escalation Atlas case
+// (regenerate with `npm run gen:cyber-targets`).
+const criticalInfraOverlapCountries = new Set(Object.keys(cyberTargetCountries));
 
 // ── Soviet-era reactor identification ───────────────────────────────────────
 const sovietEraDesigns = {
@@ -197,7 +203,8 @@ export const enrichedFacilities = commercialPlants.map(plant => {
   const sovietData = sovietEraDesigns[plant.id] || null;
   const seismicZone = seismicOverrides[plant.id] || cData.seismic_zone_default || 'Moderate';
   const isDigital = digitalICFacilities.has(plant.id);
-  const hasCyberIncident = cyberIncidentFacilities.has(plant.id);
+  const cyberIncident = cyberIncidentFacilities[plant.id] || null;
+  const hasCyberIncident = Boolean(cyberIncident);
   const hasInfraOverlap = criticalInfraOverlapCountries.has(plant.country);
   const isConflictProximity = conflictProximityFacilities.has(plant.id);
   const isPostSoviet = postSovietStates.has(plant.country);
@@ -214,11 +221,9 @@ export const enrichedFacilities = commercialPlants.map(plant => {
   if (plant.status === 'shutdown' || plant.status === 'decommissioned') {
     governanceFlags.push('In decommissioning');
   }
-  if (isDigital && !hasCyberIncident) {
-    // No flag — having digital I&C without an incident is expected
-  }
-  if (isDigital && hasCyberIncident) {
-    governanceFlags.push('Digital I&C with reported cyber incident');
+  // No flag for digital I&C alone — having digital I&C without an incident is expected
+  if (hasCyberIncident) {
+    governanceFlags.push(`${cyberIncident.label} (${cyberIncident.year})`);
   }
   if (cData.post_fukushima_trajectory === 'accelerated_phase_out') {
     governanceFlags.push('Host country in accelerated nuclear phase-out');
@@ -226,6 +231,7 @@ export const enrichedFacilities = commercialPlants.map(plant => {
 
   return {
     ...plant,
+    sources: cyberIncident ? [...(plant.sources || []), cyberIncident.source] : plant.sources,
     // Facility type
     facility_type: plant.status === 'shutdown' || plant.status === 'decommissioned' ? 'dismantled' : 'reactor',
     // Governance
@@ -248,6 +254,7 @@ export const enrichedFacilities = commercialPlants.map(plant => {
     digital_i_and_c: isDigital,
     digital_i_and_c_note: digitalICNotes[plant.id] || null,
     reported_cyber_incident: hasCyberIncident || null,
+    cyber_incident: cyberIncident,
     critical_infrastructure_overlap: hasInfraOverlap,
     // Soviet-era (only populated where applicable)
     soviet_era_design: sovietData ? sovietData.soviet_era_design : (isPostSoviet ? false : null),

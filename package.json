@@ -9,6 +9,7 @@
     "dev": "vite",
     "build": "npm run check:data && vite build",
     "check:data": "node scripts/check-data.mjs",
+    "gen:cyber-targets": "node scripts/gen-cyber-targets.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
