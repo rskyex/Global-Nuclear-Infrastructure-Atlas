@@ -94,6 +94,13 @@ function PlantDetailPanel({ plant, onClose }) {
             <p className="text-xs text-slate-300 leading-relaxed">{plant.overview}</p>
           </div>
 
+          {plant.digital_i_and_c && (
+            <div data-testid="plant-digital-ic">
+              <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">Digital I&amp;C</div>
+              <p className="text-xs text-slate-300">{plant.digital_i_and_c_note || 'Yes'}</p>
+            </div>
+          )}
+
           {/* Sources */}
           <div data-testid="plant-sources">
             <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">Sources</div>
@@ -299,7 +306,7 @@ export default function InfrastructurePage() {
           onClick={() => {
             const keys = ['id','name','country','status','reactorType','units','netCapacityMW','operator',
               'governance_risk_score','safeguards_status','seismic_zone','proximity_conflict',
-              'digital_i_and_c','reported_cyber_incident','post_fukushima_policy_change'];
+              'digital_i_and_c','digital_i_and_c_note','reported_cyber_incident','post_fukushima_policy_change'];
             const rows = filteredPlants.map(p => keys.map(k => {
               const v = p[k]; return `"${String(v ?? '').replace(/"/g,'""')}"`;
             }).join(','));

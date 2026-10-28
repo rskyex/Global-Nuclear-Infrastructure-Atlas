@@ -139,7 +139,7 @@ export default function FacilityDetailPanel({ facility, onClose }) {
             <div>
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Cyber-Nuclear Intersection</h3>
               <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
-                <InfoRow label="Digital I&C" value={facility.digital_i_and_c ? 'Yes' : 'No / Unknown'} />
+                <InfoRow label="Digital I&C" value={facility.digital_i_and_c ? (facility.digital_i_and_c_note || 'Yes') : 'No / Unknown'} />
                 <InfoRow label="Cyber Incident" value={facility.reported_cyber_incident ? 'Reported' : 'None reported'} />
                 <InfoRow label="Infra Overlap" value={facility.critical_infrastructure_overlap ? 'Yes' : 'No'} />
               </div>

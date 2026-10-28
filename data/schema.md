@@ -27,7 +27,8 @@
 | stress_test_conducted | boolean/null | ENSREG-standard stress test completed | ENSREG |
 | evacuation_plan_status | string | current / outdated / none / unknown | National sources |
 | community_consent_mechanism | string | exists / absent / disputed / unknown | National sources |
-| digital_i_and_c | boolean | Digital instrumentation and control | Operator data |
+| digital_i_and_c | boolean | Digital instrumentation and control (at one or more units) | Operator data |
+| digital_i_and_c_note | string/null | Set when only some units have digital I&C, e.g. "Digital I&C at some units (EPR Unit 3)" | Operator data |
 | reported_cyber_incident | boolean/null | Publicly reported cyber incident | Public record |
 | critical_infrastructure_overlap | boolean | Shares infrastructure with Cyber Atlas assets | Derived |
 | soviet_era_design | boolean/null | Soviet-origin reactor design | IAEA PRIS |
