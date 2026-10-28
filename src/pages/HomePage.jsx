@@ -667,7 +667,7 @@ export default function HomePage() {
                     { name: 'Nuclear Infrastructure Atlas', desc: 'Civil nuclear mapping', color: '#3b82f6', url: 'https://globalnuclearinfrastructureatlas.vercel.app', current: true },
                     { name: 'Orbital Risk Tracker', desc: 'Space & satellite risk', color: '#8b5cf6', url: 'https://orbitalrisktracker.vercel.app' },
                     { name: 'Cyber Escalation Atlas', desc: 'Cyber conflict mapping', color: '#ec4899', url: 'https://cyber-escalation-atlas.vercel.app' },
-                    { name: 'Lunar Mandate Atlas', desc: 'Lunar governance & mandates', color: '#06b6d4', url: 'https://lunar-mandate-atlas.vercel.app/' },
+                    { name: 'Lunar Governance Tracker', desc: 'Lunar governance & mandates', color: '#06b6d4', url: 'https://lunar-mandate-atlas.vercel.app/' },
                   ].map(m => (
                     <a key={m.name} href={m.current ? undefined : m.url} target={m.current ? undefined : '_blank'} rel="noopener noreferrer"
                       className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs no-underline transition-all hover:brightness-110"

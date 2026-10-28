@@ -36,7 +36,7 @@ export const suiteModules = {
   nuclear: { name: 'Global Nuclear Infrastructure Atlas', url: 'https://globalnuclearinfrastructureatlas.vercel.app' },
   orbital: { name: 'Orbital Risk Tracker', url: 'https://orbitalrisktracker.vercel.app' },
   cyber: { name: 'Cyber Escalation Atlas', url: 'https://cyber-escalation-atlas.vercel.app' },
-  lunar: { name: 'Lunar Mandate Atlas', url: 'https://lunar-mandate-atlas.vercel.app/' },
+  lunar: { name: 'Lunar Governance Tracker', url: 'https://lunar-mandate-atlas.vercel.app/' },
 };
 
 export default { colors, fonts, spacing, suiteModules };

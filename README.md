@@ -55,7 +55,7 @@ See [data/schema.md](data/schema.md) for data schema.
 | Nuclear Infrastructure Atlas | [globalnuclearinfrastructureatlas.vercel.app](https://globalnuclearinfrastructureatlas.vercel.app) |
 | Orbital Risk Tracker | [orbitalrisktracker.vercel.app](https://orbitalrisktracker.vercel.app) |
 | Cyber Escalation Atlas | [cyber-escalation-atlas.vercel.app](https://cyber-escalation-atlas.vercel.app) |
-| Lunar Mandate Atlas | [lunar-mandate-atlas.vercel.app](https://lunar-mandate-atlas.vercel.app) |
+| Lunar Governance Tracker | [lunar-mandate-atlas.vercel.app](https://lunar-mandate-atlas.vercel.app) |
 
 Cross-module links surface Cyber Atlas entries for facilities flagged with critical infrastructure overlap.
 
