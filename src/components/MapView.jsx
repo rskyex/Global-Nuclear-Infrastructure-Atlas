@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BASEMAP_URL, BASEMAP_ATTRIBUTION, BASEMAP_CLASS, BASEMAP_MAX_ZOOM, BASEMAP_ERROR_TILE } from '../shared/basemap';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import FacilityPopup from './FacilityPopup';
@@ -11,8 +12,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 // Safeguards color mapping
 const SAFEGUARDS_COLORS = {
@@ -104,7 +103,7 @@ export default function MapView({
       style={{ width: '100%', height: '100%' }}
       zoomControl={true} worldCopyJump={false}
     >
-      <TileLayer url={TILE_URL} attribution={TILE_ATTR} subdomains="abcd" maxZoom={19} />
+      <TileLayer url={BASEMAP_URL} attribution={BASEMAP_ATTRIBUTION} className={BASEMAP_CLASS} maxZoom={BASEMAP_MAX_ZOOM} errorTileUrl={BASEMAP_ERROR_TILE} />
 
       {/* Conflict proximity radius circles */}
       {conflictItems.map(f => (

@@ -37,10 +37,17 @@ body {
 
 .leaflet-control-attribution {
   background-color: rgba(7, 13, 26, 0.8) !important;
-  color: #475569 !important;
+  color: #94a3b8 !important;
   font-size: 10px !important;
 }
-.leaflet-control-attribution a { color: #64748b !important; }
+.leaflet-control-attribution a { color: #94a3b8 !important; }
+
+/* Dark basemap: OpenStreetMap standard tiles (no API key) darkened with a
+   CSS filter so the map keeps the atlas's navy look. Only the tile layer is
+   filtered; markers and overlays keep their true colours. */
+.basemap-dark {
+  filter: invert(100%) hue-rotate(180deg) brightness(0.9) contrast(0.85) saturate(0.35);
+}
 
 /* ─── Custom marker styles ──────────────────────────────── */
 .marker-pulse {

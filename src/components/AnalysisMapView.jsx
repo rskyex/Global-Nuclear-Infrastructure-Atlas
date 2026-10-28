@@ -1,8 +1,7 @@
 import { useEffect, Fragment } from 'react';
+import { BASEMAP_URL, BASEMAP_ATTRIBUTION, BASEMAP_CLASS, BASEMAP_MAX_ZOOM, BASEMAP_ERROR_TILE } from '../shared/basemap';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 
-const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 /** Fit bounds once on mount only, so toggling layers never resets the view. */
 function FitOnce({ points }) {
@@ -37,7 +36,7 @@ export default function AnalysisMapView({ registry, activeIds, getOpacity, setti
       style={{ width: '100%', height: '100%' }}
       zoomControl={true} worldCopyJump={false}
     >
-      <TileLayer url={TILE_URL} attribution={TILE_ATTR} subdomains="abcd" maxZoom={19} />
+      <TileLayer url={BASEMAP_URL} attribution={BASEMAP_ATTRIBUTION} className={BASEMAP_CLASS} maxZoom={BASEMAP_MAX_ZOOM} errorTileUrl={BASEMAP_ERROR_TILE} />
       <FitOnce points={fitPoints} />
       {activeLayers.map((layer) => (
         <Fragment key={layer.id}>

@@ -95,21 +95,28 @@ function PlantDetailPanel({ plant, onClose }) {
           </div>
 
           {/* Sources */}
-          {plant.sources?.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">Sources</div>
+          <div data-testid="plant-sources">
+            <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">Sources</div>
+            {plant.sources?.length > 0 ? (
               <div className="space-y-1.5">
                 {plant.sources.map((s, i) => (
                   <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 no-underline">
-                    <ExternalLink size={11} />
+                    className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 no-underline break-all">
+                    <ExternalLink size={11} className="flex-shrink-0" />
                     {s.name}
                     <span className="text-slate-600 text-xs">({s.type})</span>
                   </a>
                 ))}
+                {plant.sources.every((s) => /pris/i.test(s.name)) && (
+                  <p className="text-xs text-slate-500 leading-relaxed pt-1">
+                    This link opens the IAEA PRIS home page. Search PRIS for this plant by name to see the reactor records.
+                  </p>
+                )}
               </div>
-            </div>
-          )}
+            ) : (
+              <p className="text-xs text-amber-400">No source is recorded for this plant yet.</p>
+            )}
+          </div>
 
           <div className="text-xs text-slate-600 border-t pt-3" style={{ borderColor: 'rgba(30,50,80,0.5)' }}>
             Last updated: {plant.lastUpdated}
@@ -348,7 +355,7 @@ export default function InfrastructurePage() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         {/* Layer panel sidebar */}
         <div className="w-52 flex-shrink-0 border-r p-3 overflow-y-auto hidden lg:block"
           style={{ borderColor: 'rgba(30,50,80,0.6)', background: 'rgba(4,13,26,0.9)' }}>
@@ -375,7 +382,7 @@ export default function InfrastructurePage() {
           )}
           {/* Hint badge */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-            <div className="px-3 py-1.5 rounded-full text-xs text-slate-400 border"
+            <div className="px-3 py-1.5 rounded-full text-xs text-slate-400 border whitespace-nowrap"
               style={{ background: 'rgba(7,13,26,0.85)', borderColor: 'rgba(30,50,80,0.6)', backdropFilter: 'blur(8px)' }}>
               <Info size={11} className="inline mr-1 mb-0.5" />
               Click a marker to inspect plant details
@@ -383,9 +390,11 @@ export default function InfrastructurePage() {
           </div>
         </div>
 
-        {/* Detail panel */}
-        <div className="w-72 flex-shrink-0 border-l flex flex-col"
-          style={{ borderColor: 'rgba(30,50,80,0.7)' }}>
+        {/* Detail panel: side column from md up; on phones it overlays the map only while a plant is open */}
+        <div className={`${selectedPlant
+            ? 'flex absolute inset-y-0 right-0 w-full max-w-sm z-[1100] md:static md:max-w-none'
+            : 'hidden md:flex'} md:w-72 flex-shrink-0 border-l flex-col`}
+          style={{ borderColor: 'rgba(30,50,80,0.7)', background: 'rgba(7,13,26,0.98)' }}>
           {selectedPlant ? (
             <PlantDetailPanel plant={selectedPlant} onClose={() => setSelectedPlant(null)} />
           ) : (

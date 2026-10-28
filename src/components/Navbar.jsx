@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText, BarChart3, Network, ChevronRight } from 'lucide-react';
+import { Atom, Globe, BookOpen, Clock, Shield, Activity, FileText, BarChart3, Network, ChevronRight, Database } from 'lucide-react';
 import { suiteModules } from '../shared/tokens';
 
 const NAV_LINKS = [
@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { to: '/arsenals', label: 'Arsenals', icon: Shield },
   { to: '/radiation', label: 'Radiation & Health', icon: Activity },
   { to: '/methodology', label: 'Methodology', icon: FileText },
+  { to: '/data', label: 'Data', icon: Database },
 ];
 
 export default function Navbar() {
@@ -62,13 +63,13 @@ export default function Navbar() {
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'}`
             }>
             <Icon size={13} className="flex-shrink-0" />
-            <span className="hidden xl:inline">{label}</span>
-            <span className="hidden md:inline xl:hidden">{label.split(' ')[0]}</span>
+            <span className="hidden 2xl:inline">{label}</span>
+            <span className="hidden md:inline 2xl:hidden">{label.split(' ')[0]}</span>
           </NavLink>
         ))}
 
         {/* Data badge */}
-        <div className="ml-2 hidden xl:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60 flex-shrink-0"
+        <div className="ml-2 hidden 2xl:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60 flex-shrink-0"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           Public data only
         </div>

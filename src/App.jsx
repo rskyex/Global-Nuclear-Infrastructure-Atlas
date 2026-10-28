@@ -9,6 +9,7 @@ import ArsenalsPage from './pages/ArsenalsPage';
 import RadiationHealthPage from './pages/RadiationHealthPage';
 import MethodologyPage from './pages/MethodologyPage';
 import PolicyPage from './pages/PolicyPage';
+import DataPage from './pages/DataPage';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/arsenals" element={<ArsenalsPage />} />
           <Route path="/radiation" element={<RadiationHealthPage />} />
           <Route path="/methodology" element={<MethodologyPage />} />
+          <Route path="/data" element={<DataPage />} />
           {/* Legacy aliases for old routes */}
           <Route path="/history" element={<Navigate to="/accidents" replace />} />
           <Route path="/fusion" element={<Navigate to="/basics" replace />} />
