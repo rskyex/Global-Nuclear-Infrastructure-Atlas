@@ -6,6 +6,8 @@ const server = await createServer({
   configFile: false,
   appType: 'custom',
   logLevel: 'silent',
+  // No dependency pre-bundling: the script only loads local data modules.
+  optimizeDeps: { noDiscovery: true, include: [] },
   server: { middlewareMode: true, hmr: false, ws: false },
 });
 

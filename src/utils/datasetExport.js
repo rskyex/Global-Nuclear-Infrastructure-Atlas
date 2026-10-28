@@ -4,8 +4,8 @@ import { commercialPlants } from '../data/commercialPlants';
 
 // Bump DATASET_VERSION and DATASET_LAST_UPDATED whenever plant records change.
 // DATASET_LAST_UPDATED is the date of the last change to src/data/commercialPlants.js.
-export const DATASET_VERSION = '1.0.0';
-export const DATASET_LAST_UPDATED = '2026-03-07';
+export const DATASET_VERSION = '1.1.0';
+export const DATASET_LAST_UPDATED = '2026-10-28';
 export const SITE_URL = 'https://globalnuclearinfrastructureatlas.vercel.app';
 
 export const PLANT_COLUMNS = [
