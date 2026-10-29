@@ -116,6 +116,9 @@ const cyberIncidentFacilities = {
     label: 'Documents leaked from operator network; no control-system compromise reported',
     detail: 'In December 2014 design documents and manuals for Kori-2 ("Gori-2") were leaked from Korea Hydro & Nuclear Power\'s corporate network. No control-system compromise was reported.',
     source: { name: 'Nextgov – Hacker Leaks S. Korea Nuke Plant Blueprints (23 Dec 2014)', url: 'https://nextgov.com/cybersecurity/2014/12/breach/143556', type: 'news' },
+    // Cross-dataset reference for the Faultline layer. The Cyber Escalation
+    // Atlas has no case for the 2014 KHNP breach, so cyberCase stays null.
+    reportedCyberIncidentRef: { cyberCase: null, sourceUrl: 'https://nextgov.com/cybersecurity/2014/12/breach/143556' },
   },
 };
 
