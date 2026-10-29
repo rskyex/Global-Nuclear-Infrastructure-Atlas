@@ -45,7 +45,7 @@ const LAYERS = [
 const OVERLAY_LAYERS = [
   { key: 'safeguards', label: 'Safeguards', icon: Shield, color: '#10b981' },
   { key: 'decommissioning', label: 'Decommission Risk', icon: AlertTriangle, color: '#f59e0b' },
-  { key: 'conflict', label: 'Conflict Exposure (analyst-flagged)', icon: Target, color: '#ef4444' },
+  { key: 'conflict', label: 'Conflict Exposure (UCDP)', icon: Target, color: '#ef4444' },
   { key: 'cyber', label: 'Cyber-Nuclear', icon: Cpu, color: '#ec4899' },
   { key: 'fukushima', label: 'Post-Fukushima', icon: Zap, color: '#3b82f6' },
   { key: 'postsoviet', label: 'Post-Soviet', icon: MapPin, color: '#06b6d4' },
@@ -429,7 +429,7 @@ export default function HomePage() {
         <div className="mt-3 flex flex-wrap gap-2">
           {[
             { label: 'Safeguards Gaps', value: facilitySummary.safeguardsGaps, icon: Shield, color: '#f59e0b' },
-            { label: 'Conflict Exposure (analyst-flagged, 2024)', value: facilitySummary.conflictProximity, icon: Target, color: '#ef4444' },
+            { label: 'Conflict Exposure (UCDP, 100 km)', value: facilitySummary.conflictProximity, icon: Target, color: '#ef4444' },
             { label: 'High Risk (4+)', value: facilitySummary.highRisk, icon: AlertTriangle, color: '#ef4444' },
             { label: 'Digital I&C', value: facilitySummary.digitalIandC, icon: Cpu, color: '#8b5cf6' },
             { label: 'Post-Soviet', value: facilitySummary.postSoviet, icon: MapPin, color: '#06b6d4' },

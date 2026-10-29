@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Layers, ChevronDown, Shield, AlertTriangle, Target, Globe, Zap, Cpu, MapPin } from 'lucide-react';
-import { SAFEGUARDS_GAP_DEFINITION } from '../data/enrichedFacilities';
+import { SAFEGUARDS_GAP_DEFINITION, CONFLICT_RULE_TEXT } from '../data/enrichedFacilities';
 
 const OVERLAY_LAYERS = [
   { key: 'safeguards', label: 'Safeguards Coverage', icon: Shield, color: '#10b981',
     description: `Amber marks a safeguards gap. ${SAFEGUARDS_GAP_DEFINITION}` },
   { key: 'decommissioning', label: 'Decommissioning Risk', icon: AlertTriangle, color: '#f59e0b',
     description: 'Facilities in decommissioning/suspended with risk score rings' },
-  { key: 'conflict', label: 'Conflict Exposure (analyst-flagged)', icon: Target, color: '#ef4444',
-    description: 'Highlights facilities an analyst flagged for conflict exposure (as of 2024). No distance test was run.' },
+  { key: 'conflict', label: 'Conflict Exposure (UCDP)', icon: Target, color: '#ef4444',
+    description: `Highlights exposed facilities. ${CONFLICT_RULE_TEXT}` },
   { key: 'treaty', label: 'Treaty Adherence', icon: Globe, color: '#8b5cf6',
     description: 'Country-level NPT/TPNW/Additional Protocol adherence' },
   { key: 'fukushima', label: 'Post-Fukushima Policy', icon: Zap, color: '#3b82f6',
@@ -35,6 +35,7 @@ export const SAFEGUARDS_LEGEND = [
 
 export const FUKUSHIMA_LEGEND = [
   { color: '#ef4444', label: 'Accelerated phase-out' },
+  { color: '#94a3b8', label: 'Phase-out completed' },
   { color: '#f59e0b', label: 'Partial moratorium' },
   { color: '#3b82f6', label: 'Policy reversal (return to nuclear)' },
   { color: '#6b7280', label: 'No change' },

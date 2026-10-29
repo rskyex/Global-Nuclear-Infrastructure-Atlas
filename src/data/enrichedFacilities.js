@@ -5,6 +5,7 @@
  * Country-level data from countryGovernance.js. Facility-specific overrides below.
  *
  * Sources: IAEA PRIS, NTI Nuclear Security Index, ENSREG, USGS, UNODA (country level;
+ * conflict exposure from UCDP event data, CC BY 4.0;
  * see FIELD_PROVENANCE for which fields have no per-field source)
  * Data policy: Public information only. Null where data is unavailable.
  */
@@ -12,6 +13,7 @@
 import { commercialPlants } from './commercialPlants';
 import countryGovernance, { COUNTRY_DATA_AS_OF } from './countryGovernance';
 import { cyberTargetCountries } from './generated/cyberTargetCountries';
+import { conflictByPlant, conflictRule } from './generated/conflictExposure';
 
 // ── Status mapping ──────────────────────────────────────────────────────────
 function mapOperationalStatus(status) {
@@ -61,18 +63,11 @@ const seismicOverrides = {
   'kr-hanbit': 'Moderate', 'kr-hanul': 'Moderate',
 };
 
-// ── Analyst-flagged conflict exposure (as of 2024) ──────────────────────────
-// An analyst judgement, not a distance test: no geometric check against event
-// data has been run, and no conflict-event dataset is in this repository.
-const conflictProximityFacilities = new Set([
-  // Ukraine — all facilities due to ongoing conflict (Khmelnytskyi is not in the plant dataset)
-  'ua-zaporizhzhia', 'ua-south-ukraine', 'ua-rivne',
-  // Armenia — Nagorno-Karabakh proximity
-  'am-metsamor',
-  // Russia — near Ukraine border: Kursk and Novovoronezh are not in the plant dataset
-  // Pakistan — various internal conflicts
-  'pk-kanupp',
-]);
+// ── Conflict exposure (UCDP) ────────────────────────────────────────────────
+// A plant is exposed when UCDP records at least conflictRule.minEvents events or
+// conflictRule.minFatalities best-estimate deaths within conflictRule.radiusKm km
+// inside the extract window. All three UCDP violence types count (state-based,
+// non-state, one-sided). Computed by `npm run gen:conflict` from data/ucdp/.
 
 // ── Digital I&C assessment ──────────────────────────────────────────────────
 // Newer designs and major upgrades have digital I&C
@@ -164,14 +159,14 @@ const postSovietStates = new Set([
 
 // Exported for scripts/check-data.mjs
 export const facilityLookups = {
-  seismicOverrides, conflictProximityFacilities, digitalICFacilities,
+  seismicOverrides, conflictByPlant, digitalICFacilities,
   digitalICNotes, cyberIncidentFacilities, sovietEraDesigns,
 };
 
 // ── Safeguards gap (one definition for counters, flags, markers, legend) ────
 // A host state has a safeguards gap when its safeguards are facility-specific
 // (India, Pakistan) or it has a comprehensive safeguards agreement without an
-// Additional Protocol in force (Brazil, Egypt, Iran). NPT weapon states'
+// Additional Protocol in force (Argentina, Belarus, Brazil, Egypt, Iran). NPT weapon states'
 // Voluntary Offer Agreements and EURATOM coverage are not counted as gaps.
 export const SAFEGUARDS_GAP_DEFINITION =
   'Safeguards gap: facility-specific safeguards only, or a comprehensive safeguards agreement without an Additional Protocol in force. Voluntary Offer Agreements (NPT weapon states) and EURATOM coverage are not counted.';
@@ -184,59 +179,63 @@ export function safeguardsGapReason(cData) {
   return null;
 }
 
-export const CONFLICT_FLAG_LABEL = 'Analyst-flagged conflict exposure (as of 2024)';
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const monthLabel = (iso) => `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${iso.slice(0, 4)}`;
+
+export const CONFLICT_WINDOW_LABEL = `${monthLabel(conflictRule.windowStart)}–${monthLabel(conflictRule.windowEnd)}`;
+export const CONFLICT_FLAG_LABEL = `UCDP organized violence within ${conflictRule.radiusKm} km (${CONFLICT_WINDOW_LABEL})`;
+export const CONFLICT_RULE_TEXT =
+  `At least ${conflictRule.minEvents} UCDP events or ${conflictRule.minFatalities} best-estimate deaths within ` +
+  `${conflictRule.radiusKm} km of the plant, ${CONFLICT_WINDOW_LABEL} (UCDP GED 26.1 and Candidate Events; ` +
+  `extract ${conflictRule.extractDate}). Counts state-based, non-state and one-sided violence.`;
+export { conflictRule };
 
 // Where each enriched field comes from. Shown on the Methodology page and in
 // the export codebook. "none" means there is no per-field source.
 export const FIELD_PROVENANCE = [
   { field: 'regulatory_body', level: 'country', source: 'none per field (country table cites IAEA, UNODA, national regulators, NTI as a group)' },
-  { field: 'safeguards_status', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
-  { field: 'treaty_obligations', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'safeguards_status', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
+  { field: 'treaty_obligations', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
   { field: 'seismic_zone', level: 'plant / country', source: 'none (facility overrides and country defaults are uncited)' },
-  { field: 'proximity_conflict', level: 'plant', source: 'none (analyst judgement, as of 2024; no distance test)' },
+  { field: 'proximity_conflict, conflict_events_100km, conflict_fatalities_100km, conflict_violence_types', level: 'plant', source: 'UCDP GED 26.1 and Candidate Events (CC BY 4.0), computed by distance; see data/ucdp/' },
   { field: 'digital_i_and_c, digital_i_and_c_note', level: 'plant', source: 'none per field (inferred from reactor design)' },
-  { field: 'post_fukushima_policy_change, post_fukushima_trajectory', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
-  { field: 'stress_test_conducted', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
-  { field: 'evacuation_plan_status', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
-  { field: 'community_consent_mechanism', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'post_fukushima_policy_change, post_fukushima_trajectory', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
+  { field: 'stress_test_conducted', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
+  { field: 'evacuation_plan_status', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
+  { field: 'community_consent_mechanism', level: 'country', source: 'none per field (country table; date in country_data_as_of)' },
   { field: 'soviet_era_design, soviet_reactor_type, decommissioning_liability_status, bilateral_agreement_with_russia', level: 'plant', source: 'none per field' },
-  { field: 'governance_risk_score, governance_flags', level: 'plant', source: 'computed from the fields above (rule table on the Methodology page)' },
+  { field: 'governance_risk_score, governance_score_rules, governance_flags', level: 'plant', source: 'computed from the fields above (rule table on the Methodology page)' },
+  { field: 'safeguards_note', level: 'country', source: 'per entry (source named in the note)' },
   { field: 'cyber_incident, reported_cyber_incident', level: 'plant', source: 'per record (source attached to each incident)' },
   { field: 'critical_infrastructure_overlap', level: 'country', source: 'generated from the Cyber Escalation Atlas case data' },
 ];
 
 // ── Governance risk score computation ───────────────────────────────────────
-function computeGovernanceRisk(plant, cData) {
-  let score = 1;
+// Each rule adds its points to a base of 1; the total is capped at 5. Plant
+// status (shutdown, decommissioned) and host-country phase-out are shown as
+// descriptive flags and do not change the score. The Methodology page renders
+// this table, and each plant stores the rules that fired (governance_score_rules).
+export const GOVERNANCE_SCORE_RULES = [
+  { id: 'no_country_data', short: 'No country data', label: 'No country governance data for the host state', points: 2 },
+  { id: 'safeguards_gap', short: 'Safeguards gap', label: 'Host state has a safeguards gap (facility-specific only, or CSA without Additional Protocol in force)', points: 1 },
+  { id: 'consent_absent', short: 'Consent mechanism absent', label: 'Host state community consent mechanism coded "absent"', points: 1 },
+  { id: 'conflict', short: 'UCDP conflict exposure', label: 'UCDP conflict exposure (rule under "Conflict exposure")', points: 1 },
+  { id: 'suspended', short: 'Suspended', label: 'Plant status is suspended', points: 1 },
+  { id: 'seismic_old', short: 'High seismic zone, first power before 1990', label: 'Seismic zone High and first power before 1990', points: 1 },
+];
+const RULE_BY_ID = Object.fromEntries(GOVERNANCE_SCORE_RULES.map((r) => [r.id, r]));
 
-  // Regulatory opacity: countries without Additional Protocol or with opacity concerns
-  if (!cData) { score += 2; }
-  else {
-    if (!cData.additional_protocol) score += 1;
-    if (cData.community_consent_mechanism === 'absent') score += 1;
-    if (cData.safeguards_status && cData.safeguards_status.includes('Voluntary Offer')) {
-      // Weapon states have VOA - not a governance gap per se, but less coverage
-    }
-    if (cData.safeguards_status && cData.safeguards_status.includes('Facility-specific')) {
-      score += 1; // Non-NPT states with partial safeguards
-    }
-  }
-
-  // Conflict proximity
-  if (conflictProximityFacilities.has(plant.id)) score += 1;
-
-  // Decommissioning status
-  if (plant.status === 'shutdown' || plant.status === 'decommissioned') score += 1;
-  if (plant.status === 'suspended') score += 1;
-
-  // Policy instability
-  if (cData && cData.post_fukushima_trajectory === 'accelerated_phase_out') score += 1;
-
-  // Seismic risk + older design
-  const seismic = seismicOverrides[plant.id] || (cData && cData.seismic_zone_default) || 'Moderate';
-  if (seismic === 'High' && plant.firstPower && plant.firstPower < 1990) score += 1;
-
-  return Math.min(Math.max(score, 1), 5);
+function computeGovernanceRisk(plant, cData, { hasCountryData, gapReason, conflictExposed, seismicZone }) {
+  const fired = [];
+  if (!hasCountryData) fired.push('no_country_data');
+  if (gapReason) fired.push('safeguards_gap');
+  if (cData.community_consent_mechanism === 'absent') fired.push('consent_absent');
+  if (conflictExposed) fired.push('conflict');
+  if (plant.status === 'suspended') fired.push('suspended');
+  if (seismicZone === 'High' && plant.firstPower && plant.firstPower < 1990) fired.push('seismic_old');
+  const rules = fired.map((id) => RULE_BY_ID[id]);
+  const score = Math.min(1 + rules.reduce((sum, r) => sum + r.points, 0), 5);
+  return { score, rules: rules.map((r) => `${r.short} +${r.points}`) };
 }
 
 // ── Build the enriched dataset ──────────────────────────────────────────────
@@ -248,14 +247,20 @@ export const enrichedFacilities = commercialPlants.map(plant => {
   const cyberIncident = cyberIncidentFacilities[plant.id] || null;
   const hasCyberIncident = Boolean(cyberIncident);
   const hasInfraOverlap = criticalInfraOverlapCountries.has(plant.country);
-  const isConflictProximity = conflictProximityFacilities.has(plant.id);
+  const conflict = conflictByPlant[plant.id] || null;
+  const isConflictProximity = Boolean(conflict?.exposed);
   const isPostSoviet = postSovietStates.has(plant.country);
-
-  const riskScore = computeGovernanceRisk(plant, cData);
-
-  // Build governance flags
-  const governanceFlags = [];
   const gapReason = safeguardsGapReason(cData);
+
+  const { score: riskScore, rules: scoreRules } = computeGovernanceRisk(plant, cData, {
+    hasCountryData: Boolean(countryGovernance[plant.country]),
+    gapReason,
+    conflictExposed: isConflictProximity,
+    seismicZone,
+  });
+
+  // Build governance flags (descriptive; the score uses only GOVERNANCE_SCORE_RULES)
+  const governanceFlags = [];
   if (gapReason) governanceFlags.push(`Safeguards gap: ${gapReason}`);
   if (isConflictProximity) governanceFlags.push(CONFLICT_FLAG_LABEL);
   if (plant.status === 'suspended') governanceFlags.push('Facility currently suspended');
@@ -268,6 +273,9 @@ export const enrichedFacilities = commercialPlants.map(plant => {
   }
   if (cData.post_fukushima_trajectory === 'accelerated_phase_out') {
     governanceFlags.push('Host country in accelerated nuclear phase-out');
+  }
+  if (cData.post_fukushima_trajectory === 'phase_out_completed') {
+    governanceFlags.push('Host country completed nuclear phase-out');
   }
 
   return {
@@ -283,13 +291,23 @@ export const enrichedFacilities = commercialPlants.map(plant => {
     grid_connectivity: plant.status === 'operating' || plant.status === 'suspended',
     seismic_zone: seismicZone,
     proximity_conflict: isConflictProximity,
+    conflict_events_100km: conflict?.events ?? 0,
+    conflict_fatalities_100km: conflict?.fatalities ?? 0,
+    conflict_violence_types: conflict?.byType ?? { stateBased: 0, nonState: 0, oneSided: 0 },
+    conflict_names: conflict?.conflicts ?? [],
+    conflict_window: `${conflictRule.windowStart}/${conflictRule.windowEnd}`,
+    conflict_window_months: conflictRule.windowMonths,
+    conflict_extract_date: conflictRule.extractDate,
     treaty_obligations: cData.treaty_obligations || [],
     governance_risk_score: riskScore,
+    governance_score_rules: scoreRules,
     governance_flags: governanceFlags,
     safeguards_gap: Boolean(gapReason),
     safeguards_gap_reason: gapReason,
-    // Every policy and safeguards field comes from the country tables, as of this date
-    country_data_as_of: COUNTRY_DATA_AS_OF,
+    safeguards_note: cData.safeguards_note || null,
+    // Policy and safeguards fields come from the country tables: the entry's own
+    // review date where it has one, otherwise the table date
+    country_data_as_of: cData.data_as_of || COUNTRY_DATA_AS_OF,
     pris_country_url: cData.iso_code ? `https://pris-stats.iaea.org/country-statistics/${cData.iso_code}` : null,
     cnpp_profile_url: cData.iaea_profile || null,
     // Post-Fukushima

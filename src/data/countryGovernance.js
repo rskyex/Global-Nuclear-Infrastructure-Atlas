@@ -1,7 +1,8 @@
 /**
  * Country-level nuclear governance data
  * Sources: IAEA, UNODA Treaty Database, national regulatory bodies, NTI Nuclear Security Index
- * Retrieved: 2024-01-01 (all policy and safeguards fields are as of this date)
+ * Retrieved: 2024-01-01. Policy and safeguards fields are as of this date unless an entry
+ * has its own data_as_of (entries reviewed since then, with the source in a comment).
  * CNPP profile links updated 2026-10-29: the old cnpp.iaea.org/countryprofiles/ pages
  * return 404; the current pages are cnpp.iaea.org/public/countries/<ISO2>/profile/highlights.
  */
@@ -11,15 +12,17 @@ const countryGovernance = {
   'Argentina': {
     iso_code: 'AR', flag: '\u{1F1E6}\u{1F1F7}', region: 'South America',
     regulatory_body: 'Autoridad Regulatoria Nuclear (ARN)',
-    safeguards_status: 'CSA + Additional Protocol (INFCIRC/435)',
-    treaty_obligations: ['NPT', 'Tlatelolco Treaty', 'Additional Protocol'],
-    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
+    safeguards_status: 'CSA (INFCIRC/435) - Quadripartite Agreement with ABACC; no Additional Protocol',
+    treaty_obligations: ['NPT', 'Tlatelolco Treaty'],
+    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
     post_fukushima_policy_change: false,
     stress_test_conducted: null,
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'no_change',
+    // Reviewed 2026-10-29: safeguards_status, additional_protocol. Source: IAEA – Status list: safeguards agreements, Additional Protocols and SQPs (30 Jun 2026), https://www.iaea.org/sites/default/files/20/01/sg-agreements-comprehensive-status.pdf
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/AR/profile/highlights',
   },
   'Armenia': {
@@ -40,28 +43,32 @@ const countryGovernance = {
     iso_code: 'BD', flag: '\u{1F1E7}\u{1F1E9}', region: 'South Asia',
     regulatory_body: 'Bangladesh Atomic Energy Regulatory Authority (BAERA)',
     safeguards_status: 'CSA + Additional Protocol',
-    treaty_obligations: ['NPT', 'Additional Protocol'],
-    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
+    treaty_obligations: ['NPT', 'Additional Protocol', 'TPNW'],
+    npt_status: 'party', tpnw_status: 'ratified', additional_protocol: true,
     post_fukushima_policy_change: false,
     stress_test_conducted: null,
     evacuation_plan_status: 'unknown',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
+    // Reviewed 2026-10-29: tpnw_status (ratified 26 Sep 2019). Source: UN Treaty Collection – XXVI-9 Treaty on the Prohibition of Nuclear Weapons (status 29 Oct 2026), https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVI-9&chapter=26&clang=_en
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/BD/profile/highlights',
   },
   'Belarus': {
     iso_code: 'BY', flag: '\u{1F1E7}\u{1F1FE}', region: 'Eastern Europe',
     regulatory_body: 'Gosatomnadzor (Department for Nuclear and Radiation Safety)',
-    safeguards_status: 'CSA + Additional Protocol',
-    treaty_obligations: ['NPT', 'Additional Protocol'],
-    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
+    safeguards_status: 'CSA - Additional Protocol signed 2005, not in force',
+    treaty_obligations: ['NPT'],
+    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
     post_fukushima_policy_change: false,
     stress_test_conducted: true,
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'disputed',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
+    // Reviewed 2026-10-29: safeguards_status, additional_protocol. Source: IAEA – Status list: safeguards agreements, Additional Protocols and SQPs (30 Jun 2026), https://www.iaea.org/sites/default/files/20/01/sg-agreements-comprehensive-status.pdf
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/BY/profile/highlights',
   },
   'Belgium': {
@@ -75,7 +82,10 @@ const countryGovernance = {
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
+    // Reviewed 2026-10-29: the Chamber repealed the 2003 phase-out law on 15 May 2025
+    // (102 for, 8 against, 31 abstentions). https://www.world-nuclear-news.org/articles/belgium-reverses-phase-out-policy-as-denmark-reconsiders-nuclear
     post_fukushima_trajectory: 'policy_reversal',
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/BE/profile/highlights',
   },
   'Brazil': {
@@ -83,13 +93,15 @@ const countryGovernance = {
     regulatory_body: 'National Nuclear Energy Commission (CNEN)',
     safeguards_status: 'CSA (INFCIRC/435) - Quadripartite Agreement with ABACC',
     treaty_obligations: ['NPT', 'Tlatelolco Treaty'],
-    npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
+    npt_status: 'party', tpnw_status: 'signed', additional_protocol: false,
     post_fukushima_policy_change: false,
     stress_test_conducted: null,
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
+    // Reviewed 2026-10-29: tpnw_status (signed 20 Sep 2017, not ratified). Source: UN Treaty Collection – XXVI-9 Treaty on the Prohibition of Nuclear Weapons (status 29 Oct 2026), https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVI-9&chapter=26&clang=_en
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/BR/profile/highlights',
   },
   'Canada': {
@@ -164,7 +176,7 @@ const countryGovernance = {
   },
   'France': {
     iso_code: 'FR', flag: '\u{1F1EB}\u{1F1F7}', region: 'Western Europe',
-    regulatory_body: "Autorit\u00e9 de S\u00fbret\u00e9 Nucl\u00e9aire (ASN)",
+    regulatory_body: 'Autorité de sûreté nucléaire et de radioprotection (ASNR)',
     safeguards_status: 'Voluntary Offer Agreement (VOA) - NPT Weapon State + EURATOM',
     treaty_obligations: ['NPT', 'EURATOM'],
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
@@ -174,6 +186,8 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
+    // Reviewed 2026-10-29: regulatory_body (ASN became ASNR on 1 Jan 2025). Source: ASNR – Creation of the Authority for Nuclear Safety and Radiation Protection (2 Jan 2025), https://regulation-oversight.asnr.fr/information/news-archives/creation-of-the-french-authority-for-nuclear-safety-and-radiation-protection-asnr
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/FR/profile/highlights',
   },
   'Germany': {
@@ -187,7 +201,10 @@ const countryGovernance = {
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
-    post_fukushima_trajectory: 'accelerated_phase_out',
+    // Reviewed 2026-10-29: the last three reactors (Emsland, Isar 2, Neckarwestheim 2) shut
+    // down on 15 April 2023. https://www.bpb.de/kurz-knapp/hintergrund-aktuell/520059/atomausstieg-deutschland-verabschiedet-sich-endgueltig-von-der-kernkraft/
+    post_fukushima_trajectory: 'phase_out_completed',
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/DE/profile/highlights',
   },
   'Hungary': {
@@ -230,6 +247,10 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'new_build_programme',
+    // Reviewed 2026-10-29. Source: IAEA Director General, statement to the Board of Governors,
+    // 8 September 2025: https://www.iaea.org/newscenter/statements/iaea-director-generals-introductory-statement-to-the-board-of-governors-8-september-2025
+    safeguards_note: 'On 2 July 2025 Iran enacted a law suspending cooperation with the IAEA. The IAEA states that the Comprehensive Safeguards Agreement (INFCIRC/214) remains in force and that a national law cannot override it (IAEA Director General, 8 September 2025).',
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/IR/profile/highlights',
   },
   'Japan': {
@@ -250,14 +271,16 @@ const countryGovernance = {
     iso_code: 'MX', flag: '\u{1F1F2}\u{1F1FD}', region: 'North America',
     regulatory_body: 'National Commission on Nuclear Safety and Safeguards (CNSNS)',
     safeguards_status: 'CSA + Additional Protocol (INFCIRC/197)',
-    treaty_obligations: ['NPT', 'Tlatelolco Treaty', 'Additional Protocol'],
-    npt_status: 'party', tpnw_status: 'signed', additional_protocol: true,
+    treaty_obligations: ['NPT', 'Tlatelolco Treaty', 'Additional Protocol', 'TPNW'],
+    npt_status: 'party', tpnw_status: 'ratified', additional_protocol: true,
     post_fukushima_policy_change: false,
     stress_test_conducted: null,
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'no_change',
+    // Reviewed 2026-10-29: tpnw_status (ratified 16 Jan 2018). Source: UN Treaty Collection – XXVI-9 Treaty on the Prohibition of Nuclear Weapons (status 29 Oct 2026), https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVI-9&chapter=26&clang=_en
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/MX/profile/highlights',
   },
   'Netherlands': {
@@ -334,14 +357,16 @@ const countryGovernance = {
     iso_code: 'ZA', flag: '\u{1F1FF}\u{1F1E6}', region: 'Africa',
     regulatory_body: 'National Nuclear Regulator (NNR)',
     safeguards_status: 'CSA + Additional Protocol (INFCIRC/394)',
-    treaty_obligations: ['NPT', 'Pelindaba Treaty', 'Additional Protocol'],
-    npt_status: 'party', tpnw_status: 'signed', additional_protocol: true,
+    treaty_obligations: ['NPT', 'Pelindaba Treaty', 'Additional Protocol', 'TPNW'],
+    npt_status: 'party', tpnw_status: 'ratified', additional_protocol: true,
     post_fukushima_policy_change: false,
     stress_test_conducted: null,
     evacuation_plan_status: 'current',
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
+    // Reviewed 2026-10-29: tpnw_status (ratified 25 Feb 2019). Source: UN Treaty Collection – XXVI-9 Treaty on the Prohibition of Nuclear Weapons (status 29 Oct 2026), https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XXVI-9&chapter=26&clang=_en
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/ZA/profile/highlights',
   },
   'South Korea': {
@@ -402,7 +427,7 @@ const countryGovernance = {
   },
   'Turkey': {
     iso_code: 'TR', flag: '\u{1F1F9}\u{1F1F7}', region: 'Middle East / Europe',
-    regulatory_body: 'Turkish Atomic Energy Authority (TAEK) / Nuclear Regulatory Authority (NDK)',
+    regulatory_body: 'Nuclear Regulatory Authority (NDK)',
     safeguards_status: 'CSA + Additional Protocol (INFCIRC/295)',
     treaty_obligations: ['NPT', 'Additional Protocol'],
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
@@ -412,6 +437,8 @@ const countryGovernance = {
     community_consent_mechanism: 'disputed',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'new_build_programme',
+    // Reviewed 2026-10-29: regulatory_body (NDK replaced TAEK as regulator in 2018). Source: Turkish Minute – Turkey establishes nuclear regulation board with government decree (9 Jul 2018), https://www.turkishminute.com/2018/07/09/turkey-establishes-nuclear-regulation-board-with-government-decree/
+    data_as_of: '2026-10-29',
     iaea_profile: 'https://cnpp.iaea.org/public/countries/TR/profile/highlights',
   },
   'Ukraine': {

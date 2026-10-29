@@ -26,7 +26,7 @@ function getSafeguardsColor(facility) {
   return facility.safeguards_gap ? SAFEGUARDS_COLORS.amber : SAFEGUARDS_COLORS.green;
 }
 
-// Analyst-flagged conflict exposure: a highlight on the marker, not a radius.
+// UCDP conflict exposure: a highlight on the marker, not a radius.
 function conflictIcon() {
   return L.divIcon({
     html: `<div style="width:22px;height:22px;border-radius:50%;border:2px dashed #ef4444;background:#ef444425;display:flex;align-items:center;justify-content:center;"><div style="width:8px;height:8px;border-radius:50%;background:#ef4444;"></div></div>`,
@@ -37,7 +37,7 @@ function conflictIcon() {
 function markerLabel(f) {
   const parts = [f.name, f.country, f.status?.replace(/_/g, ' ')];
   if (f.safeguards_gap) parts.push('safeguards gap');
-  if (f.proximity_conflict) parts.push('analyst-flagged conflict exposure');
+  if (f.proximity_conflict) parts.push('UCDP conflict exposure');
   return parts.filter(Boolean).join(', ');
 }
 

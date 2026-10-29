@@ -1,7 +1,8 @@
 // Fails if any lookup table in src/data/enrichedFacilities.js references an id
 // that is not a plant in src/data/commercialPlants.js, if a plant lacks its IAEA
-// PRIS country link, or if the safeguards-gap counter disagrees with the
-// per-plant flag. Run with `npm run check:data`.
+// PRIS country link, if the safeguards-gap counter disagrees with the
+// per-plant flag, if the UCDP conflict extract is more than 12 months old, or
+// if a plant's score disagrees with the rules recorded for it. Run with `npm run check:data`.
 import { createServer } from 'vite';
 
 const server = await createServer({
@@ -38,6 +39,24 @@ try {
     failed = true;
     console.error(`PRIS country link missing: ${noPris.map((p) => p.id).join(', ')}`);
   } else console.log(`PRIS country links: ${enrichedFacilities.length} plants OK`);
+
+  // The UCDP extract behind conflict exposure must be refreshed at least yearly.
+  const { conflictRule } = await server.ssrLoadModule('/src/data/generated/conflictExposure.js');
+  const ageDays = (Date.now() - Date.parse(`${conflictRule.extractDate}T00:00:00Z`)) / 86400000;
+  if (!(ageDays <= 366)) {
+    failed = true;
+    console.error(`UCDP extract is ${Math.floor(ageDays)} days old (${conflictRule.extractDate}); refresh it with scripts/extract-ucdp.py and npm run gen:conflict`);
+  } else console.log(`UCDP extract ${conflictRule.extractDate}: ${Math.floor(ageDays)} days old, OK`);
+
+  // Each score equals 1 plus the points of the rules recorded for the plant (capped at 5).
+  const badScore = enrichedFacilities.filter((p) => {
+    const pts = p.governance_score_rules.reduce((s, r) => s + Number(r.match(/\+(\d+)$/)[1]), 0);
+    return Math.min(1 + pts, 5) !== p.governance_risk_score;
+  });
+  if (badScore.length) {
+    failed = true;
+    console.error(`Score does not match recorded rules: ${badScore.map((p) => p.id).join(', ')}`);
+  } else console.log(`Score rules: ${enrichedFacilities.length} plants agree`);
 
   // The counter and the per-plant flag use one definition.
   const gaps = enrichedFacilities.filter((p) => p.safeguards_gap).length;

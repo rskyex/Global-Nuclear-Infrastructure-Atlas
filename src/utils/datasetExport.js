@@ -1,13 +1,13 @@
 // Versioned, client-side dataset exports for verifiers.
 // Files are generated in the browser from the same data modules the site uses.
 import { commercialPlants } from '../data/commercialPlants';
-import { enrichedFacilities, SAFEGUARDS_GAP_DEFINITION } from '../data/enrichedFacilities';
+import { enrichedFacilities, SAFEGUARDS_GAP_DEFINITION, CONFLICT_RULE_TEXT, conflictRule } from '../data/enrichedFacilities';
 import { COUNTRY_DATA_AS_OF } from '../data/countryGovernance';
 
 // Bump DATASET_VERSION and DATASET_LAST_UPDATED whenever plant records change.
 // DATASET_LAST_UPDATED is the date of the last change to the data or code (codeLastChanged in the
 // export metadata). When each record was last reviewed is a separate date (recordsLastReviewed).
-export const DATASET_VERSION = '1.2.0';
+export const DATASET_VERSION = '1.3.0';
 export const DATASET_LAST_UPDATED = '2026-10-29';
 export const SITE_URL = 'https://globalnuclearinfrastructureatlas.vercel.app';
 
@@ -30,19 +30,28 @@ export const PLANT_COLUMNS = [
   { key: 'source_urls', description: 'Source URLs in the same order, separated by " | ".' },
   { key: 'source_types', description: 'Source types in the same order, separated by " | ".' },
   { key: 'overview', description: 'Short descriptive note.' },
-  { key: 'governance_risk_score', description: 'Rule-based score 1-5; rules on the Methodology page (under review).' },
-  { key: 'governance_flags', description: 'Flags behind the score, separated by " | ".' },
+  { key: 'governance_risk_score', description: 'Rule-based score 1-5; rules on the Methodology page.' },
+  { key: 'governance_score_rules', description: 'Score rules that applied to this plant, with points, separated by " | ".' },
+  { key: 'governance_flags', description: 'Descriptive flags (not all are scored), separated by " | ".' },
   { key: 'safeguards_status', description: 'Host-state safeguards agreement (country level, as of country_data_as_of).' },
   { key: 'safeguards_gap', description: 'true when facility-specific safeguards only, or a CSA without an Additional Protocol in force.' },
   { key: 'safeguards_gap_reason', description: 'Which of the two conditions applies.' },
-  { key: 'proximity_conflict', description: 'Analyst-flagged conflict exposure (as of 2024); no distance test.' },
+  { key: 'safeguards_note', description: 'Dated note on the host-state safeguards situation, with its source named.' },
+  { key: 'proximity_conflict', description: 'UCDP conflict exposure: at least 5 events or 25 deaths within 100 km in the extract window.' },
+  { key: 'conflict_events_100km', description: 'UCDP events within 100 km in the extract window.' },
+  { key: 'conflict_fatalities_100km', description: 'UCDP best-estimate deaths within 100 km in the extract window.' },
+  { key: 'conflict_state_based', description: 'Of those events, state-based violence.' },
+  { key: 'conflict_non_state', description: 'Of those events, non-state violence.' },
+  { key: 'conflict_one_sided', description: 'Of those events, one-sided violence.' },
+  { key: 'conflict_window', description: 'Extract window (start/end dates).' },
+  { key: 'conflict_extract_date', description: 'Date the UCDP extract was made.' },
   { key: 'seismic_zone', description: 'Seismic zone (facility override or country default; uncited).' },
   { key: 'digital_i_and_c', description: 'Digital instrumentation and control (inferred from design).' },
   { key: 'reported_cyber_incident', description: 'A documented cyber incident names this site.' },
   { key: 'critical_infrastructure_overlap', description: 'Host state is a target in the Cyber Escalation Atlas.' },
   { key: 'post_fukushima_policy_change', description: 'Host-state policy change since 2011 (country level).' },
   { key: 'evacuation_plan_status', description: 'Host-state evacuation planning (country level).' },
-  { key: 'country_data_as_of', description: 'Date of the country-level policy and safeguards fields.' },
+  { key: 'country_data_as_of', description: 'Date of the country-level policy and safeguards fields (the entry\'s own review date where it has one).' },
   { key: 'pris_country_url', description: 'IAEA PRIS country statistics page.' },
   { key: 'cnpp_profile_url', description: 'IAEA Country Nuclear Power Profile.' },
 ];
@@ -69,11 +78,20 @@ function plantRow(p) {
     source_types: sources.map((s) => s.type || '').join(' | '),
     overview: p.overview,
     governance_risk_score: p.governance_risk_score,
+    governance_score_rules: (p.governance_score_rules || []).join(' | '),
     governance_flags: (p.governance_flags || []).join(' | '),
     safeguards_status: p.safeguards_status,
     safeguards_gap: p.safeguards_gap,
     safeguards_gap_reason: p.safeguards_gap_reason,
+    safeguards_note: p.safeguards_note,
     proximity_conflict: p.proximity_conflict,
+    conflict_events_100km: p.conflict_events_100km,
+    conflict_fatalities_100km: p.conflict_fatalities_100km,
+    conflict_state_based: p.conflict_violence_types.stateBased,
+    conflict_non_state: p.conflict_violence_types.nonState,
+    conflict_one_sided: p.conflict_violence_types.oneSided,
+    conflict_window: p.conflict_window,
+    conflict_extract_date: p.conflict_extract_date,
     seismic_zone: p.seismic_zone,
     digital_i_and_c: p.digital_i_and_c,
     reported_cyber_incident: Boolean(p.reported_cyber_incident),
@@ -115,8 +133,10 @@ export const plantsMeta = buildMeta(
   commercialPlants.length,
   {
     recordsLastReviewed: commercialPlants.map((p) => p.lastUpdated).filter(Boolean).sort().at(-1),
-    countryDataAsOf: COUNTRY_DATA_AS_OF,
+    countryDataAsOf: `${COUNTRY_DATA_AS_OF} (entries reviewed later carry their own date in country_data_as_of)`,
     safeguardsGapDefinition: SAFEGUARDS_GAP_DEFINITION,
+    conflictExposureRule: CONFLICT_RULE_TEXT,
+    conflictData: `UCDP GED 26.1 and Candidate Events (CC BY 4.0), extract ${conflictRule.extractDate}`,
   },
 );
 

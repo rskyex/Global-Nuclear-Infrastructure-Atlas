@@ -11,7 +11,8 @@
     "check:data": "node scripts/check-data.mjs",
     "gen:cyber-targets": "node scripts/gen-cyber-targets.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gen:conflict": "node scripts/gen-conflict-exposure.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.35.0",

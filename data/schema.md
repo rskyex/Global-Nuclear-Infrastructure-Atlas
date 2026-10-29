@@ -19,7 +19,7 @@
 | operational_status | string | operational / suspended / decommissioning / planned / under_construction | Derived |
 | grid_connectivity | boolean | Connected to electrical grid | Derived |
 | seismic_zone | string | High / Moderate / Low | USGS |
-| proximity_conflict | boolean | Analyst-flagged conflict exposure (as of 2024). An analyst judgement; no distance test against conflict-event data was run | none |
+| proximity_conflict | boolean | UCDP conflict exposure: at least 5 events or 25 best-estimate deaths within 100 km in the 24-month extract window (all three UCDP violence types) | UCDP GED 26.1 + Candidate Events (CC BY 4.0) |
 | treaty_obligations | string[] | Applicable treaties | UNODA |
 | governance_risk_score | number 1-5 | Composite governance risk | Computed |
 | governance_flags | string[] | Active governance flags | Computed |
@@ -51,7 +51,7 @@
 | export_policy | string | supplier / recipient / both / neither |
 | nuclear_sharing_arrangements | string[] | NATO DCA or equivalent |
 | recent_policy_shift | string | Max 200 chars |
-| post_fukushima_trajectory | string | accelerated_phase_out / partial_moratorium / policy_reversal / no_change / new_build_programme |
+| post_fukushima_trajectory | string | accelerated_phase_out / phase_out_completed / partial_moratorium / policy_reversal / no_change / new_build_programme |
 | policy_flux | boolean | Policy posture changed direction in last 5 years |
 | npt_status | string | party / non_party / withdrew |
 | tpnw_status | string | signed / ratified / non_signatory |
@@ -68,3 +68,21 @@
 | country_data_as_of | date | Date of the country policy and safeguards data (2024-01-01) | country table |
 | pris_country_url | URL | IAEA PRIS country statistics page | iso_code |
 | cnpp_profile_url | URL | IAEA Country Nuclear Power Profile | iso_code |
+
+## Fields added in dataset 1.3.0
+
+| Field | Type | Description | Source |
+|---|---|---|---|
+| governance_score_rules | string list | Score rules that applied to the plant, each with its points (e.g. "Safeguards gap +1") | computed |
+| conflict_events_100km | integer | UCDP events within 100 km in the extract window | UCDP |
+| conflict_fatalities_100km | integer | UCDP best-estimate deaths within 100 km in the extract window | UCDP |
+| conflict_violence_types | object | { stateBased, nonState, oneSided } event counts | UCDP |
+| conflict_names | string list | Up to five UCDP conflict / dyad names among those events | UCDP |
+| conflict_window | string | Extract window, start/end dates | data/ucdp/extract-meta.json |
+| conflict_window_months | integer | Window length (24) | data/ucdp/extract-meta.json |
+| conflict_extract_date | date | Date the extract was made; check:data fails after 12 months | data/ucdp/extract-meta.json |
+| safeguards_note | string/null | Dated note on the host-state safeguards situation, source named in the note | country table |
+
+Country tables: `data_as_of` (countryGovernance) gives an entry's own review date and feeds
+`country_data_as_of`; `policy_sources` (countryPolicies) lists the sources for entries reviewed
+since 2024-01-01.

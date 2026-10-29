@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   Search, X, Filter, ChevronDown, ExternalLink,
   Globe, Zap, Building2, Info, BarChart3, Download,
@@ -13,7 +14,7 @@ import LayerPanel from '../components/LayerPanel';
 import GlobalRiskBar from '../components/GlobalRiskBar';
 import useFilters from '../hooks/useFilters';
 import { STATUS_COLORS, getStatusLabel } from '../utils/categoryHelpers';
-import { enrichedFacilities, facilitySummary } from '../data/enrichedFacilities';
+import { enrichedFacilities, facilitySummary, CONFLICT_FLAG_LABEL } from '../data/enrichedFacilities';
 import { countryPolicies } from '../data/countryPolicies';
 import TimelineSlider from '../components/TimelineSlider';
 
@@ -94,6 +95,42 @@ function PlantDetailPanel({ plant, onClose }) {
             <p className="text-xs text-slate-300 leading-relaxed">{plant.overview}</p>
           </div>
 
+          <div data-testid="plant-score">
+            <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">
+              Governance score {plant.governance_risk_score} / 5
+            </div>
+            {plant.governance_score_rules?.length > 0 ? (
+              <ul className="text-xs text-slate-300 list-disc pl-4 space-y-0.5">
+                {plant.governance_score_rules.map((r) => <li key={r}>{r}</li>)}
+              </ul>
+            ) : (
+              <p className="text-xs text-slate-300">No rule applies (base score 1).</p>
+            )}
+            <Link to="/methodology#risk-score" className="text-xs text-blue-400 hover:text-blue-300">How the score is computed</Link>
+          </div>
+
+          {plant.conflict_events_100km > 0 && (
+            <div data-testid="plant-conflict">
+              <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">{CONFLICT_FLAG_LABEL}</div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {plant.conflict_events_100km} events, {plant.conflict_fatalities_100km} deaths (best estimate):{' '}
+                {plant.conflict_violence_types.stateBased} state-based, {plant.conflict_violence_types.nonState} non-state,{' '}
+                {plant.conflict_violence_types.oneSided} one-sided. {plant.proximity_conflict ? 'Meets the exposure rule.' : 'Below the exposure rule.'}
+              </p>
+              {plant.conflict_names.length > 0 && (
+                <p className="text-xs text-slate-400 mt-1">{plant.conflict_names.join('; ')}</p>
+              )}
+              <p className="text-xs text-slate-400 mt-1">Source: UCDP (CC BY 4.0), extract {plant.conflict_extract_date}.</p>
+            </div>
+          )}
+
+          {plant.safeguards_note && (
+            <div data-testid="plant-safeguards-note">
+              <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">Safeguards note (as of {plant.country_data_as_of})</div>
+              <p className="text-xs text-slate-300 leading-relaxed">{plant.safeguards_note}</p>
+            </div>
+          )}
+
           {plant.digital_i_and_c && (
             <div data-testid="plant-digital-ic">
               <div className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wide">Digital I&amp;C</div>
@@ -129,7 +166,7 @@ function PlantDetailPanel({ plant, onClose }) {
                 ))}
                 {plant.sources.every((s) => /pris/i.test(s.name)) && (
                   <p className="text-xs text-slate-400 leading-relaxed pt-1">
-                    This link opens the IAEA PRIS home page. Search PRIS for this plant by name to see the reactor records.
+                    This link opens the IAEA PRIS country page, which lists this plant&apos;s reactors.
                   </p>
                 )}
               </div>
@@ -319,8 +356,8 @@ export default function InfrastructurePage() {
         <button
           onClick={() => {
             const keys = ['id','name','country','status','reactorType','units','netCapacityMW','operator',
-              'governance_risk_score','governance_flags','safeguards_status','safeguards_gap','safeguards_gap_reason',
-              'seismic_zone','proximity_conflict','digital_i_and_c','digital_i_and_c_note','reported_cyber_incident',
+              'governance_risk_score','governance_score_rules','governance_flags','safeguards_status','safeguards_gap','safeguards_gap_reason',
+              'safeguards_note','seismic_zone','proximity_conflict','conflict_events_100km','conflict_fatalities_100km','conflict_extract_date','digital_i_and_c','digital_i_and_c_note','reported_cyber_incident',
               'post_fukushima_policy_change','country_data_as_of','lastUpdated','pris_country_url','cnpp_profile_url'];
             const rows = filteredPlants.map(p => keys.map(k => {
               const v = Array.isArray(p[k]) ? p[k].join(' | ') : p[k];
@@ -425,7 +462,7 @@ export default function InfrastructurePage() {
                     <th scope="col" className="px-3 py-2">Country</th>
                     <th scope="col" className="px-3 py-2">Status</th>
                     <th scope="col" className="px-3 py-2">Safeguards gap</th>
-                    <th scope="col" className="px-3 py-2">Conflict flag</th>
+                    <th scope="col" className="px-3 py-2">Conflict exposure</th>
                     <th scope="col" className="px-3 py-2">Score</th>
                   </tr>
                 </thead>
@@ -441,7 +478,12 @@ export default function InfrastructurePage() {
                       <td className="px-3 py-1.5 text-slate-300">{getStatusLabel(p.status)}</td>
                       <td className="px-3 py-1.5 text-slate-300">{p.safeguards_gap ? 'Yes' : 'No'}</td>
                       <td className="px-3 py-1.5 text-slate-300">{p.proximity_conflict ? 'Yes' : 'No'}</td>
-                      <td className="px-3 py-1.5 text-slate-300">{p.governance_risk_score}</td>
+                      <td className="px-3 py-1.5 text-slate-300" title={(p.governance_score_rules || []).join('; ') || 'No rule applies'}>
+                        {p.governance_risk_score}
+                        {p.governance_score_rules?.length > 0 && (
+                          <span className="block text-slate-400">{p.governance_score_rules.join('; ')}</span>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

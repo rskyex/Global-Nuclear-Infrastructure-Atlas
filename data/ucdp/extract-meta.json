@@ -1,0 +1,26 @@
+{
+  "extractDate": "2026-10-29",
+  "windowStart": "2024-10-01",
+  "windowEnd": "2026-09-30",
+  "windowMonths": 24,
+  "extractRadiusKm": 150,
+  "excludedWherePrec": [
+    6,
+    7
+  ],
+  "events": 2865,
+  "sources": [
+    {
+      "name": "UCDP Georeferenced Event Dataset (GED) Global version 26.1",
+      "url": "https://ucdp.uu.se/downloads/ged/ged261-csv.zip",
+      "covers": "2024-10-01 to 2025-12-31"
+    },
+    {
+      "name": "UCDP Candidate Events Dataset, January to September 2026",
+      "url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_01_26_09.csv",
+      "covers": "2026-01-01 to 2026-09-30"
+    }
+  ],
+  "licence": "CC BY 4.0",
+  "citation": "Sundberg, Ralph and Erik Melander (2013) Introducing the UCDP Georeferenced Event Dataset. Journal of Peace Research 50(4); Hegre et al. for the Candidate Events Dataset. Data: Uppsala Conflict Data Program, https://ucdp.uu.se"
+}

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FIELD_PROVENANCE } from '../data/enrichedFacilities';
+import { FIELD_PROVENANCE, GOVERNANCE_SCORE_RULES, CONFLICT_RULE_TEXT, conflictRule } from '../data/enrichedFacilities';
 import {
   FileText, ShieldCheck, BookOpen, Database, Info,
   ExternalLink, CheckCircle, XCircle, AlertCircle,
@@ -36,21 +36,11 @@ const INCLUSIONS = [
   'Educational health content on ionizing radiation from WHO, UNSCEAR, and ICRP',
 ];
 
-// The governance_risk_score rules exactly as coded in computeGovernanceRisk
-// (src/data/enrichedFacilities.js). Keep in step with that function.
+// Rows come from GOVERNANCE_SCORE_RULES, the table computeGovernanceRisk uses.
 const SCORE_RULES = [
   ['Starting score', '1'],
-  ['No country governance data for the host state', '+2'],
-  ['Host state has no Additional Protocol in force', '+1'],
-  ['Host state community consent mechanism coded "absent"', '+1'],
-  ['Host state safeguards are facility-specific (non-NPT states)', '+1'],
-  ['Plant is analyst-flagged for conflict exposure (as of 2024)', '+1'],
-  ['Plant status is shutdown or decommissioned', '+1'],
-  ['Plant status is suspended', '+1'],
-  ['Host state post-Fukushima trajectory coded "accelerated phase-out"', '+1'],
-  ['Seismic zone High and first power before 1990', '+1'],
-  ['Voluntary Offer Agreement (NPT weapon states)', '0 (no effect)'],
-  ['Final score is clamped to', '1–5'],
+  ...GOVERNANCE_SCORE_RULES.map((r) => [r.label, `+${r.points}`]),
+  ['Final score is capped at', '5'],
 ];
 
 const EXCLUSIONS = [
@@ -121,12 +111,14 @@ export default function MethodologyPage() {
 
         {/* Governance risk score — current rules, as coded */}
         <section id="risk-score">
-          <SectionHeading icon={Database} label="Governance risk score (current rules, under review)" color="#f59e0b" />
+          <SectionHeading icon={Database} label="Governance risk score" color="#f59e0b" />
           <div className="text-sm text-slate-300 leading-relaxed mb-4 max-w-3xl">
-            Each plant carries a governance_risk_score from 1 to 5. It is computed in
-            src/data/enrichedFacilities.js by the rules below, exactly as coded. The rules are under
-            review: two safeguards terms overlap for India and Pakistan, and shutdown and phase-out
-            add to the score. Treat the score as a summary of these rules, not as an assessment.
+            Each plant carries a governance_risk_score from 1 to 5, computed in
+            src/data/enrichedFacilities.js by the rules below. Each plant also lists the rules that
+            applied to it (governance_score_rules; shown in the plant panel, the plant table and the
+            exports). Plant status (shutdown, decommissioned) and host-country phase-out are shown as
+            flags and do not change the score. Treat the score as a summary of these rules, not as an
+            assessment.
           </div>
           <div className="rounded-xl border overflow-hidden mb-6" style={{ borderColor: 'rgba(30,50,80,0.6)' }}>
             <table className="w-full text-xs">
@@ -172,6 +164,19 @@ export default function MethodologyPage() {
               </tbody>
             </table>
           </div>
+          <h3 id="conflict-exposure" className="text-sm font-semibold text-slate-200 mt-6 mb-2">Conflict exposure</h3>
+          <p className="text-sm text-slate-300 mb-2 max-w-3xl">{CONFLICT_RULE_TEXT}</p>
+          <p className="text-sm text-slate-300 mb-2 max-w-3xl">
+            Distances are great-circle distances from the plant coordinates to UCDP event locations.
+            Events located only to a country (UCDP where_prec 6) or to international waters (7) are
+            excluded. The committed extract (data/ucdp/, {conflictRule.events} events within{' '}
+            {conflictRule.extractRadiusKm} km of any plant) is refreshed with scripts/extract-ucdp.py;
+            the build fails when the extract is more than 12 months old.
+          </p>
+          <p className="text-xs text-slate-400 max-w-3xl">
+            Data: Uppsala Conflict Data Program (UCDP), Georeferenced Event Dataset 26.1 and Candidate
+            Events Dataset, licensed CC BY 4.0. Sundberg &amp; Melander (2013), Journal of Peace Research 50(4).
+          </p>
         </section>
 
         {/* Source policy */}
