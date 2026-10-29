@@ -54,14 +54,14 @@ function CountryCard({ c }) {
           <span className="text-2xl">{c.flag}</span>
           <div>
             <div className="text-sm font-bold text-white">{c.country}</div>
-            <div className="text-xs text-slate-500">{c.region}</div>
+            <div className="text-xs text-slate-400">{c.region}</div>
           </div>
         </div>
         <div className="text-right">
           <div className="text-xl font-bold" style={{ color: c.color, fontFamily: 'JetBrains Mono, monospace' }}>
             {c.totalWarheads === 90 && c.id === 'israel' ? '~' : ''}{c.totalWarheads.toLocaleString()}
           </div>
-          <div className="text-xs text-slate-500">est. total warheads</div>
+          <div className="text-xs text-slate-400">est. total warheads</div>
         </div>
       </div>
 
@@ -88,17 +88,17 @@ function CountryCard({ c }) {
       {/* Metadata */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between text-xs">
-          <span className="text-slate-500">NPT Status</span>
+          <span className="text-slate-400">NPT Status</span>
           <span className="text-slate-300">{c.nptStatus}</span>
         </div>
         <div className="flex items-center justify-between text-xs">
-          <span className="text-slate-500">First Test</span>
+          <span className="text-slate-400">First Test</span>
           <span className="text-slate-300">
             {c.firstTest ? `${c.firstTest} — ${c.firstTestName}` : 'No confirmed test'}
           </span>
         </div>
         <div className="flex items-center justify-between text-xs">
-          <span className="text-slate-500">Stockpile trend</span>
+          <span className="text-slate-400">Stockpile trend</span>
           <span className="flex items-center gap-1">
             {TREND_ICON[c.stockpileTrend]}
             <span className="text-slate-300">{TREND_LABEL[c.stockpileTrend]}</span>
@@ -202,7 +202,7 @@ export default function ArsenalsPage() {
         style={{ background: 'rgba(10,20,40,0.7)', borderColor: 'rgba(30,50,80,0.6)' }}
       >
         <h2 className="text-sm font-semibold text-slate-200 mb-1">Estimated Total Warheads by Country</h2>
-        <p className="text-xs text-slate-500 mb-5">SIPRI Yearbook 2023 / FAS Nuclear Notebook estimates. Includes deployed, reserve, and retired warheads awaiting dismantlement.</p>
+        <p className="text-xs text-slate-400 mb-5">SIPRI Yearbook 2023 / FAS Nuclear Notebook estimates. Includes deployed, reserve, and retired warheads awaiting dismantlement.</p>
         <ResponsiveContainer width="100%" height={260}>
           <BarChart data={chartData} margin={{ top: 0, right: 10, bottom: 30, left: 20 }}>
             <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 10 }} axisLine={false} tickLine={false}
@@ -225,7 +225,7 @@ export default function ArsenalsPage() {
         style={{ background: 'rgba(10,20,40,0.7)', borderColor: 'rgba(30,50,80,0.6)' }}
       >
         <h2 className="text-sm font-semibold text-slate-200 mb-1">Warhead Breakdown by Category</h2>
-        <p className="text-xs text-slate-500 mb-5">Deployed strategic, deployed non-strategic, reserve, and retired. Note: Israel and North Korea figures are not broken down officially; estimates vary.</p>
+        <p className="text-xs text-slate-400 mb-5">Deployed strategic, deployed non-strategic, reserve, and retired. Note: Israel and North Korea figures are not broken down officially; estimates vary.</p>
         <ResponsiveContainer width="100%" height={260}>
           <BarChart data={chartData} margin={{ top: 0, right: 10, bottom: 30, left: 20 }}>
             <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 10 }} axisLine={false} tickLine={false}
@@ -258,7 +258,7 @@ export default function ArsenalsPage() {
       <div className="rounded-xl border p-5 text-xs text-slate-400 leading-relaxed"
         style={{ background: 'rgba(10,20,40,0.5)', borderColor: 'rgba(30,50,80,0.5)' }}>
         <div className="flex items-center gap-2 mb-3">
-          <Info size={14} className="text-slate-500" />
+          <Info size={14} className="text-slate-400" />
           <span className="font-semibold text-slate-300">Sources & Methodology Note</span>
         </div>
         <p className="mb-2">

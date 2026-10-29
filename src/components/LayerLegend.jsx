@@ -22,7 +22,7 @@ export default function LayerLegend({ layers }) {
           ))}
         </div>
       ))}
-      <div className="pt-1.5 border-t text-[10px] text-slate-600 leading-snug" style={{ borderColor: 'rgba(26,48,80,0.6)' }}>
+      <div className="pt-1.5 border-t text-[10px] text-slate-400 leading-snug" style={{ borderColor: 'rgba(26,48,80,0.6)' }}>
         Composable overlays · public sources · provisional records flagged in popups.
       </div>
     </div>

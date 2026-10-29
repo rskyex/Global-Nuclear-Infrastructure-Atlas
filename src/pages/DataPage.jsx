@@ -18,7 +18,7 @@ function Stat({ label, value, testId }) {
   return (
     <div className="rounded-lg px-4 py-3" data-testid={testId}
       style={{ background: 'rgba(13,27,46,0.8)', border: '1px solid rgba(26,48,80,0.8)' }}>
-      <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">{label}</div>
+      <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">{label}</div>
       <div className="text-lg font-semibold text-slate-100" style={MONO}>{value}</div>
     </div>
   );
@@ -47,7 +47,8 @@ export default function DataPage() {
         <h2 className="text-base font-semibold text-slate-100 mb-4">Commercial nuclear power plants</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
           <Stat label="Version" value={DATASET_VERSION} testId="nuc-version" />
-          <Stat label="Last updated" value={DATASET_LAST_UPDATED} testId="nuc-updated" />
+          <Stat label="Code last changed" value={DATASET_LAST_UPDATED} testId="nuc-updated" />
+          <Stat label="Records last reviewed" value={plantsMeta.recordsLastReviewed} testId="nuc-reviewed" />
           <Stat label="Records" value={plantsMeta.recordCount} testId="nuc-count" />
           <Stat label="Records with a source" value={`${cov.withSource} / ${cov.total}`} testId="nuc-sourced" />
         </div>
@@ -63,7 +64,7 @@ export default function DataPage() {
             <FileJson size={15} /> Download JSON
           </button>
         </div>
-        <div className="text-xs text-slate-500 leading-relaxed space-y-2 max-w-3xl">
+        <div className="text-xs text-slate-400 leading-relaxed space-y-2 max-w-3xl">
           <p>
             Both files carry the dataset version, last-updated date and record count. In the JSON
             they sit under <span style={MONO}>meta</span> with the records under <span style={MONO}>records</span>.
@@ -117,7 +118,7 @@ export default function DataPage() {
         </div>
       </section>
 
-      <p className="text-xs text-slate-600 pb-6 flex items-center gap-1.5">
+      <p className="text-xs text-slate-400 pb-6 flex items-center gap-1.5">
         <Download size={12} /> Generated client side. Cite the version number when you report a check.
       </p>
     </div>

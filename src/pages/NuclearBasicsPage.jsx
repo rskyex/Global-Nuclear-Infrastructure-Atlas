@@ -165,7 +165,7 @@ function FissionTab() {
               <ProcessStep key={i} {...step} index={i} total={PROCESS_STEPS.length} />
             ))}
           </div>
-          <p className="mt-5 text-xs text-slate-500 max-w-2xl">
+          <p className="mt-5 text-xs text-slate-400 max-w-2xl">
             The core principle is straightforward: nuclear fission generates heat, heat produces steam, steam drives a turbine, and the turbine drives a generator. Nuclear plants are essentially very sophisticated steam power plants.
           </p>
         </div>
@@ -209,7 +209,7 @@ function FissionTab() {
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-500 mt-3">Note: CANDU (heavy water, natural uranium), RBMK (graphite-moderated, Soviet-era), and advanced Gen III+ designs (AP1000, EPR) also exist. Over 90% of commercial reactors are light-water designs (PWR or BWR).</p>
+        <p className="text-xs text-slate-400 mt-3">Note: CANDU (heavy water, natural uranium), RBMK (graphite-moderated, Soviet-era), and advanced Gen III+ designs (AP1000, EPR) also exist. Over 90% of commercial reactors are light-water designs (PWR or BWR).</p>
       </section>
 
       {/* Safety systems */}
@@ -350,7 +350,7 @@ function FusionTab() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-slate-500 mt-2">
+        <p className="text-xs text-slate-400 mt-2">
           Sources: World Nuclear Association, IAEA, ITER Organization, NIF/LLNL, Eurofusion.
         </p>
       </section>

@@ -1,5 +1,34 @@
 # Changelog
 
+## Dataset 1.2.0 — 2026-10-29
+
+- Safeguards gap has one definition, shown on screen and used by the counter, the plant flag, the
+  map markers and the legend: facility-specific safeguards only, or a comprehensive safeguards
+  agreement without an Additional Protocol in force. The counter now includes Brazil, Egypt and
+  Iran (7 plants, was 4); Iran's marker, previously green because its status text mentions a signed
+  Additional Protocol, is amber. VOA (NPT weapon states) and EURATOM coverage are not gaps.
+- "Digital I&C (no audit)" renamed "Digital I&C, no reported incident".
+- Conflict proximity is now "analyst-flagged conflict exposure (as of 2024)". The 200 km circles
+  and wording are removed: no distance test was ever run. The ACLED citation is removed from the
+  schema, sources list and README; no ACLED data is in the repository.
+- Methodology page: a labelled section gives the governance risk score rule table exactly as coded
+  (under review), and lists which enriched fields have no per-field source.
+- Sources: every plant links to its IAEA PRIS country page. The old
+  pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=<ISO2> pattern now redirects to
+  the PRIS Analytics home page, so links use pris-stats.iaea.org/country-statistics/<ISO2> (checked
+  for several countries). The old cnpp.iaea.org/countryprofiles/ links return 404; CNPP links now
+  use cnpp.iaea.org/public/countries/<ISO2>/profile/highlights (all 32 countries listed by CNPP).
+- Dates: policy and safeguards values are labelled "as of 2024-01-01" (Policy page column, plant
+  detail, exports). Export metadata separates codeLastChanged from recordsLastReviewed and adds
+  countryDataAsOf.
+- Exports include the enriched fields, governance_risk_score, governance_flags, safeguards gap,
+  as-of date, and PRIS and CNPP links.
+- Accessibility: map markers are keyboard-focusable with accessible names; a skip link and a
+  "Plant list" button open a plant table that opens each plant's details; low-contrast grey text
+  raised to at least 7:1.
+- check:data also verifies that every plant has a PRIS country link and that the safeguards-gap
+  counter matches the per-plant flag.
+
 ## Dataset 1.1.0 — 2026-10-28
 
 Data corrections:

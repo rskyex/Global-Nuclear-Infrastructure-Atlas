@@ -34,7 +34,7 @@ export default function AnalysisLayerPanel({
 
       {byCategory.map(({ cat, layers }) => (
         <div key={cat} className="space-y-1.5">
-          <div className="text-[10px] uppercase tracking-wider text-slate-600 px-0.5">{cat}</div>
+          <div className="text-[10px] uppercase tracking-wider text-slate-400 px-0.5">{cat}</div>
           {layers.map((layer) => {
             const active = isActive(layer.id);
             const Icon = layer.icon;
@@ -62,7 +62,7 @@ export default function AnalysisLayerPanel({
                   </button>
                   <button
                     onClick={() => setOpenInfo(openInfo === layer.id ? null : layer.id)}
-                    className="text-slate-500 hover:text-slate-300 flex-shrink-0"
+                    className="text-slate-400 hover:text-slate-300 flex-shrink-0"
                     aria-label={`About ${layer.label}`}
                     aria-expanded={openInfo === layer.id}
                   >
@@ -103,7 +103,7 @@ export default function AnalysisLayerPanel({
                     )}
                     {/* Opacity */}
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="text-[10px] text-slate-500 w-9">{Math.round(opacity * 100)}%</span>
+                      <span className="text-[10px] text-slate-400 w-9">{Math.round(opacity * 100)}%</span>
                       <input
                         type="range"
                         min={10}

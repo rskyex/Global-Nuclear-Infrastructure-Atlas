@@ -12,7 +12,6 @@
 | ENSREG | https://www.ensreg.eu/ | EU stress test results | 2024-01-01 |
 | UNODA Treaty Database | https://treaties.unoda.org/ | Treaty status by country | 2024-01-01 |
 | USGS Seismic Hazard Maps | https://www.usgs.gov/programs/earthquake-hazards | Seismic zone classification | 2024-01-01 |
-| ACLED | https://acleddata.com/ | Conflict zone boundaries (for proximity calc) | 2024-01-01 |
 | WNA Country Profiles | https://world-nuclear.org/information-library | Country nuclear policy data | 2024-01-01 |
 
 ## Secondary Sources

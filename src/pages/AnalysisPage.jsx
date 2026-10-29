@@ -56,10 +56,10 @@ export default function AnalysisPage() {
         <div className="flex items-center gap-2">
           <Network size={15} className="text-blue-400" />
           <span className="text-sm font-semibold text-slate-200">Analysis Layers</span>
-          <span className="text-xs text-slate-500 hidden sm:inline">· who classifies & interprets what</span>
+          <span className="text-xs text-slate-400 hidden sm:inline">· who classifies & interprets what</span>
         </div>
         <div className="flex-1" />
-        <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
+        <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
           <Info size={11} />
           {activeLayers.length} active · view encoded in URL
         </div>
@@ -128,7 +128,7 @@ export default function AnalysisPage() {
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="text-center px-6">
                 <div className="text-slate-400 text-sm mb-1">No analysis layers active</div>
-                <div className="text-slate-600 text-xs">Toggle a layer to overlay it on the map. Layers combine.</div>
+                <div className="text-slate-400 text-xs">Toggle a layer to overlay it on the map. Layers combine.</div>
               </div>
             </div>
           )}

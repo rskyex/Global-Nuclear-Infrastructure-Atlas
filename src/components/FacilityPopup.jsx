@@ -37,19 +37,19 @@ export default function FacilityPopup({ facility, onOpenDetail }) {
       <div className="px-3 py-2 border-t border-slate-800/60">
         {facility.operator && (
           <div className="flex gap-2 mb-1">
-            <span className="text-xs text-slate-500 w-16 flex-shrink-0">Operator</span>
+            <span className="text-xs text-slate-400 w-16 flex-shrink-0">Operator</span>
             <span className="text-xs text-slate-300 flex-1 truncate">{facility.operator}</span>
           </div>
         )}
         {facility.reactorType && (
           <div className="flex gap-2 mb-1">
-            <span className="text-xs text-slate-500 w-16 flex-shrink-0">Type</span>
+            <span className="text-xs text-slate-400 w-16 flex-shrink-0">Type</span>
             <span className="text-xs text-slate-300 flex-1 truncate">{facility.reactorType}</span>
           </div>
         )}
         {facility.capacityMW && (
           <div className="flex gap-2 mb-1">
-            <span className="text-xs text-slate-500 w-16 flex-shrink-0">Capacity</span>
+            <span className="text-xs text-slate-400 w-16 flex-shrink-0">Capacity</span>
             <span className="text-xs text-slate-300 flex-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
               {facility.capacityMW.toLocaleString()} MWe
             </span>
@@ -57,7 +57,7 @@ export default function FacilityPopup({ facility, onOpenDetail }) {
         )}
         {facility.accidentDate && (
           <div className="flex gap-2 mb-1">
-            <span className="text-xs text-slate-500 w-16 flex-shrink-0">Date</span>
+            <span className="text-xs text-slate-400 w-16 flex-shrink-0">Date</span>
             <span className="text-xs text-slate-300 flex-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
               {facility.accidentDate}
             </span>
@@ -65,7 +65,7 @@ export default function FacilityPopup({ facility, onOpenDetail }) {
         )}
         {facility.eventDate && (
           <div className="flex gap-2">
-            <span className="text-xs text-slate-500 w-16 flex-shrink-0">Date</span>
+            <span className="text-xs text-slate-400 w-16 flex-shrink-0">Date</span>
             <span className="text-xs text-slate-300 flex-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
               {facility.eventDate}
             </span>

@@ -10,9 +10,9 @@ The Atlas enriches each facility with governance, safeguards, post-Fukushima pol
 
 ### Core Analytical Layers
 
-1. **Safeguards Coverage** — IAEA agreement type per facility (CSA, Additional Protocol, VOA) with color-coded markers
+1. **Safeguards Coverage** — markers show whether the host state has a safeguards gap (facility-specific safeguards only, or a CSA without an Additional Protocol in force)
 2. **Decommissioning Risk** — Facilities in decommissioning/suspended with governance risk score rings
-3. **Conflict Proximity** — 200km radius circles around facilities near active armed conflict
+3. **Conflict Exposure** — highlights facilities an analyst flagged for conflict exposure (as of 2024); no distance test is run
 4. **Treaty Adherence** — Country-level NPT/TPNW/Additional Protocol status
 5. **Post-Fukushima Policy** — Country-level policy trajectory since March 2011
 6. **Cyber-Nuclear Intersection** — Digital I&C systems, reported cyber incidents, critical infrastructure overlap
@@ -40,7 +40,6 @@ Composite score derived from: regulatory opacity, safeguards gaps, conflict prox
 - [NTI Nuclear Security Index](https://www.ntiindex.org/) — Security governance
 - [ENSREG](https://www.ensreg.eu/) — EU stress test results
 - [USGS](https://www.usgs.gov/) — Seismic hazard maps
-- [ACLED](https://acleddata.com/) — Conflict data for proximity analysis
 - [UNODA](https://treaties.unoda.org/) — Treaty databases
 - National regulatory bodies (NRC, ASN, ONR, NRA, etc.)
 

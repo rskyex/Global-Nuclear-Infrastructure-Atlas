@@ -14,7 +14,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Argentina/Argentina.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/AR/profile/highlights',
   },
   {
     country: 'Armenia', iso_code: 'AM', flag: '\u{1F1E6}\u{1F1F2}', region: 'South Caucasus',
@@ -25,7 +25,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Armenia/Armenia.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/AM/profile/highlights',
   },
   {
     country: 'Bangladesh', iso_code: 'BD', flag: '\u{1F1E7}\u{1F1E9}', region: 'South Asia',
@@ -36,7 +36,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Bangladesh/Bangladesh.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/BD/profile/highlights',
   },
   {
     country: 'Belarus', iso_code: 'BY', flag: '\u{1F1E7}\u{1F1FE}', region: 'Eastern Europe',
@@ -47,7 +47,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Belarus/Belarus.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/BY/profile/highlights',
   },
   {
     country: 'Belgium', iso_code: 'BE', flag: '\u{1F1E7}\u{1F1EA}', region: 'Western Europe',
@@ -59,7 +59,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'policy_reversal', policy_flux: true,
     policy_flux_description: 'Reversed nuclear phase-out decision; extended reactor lifetimes by 10 years',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Belgium/Belgium.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/BE/profile/highlights',
   },
   {
     country: 'Brazil', iso_code: 'BR', flag: '\u{1F1E7}\u{1F1F7}', region: 'South America',
@@ -70,7 +70,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Brazil/Brazil.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/BR/profile/highlights',
   },
   {
     country: 'Canada', iso_code: 'CA', flag: '\u{1F1E8}\u{1F1E6}', region: 'North America',
@@ -81,7 +81,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Canada/Canada.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/CA/profile/highlights',
   },
   {
     country: 'China', iso_code: 'CN', flag: '\u{1F1E8}\u{1F1F3}', region: 'East Asia',
@@ -92,7 +92,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/China/China.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/CN/profile/highlights',
   },
   {
     country: 'Czech Republic', iso_code: 'CZ', flag: '\u{1F1E8}\u{1F1FF}', region: 'Central Europe',
@@ -103,7 +103,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/CzechRepublic/CzechRepublic.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/CZ/profile/highlights',
   },
   {
     country: 'Egypt', iso_code: 'EG', flag: '\u{1F1EA}\u{1F1EC}', region: 'North Africa',
@@ -114,7 +114,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Egypt/Egypt.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/EG/profile/highlights',
   },
   {
     country: 'Finland', iso_code: 'FI', flag: '\u{1F1EB}\u{1F1EE}', region: 'Northern Europe',
@@ -125,7 +125,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Finland/Finland.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/FI/profile/highlights',
   },
   {
     country: 'France', iso_code: 'FR', flag: '\u{1F1EB}\u{1F1F7}', region: 'Western Europe',
@@ -136,7 +136,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/France/France.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/FR/profile/highlights',
   },
   {
     country: 'Germany', iso_code: 'DE', flag: '\u{1F1E9}\u{1F1EA}', region: 'Western Europe',
@@ -148,7 +148,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'accelerated_phase_out', policy_flux: true,
     policy_flux_description: 'Completed nuclear phase-out in April 2023 after post-Fukushima acceleration',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Germany/Germany.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/DE/profile/highlights',
   },
   {
     country: 'Hungary', iso_code: 'HU', flag: '\u{1F1ED}\u{1F1FA}', region: 'Central Europe',
@@ -159,7 +159,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Hungary/Hungary.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/HU/profile/highlights',
   },
   {
     country: 'India', iso_code: 'IN', flag: '\u{1F1EE}\u{1F1F3}', region: 'South Asia',
@@ -170,7 +170,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'non_party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/India/India.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/IN/profile/highlights',
   },
   {
     country: 'Iran', iso_code: 'IR', flag: '\u{1F1EE}\u{1F1F7}', region: 'Middle East',
@@ -181,7 +181,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: false,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Iran/Iran.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/IR/profile/highlights',
   },
   {
     country: 'Japan', iso_code: 'JP', flag: '\u{1F1EF}\u{1F1F5}', region: 'East Asia',
@@ -193,7 +193,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'policy_reversal', policy_flux: true,
     policy_flux_description: 'Reversed post-Fukushima shutdown; pursuing reactor restarts and lifetime extensions',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Japan/Japan.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/JP/profile/highlights',
   },
   {
     country: 'Mexico', iso_code: 'MX', flag: '\u{1F1F2}\u{1F1FD}', region: 'North America',
@@ -204,7 +204,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'signed', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Mexico/Mexico.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/MX/profile/highlights',
   },
   {
     country: 'Netherlands', iso_code: 'NL', flag: '\u{1F1F3}\u{1F1F1}', region: 'Western Europe',
@@ -216,7 +216,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'new_build_programme', policy_flux: true,
     policy_flux_description: 'Shifted from single-reactor status to planning 2 new large reactors',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Netherlands/Netherlands.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/NL/profile/highlights',
   },
   {
     country: 'Pakistan', iso_code: 'PK', flag: '\u{1F1F5}\u{1F1F0}', region: 'South Asia',
@@ -227,7 +227,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'non_party', tpnw_status: 'non_signatory', additional_protocol: false,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Pakistan/Pakistan.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/PK/profile/highlights',
   },
   {
     country: 'Romania', iso_code: 'RO', flag: '\u{1F1F7}\u{1F1F4}', region: 'Eastern Europe',
@@ -238,7 +238,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Romania/Romania.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/RO/profile/highlights',
   },
   {
     country: 'Russia', iso_code: 'RU', flag: '\u{1F1F7}\u{1F1FA}', region: 'Europe / Asia',
@@ -249,7 +249,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Russia/Russia.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/RU/profile/highlights',
   },
   {
     country: 'Slovenia', iso_code: 'SI', flag: '\u{1F1F8}\u{1F1EE}', region: 'Central Europe',
@@ -260,7 +260,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Slovenia/Slovenia.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/SI/profile/highlights',
   },
   {
     country: 'South Africa', iso_code: 'ZA', flag: '\u{1F1FF}\u{1F1E6}', region: 'Africa',
@@ -271,7 +271,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'signed', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/SouthAfrica/SouthAfrica.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/ZA/profile/highlights',
   },
   {
     country: 'South Korea', iso_code: 'KR', flag: '\u{1F1F0}\u{1F1F7}', region: 'East Asia',
@@ -283,7 +283,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'policy_reversal', policy_flux: true,
     policy_flux_description: 'Reversed phase-out policy to nuclear expansion under Yoon administration',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Korea/Korea.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/KR/profile/highlights',
   },
   {
     country: 'Spain', iso_code: 'ES', flag: '\u{1F1EA}\u{1F1F8}', region: 'Western Europe',
@@ -294,7 +294,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'partial_moratorium', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Spain/Spain.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/ES/profile/highlights',
   },
   {
     country: 'Sweden', iso_code: 'SE', flag: '\u{1F1F8}\u{1F1EA}', region: 'Northern Europe',
@@ -306,7 +306,7 @@ export const countryPolicies = [
     post_fukushima_trajectory: 'policy_reversal', policy_flux: true,
     policy_flux_description: 'Reversed decades-old phase-out policy; now pursuing new nuclear construction',
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Sweden/Sweden.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/SE/profile/highlights',
   },
   {
     country: 'Switzerland', iso_code: 'CH', flag: '\u{1F1E8}\u{1F1ED}', region: 'Western Europe',
@@ -317,7 +317,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'partial_moratorium', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Switzerland/Switzerland.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/CH/profile/highlights',
   },
   {
     country: 'Turkey', iso_code: 'TR', flag: '\u{1F1F9}\u{1F1F7}', region: 'Middle East / Europe',
@@ -328,7 +328,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Turkey/Turkey.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/TR/profile/highlights',
   },
   {
     country: 'Ukraine', iso_code: 'UA', flag: '\u{1F1FA}\u{1F1E6}', region: 'Eastern Europe',
@@ -339,7 +339,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/Ukraine/Ukraine.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/UA/profile/highlights',
   },
   {
     country: 'United Arab Emirates', iso_code: 'AE', flag: '\u{1F1E6}\u{1F1EA}', region: 'Middle East',
@@ -350,7 +350,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/UnitedArabEmirates/UnitedArabEmirates.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/AE/profile/highlights',
   },
   {
     country: 'United Kingdom', iso_code: 'GB', flag: '\u{1F1EC}\u{1F1E7}', region: 'Western Europe',
@@ -361,7 +361,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'new_build_programme', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/UnitedKingdom/UnitedKingdom.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/GB/profile/highlights',
   },
   {
     country: 'United States', iso_code: 'US', flag: '\u{1F1FA}\u{1F1F8}', region: 'North America',
@@ -372,7 +372,7 @@ export const countryPolicies = [
     policy_last_verified: '2024-01-01',
     post_fukushima_trajectory: 'no_change', policy_flux: false, policy_flux_description: null,
     npt_status: 'party', tpnw_status: 'non_signatory', additional_protocol: true,
-    iaea_country_profile_url: 'https://cnpp.iaea.org/countryprofiles/UnitedStates/UnitedStates.htm',
+    iaea_country_profile_url: 'https://cnpp.iaea.org/public/countries/US/profile/highlights',
   },
 ];
 

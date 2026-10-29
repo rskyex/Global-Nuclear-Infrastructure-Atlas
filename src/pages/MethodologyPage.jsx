@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { FIELD_PROVENANCE } from '../data/enrichedFacilities';
 import {
   FileText, ShieldCheck, BookOpen, Database, Info,
   ExternalLink, CheckCircle, XCircle, AlertCircle,
@@ -35,13 +36,30 @@ const INCLUSIONS = [
   'Educational health content on ionizing radiation from WHO, UNSCEAR, and ICRP',
 ];
 
+// The governance_risk_score rules exactly as coded in computeGovernanceRisk
+// (src/data/enrichedFacilities.js). Keep in step with that function.
+const SCORE_RULES = [
+  ['Starting score', '1'],
+  ['No country governance data for the host state', '+2'],
+  ['Host state has no Additional Protocol in force', '+1'],
+  ['Host state community consent mechanism coded "absent"', '+1'],
+  ['Host state safeguards are facility-specific (non-NPT states)', '+1'],
+  ['Plant is analyst-flagged for conflict exposure (as of 2024)', '+1'],
+  ['Plant status is shutdown or decommissioned', '+1'],
+  ['Plant status is suspended', '+1'],
+  ['Host state post-Fukushima trajectory coded "accelerated phase-out"', '+1'],
+  ['Seismic zone High and first power before 1990', '+1'],
+  ['Voluntary Offer Agreement (NPT weapon states)', '0 (no effect)'],
+  ['Final score is clamped to', '1–5'],
+];
+
 const EXCLUSIONS = [
   { item: 'Military nuclear facility mapping', reason: 'Sites, bases, and storage locations for military nuclear material are not mapped at site/facility level under any circumstances' },
   { item: 'Detailed global mapping of enrichment / reprocessing facilities', reason: 'Sensitive dual-use fuel cycle facilities are not mapped at equivalent plant-level granularity globally. They may appear only in educational text or high-level country summaries.' },
   { item: 'Weapon site, deployment site, or tactical detail', reason: 'No operational, deployment, basing, or targeting information is included under any framing' },
   { item: 'Classified or leaked material', reason: 'The atlas uses only publicly available official or authoritative public-interest material' },
-  { item: 'Speculative or unsourced data', reason: 'All data must be traceable to a named reputable public source' },
-  { item: 'Operational or strategic analysis framing', reason: 'This is an educational atlas, not a security-analysis platform. No risk scoring, escalation analysis, or operational framing is used.' },
+  { item: 'Speculative or unsourced data', reason: 'Plant records cite named public sources. Some enriched analytical fields have no per-field source yet; they are listed under "Governance risk score (current rules)" below.' },
+  { item: 'Operational or strategic analysis framing', reason: 'This is an educational atlas, not a security-analysis platform. No escalation analysis or operational framing is used. A rule-based governance risk score does exist; its rules are published below and are under review.' },
 ];
 
 function SectionHeading({ icon: Icon, label, color = '#3b82f6' }) {
@@ -101,6 +119,61 @@ export default function MethodologyPage() {
           </div>
         </section>
 
+        {/* Governance risk score — current rules, as coded */}
+        <section id="risk-score">
+          <SectionHeading icon={Database} label="Governance risk score (current rules, under review)" color="#f59e0b" />
+          <div className="text-sm text-slate-300 leading-relaxed mb-4 max-w-3xl">
+            Each plant carries a governance_risk_score from 1 to 5. It is computed in
+            src/data/enrichedFacilities.js by the rules below, exactly as coded. The rules are under
+            review: two safeguards terms overlap for India and Pakistan, and shutdown and phase-out
+            add to the score. Treat the score as a summary of these rules, not as an assessment.
+          </div>
+          <div className="rounded-xl border overflow-hidden mb-6" style={{ borderColor: 'rgba(30,50,80,0.6)' }}>
+            <table className="w-full text-xs">
+              <thead>
+                <tr style={{ background: 'rgba(15,30,60,0.8)' }}>
+                  <th scope="col" className="text-left px-4 py-2.5 text-slate-300 font-semibold">Condition</th>
+                  <th scope="col" className="text-left px-4 py-2.5 text-slate-300 font-semibold w-20">Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SCORE_RULES.map(([cond, pts], i) => (
+                  <tr key={cond} style={{ background: i % 2 === 0 ? 'rgba(10,20,40,0.4)' : 'rgba(10,20,40,0.2)' }}>
+                    <td className="px-4 py-2 text-slate-300">{cond}</td>
+                    <td className="px-4 py-2 text-slate-200 font-mono">{pts}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <h3 className="text-sm font-semibold text-slate-200 mb-2">Enriched fields and their sources</h3>
+          <p className="text-sm text-slate-300 mb-3 max-w-3xl">
+            Plant identity fields (name, operator, capacity, status) cite named sources per record.
+            The enriched fields below are country-level or analyst-coded. Fields marked &ldquo;none&rdquo;
+            have no per-field source yet, which is an exception to the source policy.
+          </p>
+          <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(30,50,80,0.6)' }}>
+            <table className="w-full text-xs">
+              <thead>
+                <tr style={{ background: 'rgba(15,30,60,0.8)' }}>
+                  <th scope="col" className="text-left px-4 py-2.5 text-slate-300 font-semibold">Field</th>
+                  <th scope="col" className="text-left px-4 py-2.5 text-slate-300 font-semibold">Level</th>
+                  <th scope="col" className="text-left px-4 py-2.5 text-slate-300 font-semibold">Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                {FIELD_PROVENANCE.map((f, i) => (
+                  <tr key={f.field} style={{ background: i % 2 === 0 ? 'rgba(10,20,40,0.4)' : 'rgba(10,20,40,0.2)' }}>
+                    <td className="px-4 py-2 text-slate-200 font-mono">{f.field}</td>
+                    <td className="px-4 py-2 text-slate-300">{f.level}</td>
+                    <td className="px-4 py-2 text-slate-300">{f.source}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         {/* Source policy */}
         <section>
           <SectionHeading icon={Database} label="Source Policy" color="#3b82f6" />
@@ -126,7 +199,7 @@ export default function MethodologyPage() {
                   <tr key={s.name} style={{ background: i % 2 === 0 ? 'rgba(10,20,40,0.4)' : 'rgba(10,20,40,0.2)' }}>
                     <td className="px-4 py-2.5">
                       <div className="font-semibold text-slate-200">{s.name}</div>
-                      <div className="text-slate-500">{s.full}</div>
+                      <div className="text-slate-400">{s.full}</div>
                     </td>
                     <td className="px-4 py-2.5 text-slate-400 hidden sm:table-cell">{s.type}</td>
                     <td className="px-4 py-2.5 text-slate-400">{s.scope}</td>

@@ -48,7 +48,7 @@ export default function Provenance({ provenance, provisional = false, label = 'S
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[10px] uppercase tracking-wider text-slate-500">{label}</span>
+        <span className="text-[10px] uppercase tracking-wider text-slate-400">{label}</span>
         {provisional && <SampleDataBadge />}
       </div>
       {list.length > 0 && (

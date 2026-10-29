@@ -9,12 +9,19 @@ function InfoRow({ label, value, mono }) {
   if (!value) return null;
   return (
     <div className="flex gap-2 py-1.5 border-b border-slate-800/60">
-      <span className="text-xs text-slate-500 min-w-[100px] flex-shrink-0">{label}</span>
+      <span className="text-xs text-slate-400 min-w-[100px] flex-shrink-0">{label}</span>
       <span className="text-xs text-slate-300 flex-1" style={mono ? { fontFamily: 'JetBrains Mono, monospace' } : {}}>
         {value}
       </span>
     </div>
   );
+}
+
+
+// Country-level policy and safeguards values carry the date of the country data.
+function asOf(value, facility) {
+  if (value === null || value === undefined || value === '') return value;
+  return facility.country_data_as_of ? `${value} (as of ${facility.country_data_as_of})` : value;
 }
 
 export default function FacilityDetailPanel({ facility, onClose }) {
@@ -61,11 +68,11 @@ export default function FacilityDetailPanel({ facility, onClose }) {
               <div className="flex items-center gap-1.5 mt-1 text-xs text-slate-400">
                 <MapPin size={11} />
                 <span>{facility.country}</span>
-                {facility.region && <><span className="text-slate-600">·</span><span>{facility.region}</span></>}
+                {facility.region && <><span className="text-slate-400">·</span><span>{facility.region}</span></>}
               </div>
             </div>
             <button onClick={onClose}
-              className="flex-shrink-0 p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-800/50 transition-colors">
+              className="flex-shrink-0 p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-colors">
               <X size={16} />
             </button>
           </div>
@@ -102,11 +109,12 @@ export default function FacilityDetailPanel({ facility, onClose }) {
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Governance Assessment</h3>
               <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
                 <InfoRow label="Risk Score" value={`${facility.governance_risk_score} / 5`} mono />
-                <InfoRow label="Regulatory Body" value={facility.regulatory_body} />
-                <InfoRow label="Safeguards" value={facility.safeguards_status} />
+                <InfoRow label="Regulatory Body" value={asOf(facility.regulatory_body, facility)} />
+                <InfoRow label="Safeguards" value={asOf(facility.safeguards_status, facility)} />
+                <InfoRow label="Safeguards gap" value={asOf(facility.safeguards_gap ? `Yes: ${facility.safeguards_gap_reason}` : 'No', facility)} />
                 <InfoRow label="Seismic Zone" value={facility.seismic_zone} />
                 <InfoRow label="Operational Status" value={facility.operational_status} />
-                <InfoRow label="Evacuation Plan" value={facility.evacuation_plan_status} />
+                <InfoRow label="Evacuation Plan" value={asOf(facility.evacuation_plan_status, facility)} />
               </div>
               {/* Treaty badges */}
               {facility.treaty_obligations && facility.treaty_obligations.length > 0 && (
@@ -127,9 +135,9 @@ export default function FacilityDetailPanel({ facility, onClose }) {
             <div>
               <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Post-Fukushima Status</h3>
               <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(26,48,80,0.6)' }}>
-                <InfoRow label="Policy Change" value={facility.post_fukushima_policy_change ? 'Yes' : 'No'} />
-                <InfoRow label="Stress Test" value={facility.stress_test_conducted === true ? 'Completed' : facility.stress_test_conducted === false ? 'No' : 'Data not available'} />
-                <InfoRow label="Community Consent" value={facility.community_consent_mechanism || 'Data not available'} />
+                <InfoRow label="Policy Change" value={asOf(facility.post_fukushima_policy_change ? 'Yes' : 'No', facility)} />
+                <InfoRow label="Stress Test" value={asOf(facility.stress_test_conducted === true ? 'Completed' : facility.stress_test_conducted === false ? 'No' : 'Data not available', facility)} />
+                <InfoRow label="Community Consent" value={asOf(facility.community_consent_mechanism || 'Data not available', facility)} />
               </div>
             </div>
           )}
@@ -182,7 +190,7 @@ export default function FacilityDetailPanel({ facility, onClose }) {
                   <span className="text-slate-200">{facility.electricityRole.crossBorder ? 'Documented' : 'Not separately documented'}</span>
                 </div>
                 {facility.electricityRole.notes && (
-                  <p className="text-slate-500 mt-2 leading-relaxed">{facility.electricityRole.notes}</p>
+                  <p className="text-slate-400 mt-2 leading-relaxed">{facility.electricityRole.notes}</p>
                 )}
               </div>
             </div>
@@ -291,7 +299,7 @@ export default function FacilityDetailPanel({ facility, onClose }) {
           {facility.sources && facility.sources.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Globe size={12} className="text-slate-500" />
+                <Globe size={12} className="text-slate-400" />
                 <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Official Public Sources</h3>
               </div>
               <div className="space-y-1.5">
@@ -299,7 +307,7 @@ export default function FacilityDetailPanel({ facility, onClose }) {
                   <SourceBadge key={i} source={src} />
                 ))}
               </div>
-              <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                 All sources are officially published public information. "Latest Publicly Available Status" refers 
                 to the most recent public data, not continuous surveillance.
               </p>

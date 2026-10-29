@@ -418,11 +418,11 @@ export default function FuelCyclePage() {
         <section>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-px flex-1 bg-gradient-to-r from-blue-900/60 to-transparent" />
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2">Physics Primer</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest px-2">Physics Primer</span>
             <div className="h-px flex-1 bg-gradient-to-l from-blue-900/60 to-transparent" />
           </div>
           <h2 className="text-lg font-bold text-white mb-1 text-center">How Nuclear Reactors Generate Electricity</h2>
-          <p className="text-xs text-slate-500 text-center mb-6 max-w-xl mx-auto">
+          <p className="text-xs text-slate-400 text-center mb-6 max-w-xl mx-auto">
             Four core concepts — fission, chain reaction, moderation, and heat conversion.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -434,11 +434,11 @@ export default function FuelCyclePage() {
         <section>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-px flex-1 bg-gradient-to-r from-violet-900/60 to-transparent" />
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2">The Fuel Cycle</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest px-2">The Fuel Cycle</span>
             <div className="h-px flex-1 bg-gradient-to-l from-violet-900/60 to-transparent" />
           </div>
           <h2 className="text-lg font-bold text-white mb-1 text-center">Eight Stages — Mine to Repository</h2>
-          <p className="text-xs text-slate-500 text-center mb-6 max-w-xl mx-auto">
+          <p className="text-xs text-slate-400 text-center mb-6 max-w-xl mx-auto">
             Each stage is explained with its key technical facts, regulatory context, and role in the overall cycle.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -450,11 +450,11 @@ export default function FuelCyclePage() {
         <section>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-px flex-1 bg-gradient-to-r from-cyan-900/60 to-transparent" />
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2">Policy Context</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest px-2">Policy Context</span>
             <div className="h-px flex-1 bg-gradient-to-l from-cyan-900/60 to-transparent" />
           </div>
           <h2 className="text-lg font-bold text-white mb-1 text-center">Open vs. Closed Fuel Cycle</h2>
-          <p className="text-xs text-slate-500 text-center mb-6 max-w-xl mx-auto">
+          <p className="text-xs text-slate-400 text-center mb-6 max-w-xl mx-auto">
             Countries make different policy choices about how to handle spent fuel — both approaches are used by NPT states.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -532,7 +532,7 @@ export default function FuelCyclePage() {
               ['Posiva Oy (Onkalo)', 'posiva.fi'],
               ['Urenco Technical Literature', 'urenco.com'],
             ].map(([name, site], i) => (
-              <div key={i} className="flex items-center gap-2 text-slate-500">
+              <div key={i} className="flex items-center gap-2 text-slate-400">
                 <div className="w-1 h-1 rounded-full bg-slate-700" />
                 <span>{name}</span>
                 <span className="text-slate-700">·</span>
@@ -540,7 +540,7 @@ export default function FuelCyclePage() {
               </div>
             ))}
           </div>
-          <p className="text-slate-600 mt-3 leading-relaxed">
+          <p className="text-slate-400 mt-3 leading-relaxed">
             Content is educational only. No operational, procedural, or engineering-level detail
             beyond appropriate public policy and general education levels is included.
           </p>

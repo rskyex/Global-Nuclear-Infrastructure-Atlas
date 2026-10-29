@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Layers, ChevronDown, Shield, AlertTriangle, Target, Globe, Zap, Cpu, MapPin } from 'lucide-react';
+import { SAFEGUARDS_GAP_DEFINITION } from '../data/enrichedFacilities';
 
 const OVERLAY_LAYERS = [
   { key: 'safeguards', label: 'Safeguards Coverage', icon: Shield, color: '#10b981',
-    description: 'Colour-coded by IAEA safeguards agreement type' },
+    description: `Amber marks a safeguards gap. ${SAFEGUARDS_GAP_DEFINITION}` },
   { key: 'decommissioning', label: 'Decommissioning Risk', icon: AlertTriangle, color: '#f59e0b',
     description: 'Facilities in decommissioning/suspended with risk score rings' },
-  { key: 'conflict', label: 'Conflict Proximity', icon: Target, color: '#ef4444',
-    description: '200km radius around facilities near active conflict zones' },
+  { key: 'conflict', label: 'Conflict Exposure (analyst-flagged)', icon: Target, color: '#ef4444',
+    description: 'Highlights facilities an analyst flagged for conflict exposure (as of 2024). No distance test was run.' },
   { key: 'treaty', label: 'Treaty Adherence', icon: Globe, color: '#8b5cf6',
     description: 'Country-level NPT/TPNW/Additional Protocol adherence' },
   { key: 'fukushima', label: 'Post-Fukushima Policy', icon: Zap, color: '#3b82f6',
@@ -27,9 +28,8 @@ const CYBER_LEGEND = [
 ];
 
 export const SAFEGUARDS_LEGEND = [
-  { color: '#10b981', label: 'Additional Protocol / EURATOM / VOA' },
-  { color: '#f59e0b', label: 'CSA only / Facility-specific' },
-  { color: '#ef4444', label: 'No safeguards agreement' },
+  { color: '#10b981', label: 'No gap: CSA with Additional Protocol in force, EURATOM, or VOA (NPT weapon state)' },
+  { color: '#f59e0b', label: 'Safeguards gap: facility-specific only, or CSA without Additional Protocol in force' },
   { color: '#6b7280', label: 'Unknown' },
 ];
 
@@ -84,8 +84,8 @@ export default function LayerPanel({ activeOverlay, setActiveOverlay, showConfli
                   }}
                   title={description}
                 >
-                  <Icon size={12} style={{ color: isActive ? color : '#6b7280', flexShrink: 0 }} />
-                  <span style={{ color: isActive ? '#e2e8f0' : '#6b7280' }} className="truncate">{label}</span>
+                  <Icon size={12} style={{ color: isActive ? color : '#94a3b8', flexShrink: 0 }} />
+                  <span style={{ color: isActive ? '#e2e8f0' : '#94a3b8' }} className="truncate">{label}</span>
                   <div className="ml-auto flex-shrink-0">
                     <div className="w-6 h-3 rounded-full transition-all relative"
                       style={{
@@ -106,7 +106,7 @@ export default function LayerPanel({ activeOverlay, setActiveOverlay, showConfli
       {/* Legend for active overlay */}
       {activeOverlay === 'safeguards' && (
         <div className="mt-2 p-2 rounded-md text-xs space-y-1" style={{ background: 'rgba(13,27,46,0.8)', border: '1px solid rgba(26,48,80,0.5)' }}>
-          <div className="text-slate-500 font-medium mb-1">Safeguards Legend</div>
+          <div className="text-slate-400 font-medium mb-1">Safeguards Legend</div>
           {SAFEGUARDS_LEGEND.map(l => (
             <div key={l.color} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: l.color }} />
@@ -117,7 +117,7 @@ export default function LayerPanel({ activeOverlay, setActiveOverlay, showConfli
       )}
       {activeOverlay === 'fukushima' && (
         <div className="mt-2 p-2 rounded-md text-xs space-y-1" style={{ background: 'rgba(13,27,46,0.8)', border: '1px solid rgba(26,48,80,0.5)' }}>
-          <div className="text-slate-500 font-medium mb-1">Post-Fukushima Legend</div>
+          <div className="text-slate-400 font-medium mb-1">Post-Fukushima Legend</div>
           {FUKUSHIMA_LEGEND.map(l => (
             <div key={l.color} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: l.color }} />
@@ -128,7 +128,7 @@ export default function LayerPanel({ activeOverlay, setActiveOverlay, showConfli
       )}
       {activeOverlay === 'cyber' && (
         <div data-testid="cyber-legend" className="mt-2 p-2 rounded-md text-xs space-y-1" style={{ background: 'rgba(13,27,46,0.8)', border: '1px solid rgba(26,48,80,0.5)' }}>
-          <div className="text-slate-500 font-medium mb-1">Cyber-Nuclear Legend</div>
+          <div className="text-slate-400 font-medium mb-1">Cyber-Nuclear Legend</div>
           {CYBER_LEGEND.map(l => (
             <div key={l.color} className="flex items-start gap-2">
               <div className="w-3 h-3 rounded-full flex-shrink-0 mt-0.5" style={{ background: l.color }} />

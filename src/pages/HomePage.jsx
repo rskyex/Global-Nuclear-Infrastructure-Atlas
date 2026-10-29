@@ -45,7 +45,7 @@ const LAYERS = [
 const OVERLAY_LAYERS = [
   { key: 'safeguards', label: 'Safeguards', icon: Shield, color: '#10b981' },
   { key: 'decommissioning', label: 'Decommission Risk', icon: AlertTriangle, color: '#f59e0b' },
-  { key: 'conflict', label: 'Conflict Proximity', icon: Target, color: '#ef4444' },
+  { key: 'conflict', label: 'Conflict Exposure (analyst-flagged)', icon: Target, color: '#ef4444' },
   { key: 'cyber', label: 'Cyber-Nuclear', icon: Cpu, color: '#ec4899' },
   { key: 'fukushima', label: 'Post-Fukushima', icon: Zap, color: '#3b82f6' },
   { key: 'postsoviet', label: 'Post-Soviet', icon: MapPin, color: '#06b6d4' },
@@ -144,7 +144,7 @@ function SectionCard({ to, icon: Icon, label, description, color, glow }) {
             {label}
           </span>
         </div>
-        <p className="text-xs text-slate-500 leading-relaxed flex-1">{description}</p>
+        <p className="text-xs text-slate-400 leading-relaxed flex-1">{description}</p>
         <div className="text-xs font-medium flex items-center gap-1" style={{ color }}>
           Explore <ChevronRight size={11} />
         </div>
@@ -189,7 +189,7 @@ function FacilityDetailModal({ facility, onClose }) {
             <h3 className="text-sm font-bold text-white leading-tight">{facility.name}</h3>
             <span className="text-xs text-slate-400">{facility.country}</span>
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-slate-300 flex-shrink-0 mt-1">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-300 flex-shrink-0 mt-1">
             <X size={16} />
           </button>
         </div>
@@ -202,7 +202,7 @@ function FacilityDetailModal({ facility, onClose }) {
               { label: 'Region', value: facility.region },
             ].filter(r => r.value).map(({ label, value }) => (
               <div key={label} className="rounded-lg p-2" style={{ background: 'rgba(10,20,40,0.8)', border: '1px solid rgba(30,50,80,0.5)' }}>
-                <div className="text-xs text-slate-500 mb-0.5">{label}</div>
+                <div className="text-xs text-slate-400 mb-0.5">{label}</div>
                 <div className="text-xs font-semibold text-slate-200 truncate">{value}</div>
               </div>
             ))}
@@ -319,7 +319,7 @@ export default function HomePage() {
               <div key={s.l} className="flex items-baseline gap-1.5 px-3 py-1.5 rounded-lg border"
                 style={{ background: 'rgba(10,20,40,0.7)', borderColor: s.c + '25' }}>
                 <span className="text-base font-bold" style={{ color: s.c, fontFamily: 'JetBrains Mono, monospace' }}>{s.v}</span>
-                <span className="text-xs text-slate-500">{s.l}</span>
+                <span className="text-xs text-slate-400">{s.l}</span>
               </div>
             ))}
           </div>
@@ -414,7 +414,7 @@ export default function HomePage() {
                   style={{
                     background: isActive ? color + '15' : 'rgba(7,13,26,0.5)',
                     borderColor: isActive ? color + '40' : 'rgba(30,50,80,0.4)',
-                    color: isActive ? color : '#64748b',
+                    color: isActive ? color : '#94a3b8',
                   }}
                 >
                   <Icon size={11} />
@@ -429,7 +429,7 @@ export default function HomePage() {
         <div className="mt-3 flex flex-wrap gap-2">
           {[
             { label: 'Safeguards Gaps', value: facilitySummary.safeguardsGaps, icon: Shield, color: '#f59e0b' },
-            { label: 'Conflict Proximity', value: facilitySummary.conflictProximity, icon: Target, color: '#ef4444' },
+            { label: 'Conflict Exposure (analyst-flagged, 2024)', value: facilitySummary.conflictProximity, icon: Target, color: '#ef4444' },
             { label: 'High Risk (4+)', value: facilitySummary.highRisk, icon: AlertTriangle, color: '#ef4444' },
             { label: 'Digital I&C', value: facilitySummary.digitalIandC, icon: Cpu, color: '#8b5cf6' },
             { label: 'Post-Soviet', value: facilitySummary.postSoviet, icon: MapPin, color: '#06b6d4' },
@@ -439,12 +439,12 @@ export default function HomePage() {
               style={{ background: 'rgba(7,13,26,0.6)', borderColor: color + '20' }}>
               <Icon size={11} style={{ color }} />
               <span className="font-bold" style={{ color, fontFamily: 'JetBrains Mono, monospace' }}>{value}</span>
-              <span className="text-slate-500">{label}</span>
+              <span className="text-slate-400">{label}</span>
             </div>
           ))}
         </div>
 
-        <p className="text-xs text-slate-600 mt-2">
+        <p className="text-xs text-slate-400 mt-2">
           Click any marker to inspect. Toggle layers and analysis overlays above. For full filtering, search, and analytics, use the
           full <Link to="/infrastructure" className="text-blue-400 hover:underline">Infrastructure</Link> or{' '}
           <Link to="/accidents" className="text-amber-400 hover:underline">Accidents</Link> pages.
@@ -503,7 +503,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="mt-2 text-xs text-slate-600">Source: SIPRI / FAS estimates (country-level only)</div>
+            <div className="mt-2 text-xs text-slate-400">Source: SIPRI / FAS estimates (country-level only)</div>
           </div>
 
           {/* Accidents Overview */}
@@ -526,12 +526,12 @@ export default function HomePage() {
                   </span>
                   <div className="flex-1">
                     <div className="text-xs text-slate-200 font-medium">{a.name}</div>
-                    <div className="text-xs text-slate-500">{a.country} · {a.accidentDate}</div>
+                    <div className="text-xs text-slate-400">{a.country} · {a.accidentDate}</div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-2 text-xs text-slate-600">{accidents.length} total incident sites mapped across the INES scale</div>
+            <div className="mt-2 text-xs text-slate-400">{accidents.length} total incident sites mapped across the INES scale</div>
           </div>
 
           {/* Policy Intelligence */}
@@ -553,7 +553,7 @@ export default function HomePage() {
               ].map(s => (
                 <div key={s.label} className="rounded-lg p-2 text-center" style={{ background: 'rgba(7,13,26,0.6)', border: '1px solid rgba(30,50,80,0.4)' }}>
                   <div className="text-base font-bold" style={{ color: s.color, fontFamily: 'JetBrains Mono, monospace' }}>{s.value}</div>
-                  <div className="text-xs text-slate-500 leading-tight">{s.label}</div>
+                  <div className="text-xs text-slate-400 leading-tight">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -582,7 +582,7 @@ export default function HomePage() {
               ].map(s => (
                 <div key={s.label} className="rounded-lg p-2" style={{ background: 'rgba(7,13,26,0.6)', border: '1px solid rgba(30,50,80,0.4)' }}>
                   <div className="text-base font-bold" style={{ color: s.color, fontFamily: 'JetBrains Mono, monospace' }}>{s.value}</div>
-                  <div className="text-xs text-slate-500 leading-tight">{s.label}</div>
+                  <div className="text-xs text-slate-400 leading-tight">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -630,7 +630,7 @@ export default function HomePage() {
         </div>
         <div className="mt-3 flex items-start gap-2.5 px-3 py-2.5 rounded-lg border text-xs text-slate-400"
           style={{ borderColor: 'rgba(30,50,80,0.5)', background: 'rgba(7,13,26,0.5)' }}>
-          <Database size={12} className="flex-shrink-0 text-slate-500 mt-0.5" />
+          <Database size={12} className="flex-shrink-0 text-slate-400 mt-0.5" />
           All data from IAEA PRIS, SIPRI, WHO, national regulators, and operator public disclosures.
           See <Link to="/methodology" className="text-blue-400 hover:underline">Methodology</Link> for full details.
         </div>
@@ -675,9 +675,9 @@ export default function HomePage() {
                       <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: m.color }} />
                       <div className="flex-1 min-w-0">
                         <div style={{ color: m.current ? m.color : '#94a3b8' }} className="font-medium truncate">{m.name}</div>
-                        <div className="text-slate-600 truncate">{m.desc}</div>
+                        <div className="text-slate-400 truncate">{m.desc}</div>
                       </div>
-                      {!m.current && <ExternalLink size={9} className="text-slate-600 flex-shrink-0" />}
+                      {!m.current && <ExternalLink size={9} className="text-slate-400 flex-shrink-0" />}
                       {m.current && <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: m.color + '20', color: m.color, fontSize: '0.6rem' }}>HERE</span>}
                     </a>
                   ))}

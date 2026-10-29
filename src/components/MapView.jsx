@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { BASEMAP_URL, BASEMAP_ATTRIBUTION, BASEMAP_CLASS, BASEMAP_MAX_ZOOM, BASEMAP_ERROR_TILE } from '../shared/basemap';
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import FacilityPopup from './FacilityPopup';
 import { getMarkerIcon } from '../utils/markerIcons';
@@ -15,18 +15,30 @@ L.Icon.Default.mergeOptions({
 
 // Safeguards color mapping
 const SAFEGUARDS_COLORS = {
-  green: '#10b981',  // Additional Protocol
-  amber: '#f59e0b',  // CSA only
-  red: '#ef4444',    // No agreement
-  grey: '#6b7280',   // Unknown
+  green: '#10b981',  // no gap: CSA + Additional Protocol in force, EURATOM, VOA
+  amber: '#f59e0b',  // safeguards gap (see SAFEGUARDS_GAP_DEFINITION)
+  grey: '#6b7280',   // unknown
 };
 
+// Same rule as the "Safeguards Gaps" counter (enrichedFacilities.safeguards_gap).
 function getSafeguardsColor(facility) {
-  const s = facility.safeguards_status;
-  if (!s) return SAFEGUARDS_COLORS.grey;
-  if (s.includes('Additional Protocol') || s.includes('EURATOM') || s.includes('Voluntary Offer')) return SAFEGUARDS_COLORS.green;
-  if (s.includes('CSA') || s.includes('Facility-specific')) return SAFEGUARDS_COLORS.amber;
-  return SAFEGUARDS_COLORS.grey;
+  if (!facility.safeguards_status) return SAFEGUARDS_COLORS.grey;
+  return facility.safeguards_gap ? SAFEGUARDS_COLORS.amber : SAFEGUARDS_COLORS.green;
+}
+
+// Analyst-flagged conflict exposure: a highlight on the marker, not a radius.
+function conflictIcon() {
+  return L.divIcon({
+    html: `<div style="width:22px;height:22px;border-radius:50%;border:2px dashed #ef4444;background:#ef444425;display:flex;align-items:center;justify-content:center;"><div style="width:8px;height:8px;border-radius:50%;background:#ef4444;"></div></div>`,
+    className: '', iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -11],
+  });
+}
+
+function markerLabel(f) {
+  const parts = [f.name, f.country, f.status?.replace(/_/g, ' ')];
+  if (f.safeguards_gap) parts.push('safeguards gap');
+  if (f.proximity_conflict) parts.push('analyst-flagged conflict exposure');
+  return parts.filter(Boolean).join(', ');
 }
 
 function getRiskRingColor(score) {
@@ -95,7 +107,6 @@ export default function MapView({
   activeOverlay = null,
   showConflictRadius = false,
 }) {
-  const conflictItems = showConflictRadius ? items.filter(f => f.proximity_conflict) : [];
 
   return (
     <MapContainer
@@ -105,26 +116,22 @@ export default function MapView({
     >
       <TileLayer url={BASEMAP_URL} attribution={BASEMAP_ATTRIBUTION} className={BASEMAP_CLASS} maxZoom={BASEMAP_MAX_ZOOM} errorTileUrl={BASEMAP_ERROR_TILE} />
 
-      {/* Conflict proximity radius circles */}
-      {conflictItems.map(f => (
-        <Circle
-          key={`conflict-${f.id}`}
-          center={[f.lat, f.lng]}
-          radius={200000}
-          pathOptions={{
-            color: '#ef4444', fillColor: '#ef444430', fillOpacity: 0.15,
-            weight: 1.5, dashArray: '6 4',
-          }}
-        />
-      ))}
-
       {/* Facility markers */}
       {items.map(facility => (
         <Marker
           key={facility.id}
           position={[facility.lat, facility.lng]}
-          icon={getLayerMarkerIcon(facility, activeOverlay)}
-          eventHandlers={{ click: () => onFacilitySelect && onFacilitySelect(facility) }}
+          icon={showConflictRadius && facility.proximity_conflict ? conflictIcon() : getLayerMarkerIcon(facility, activeOverlay)}
+          title={markerLabel(facility)}
+          keyboard={true}
+          eventHandlers={{
+            click: () => onFacilitySelect && onFacilitySelect(facility),
+            // Leaflet makes markers focusable (Enter opens them); give the element a name.
+            add: (e) => {
+              const el = e.target.getElement();
+              if (el) { el.setAttribute('aria-label', markerLabel(facility)); el.setAttribute('role', 'button'); }
+            },
+          }}
         >
           <Popup maxWidth={310} minWidth={270} closeButton={true} className="atlas-popup">
             <FacilityPopup facility={facility} onOpenDetail={onFacilitySelect} />

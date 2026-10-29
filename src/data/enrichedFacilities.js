@@ -4,12 +4,13 @@
  * This module maps over ALL commercial plants and adds governance-grade analytical fields.
  * Country-level data from countryGovernance.js. Facility-specific overrides below.
  *
- * Sources: IAEA PRIS, NTI Nuclear Security Index, ENSREG, ACLED, USGS, UNODA
+ * Sources: IAEA PRIS, NTI Nuclear Security Index, ENSREG, USGS, UNODA (country level;
+ * see FIELD_PROVENANCE for which fields have no per-field source)
  * Data policy: Public information only. Null where data is unavailable.
  */
 
 import { commercialPlants } from './commercialPlants';
-import countryGovernance from './countryGovernance';
+import countryGovernance, { COUNTRY_DATA_AS_OF } from './countryGovernance';
 import { cyberTargetCountries } from './generated/cyberTargetCountries';
 
 // ── Status mapping ──────────────────────────────────────────────────────────
@@ -60,8 +61,9 @@ const seismicOverrides = {
   'kr-hanbit': 'Moderate', 'kr-hanul': 'Moderate',
 };
 
-// ── Conflict proximity overrides ────────────────────────────────────────────
-// True for facilities within 200km of active armed conflict (2024)
+// ── Analyst-flagged conflict exposure (as of 2024) ──────────────────────────
+// An analyst judgement, not a distance test: no geometric check against event
+// data has been run, and no conflict-event dataset is in this repository.
 const conflictProximityFacilities = new Set([
   // Ukraine — all facilities due to ongoing conflict (Khmelnytskyi is not in the plant dataset)
   'ua-zaporizhzhia', 'ua-south-ukraine', 'ua-rivne',
@@ -166,6 +168,43 @@ export const facilityLookups = {
   digitalICNotes, cyberIncidentFacilities, sovietEraDesigns,
 };
 
+// ── Safeguards gap (one definition for counters, flags, markers, legend) ────
+// A host state has a safeguards gap when its safeguards are facility-specific
+// (India, Pakistan) or it has a comprehensive safeguards agreement without an
+// Additional Protocol in force (Brazil, Egypt, Iran). NPT weapon states'
+// Voluntary Offer Agreements and EURATOM coverage are not counted as gaps.
+export const SAFEGUARDS_GAP_DEFINITION =
+  'Safeguards gap: facility-specific safeguards only, or a comprehensive safeguards agreement without an Additional Protocol in force. Voluntary Offer Agreements (NPT weapon states) and EURATOM coverage are not counted.';
+
+export function safeguardsGapReason(cData) {
+  const s = cData?.safeguards_status;
+  if (!s) return null;
+  if (s.includes('Facility-specific')) return 'facility-specific safeguards only';
+  if (s.includes('CSA') && !cData.additional_protocol) return 'comprehensive safeguards agreement without an Additional Protocol in force';
+  return null;
+}
+
+export const CONFLICT_FLAG_LABEL = 'Analyst-flagged conflict exposure (as of 2024)';
+
+// Where each enriched field comes from. Shown on the Methodology page and in
+// the export codebook. "none" means there is no per-field source.
+export const FIELD_PROVENANCE = [
+  { field: 'regulatory_body', level: 'country', source: 'none per field (country table cites IAEA, UNODA, national regulators, NTI as a group)' },
+  { field: 'safeguards_status', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'treaty_obligations', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'seismic_zone', level: 'plant / country', source: 'none (facility overrides and country defaults are uncited)' },
+  { field: 'proximity_conflict', level: 'plant', source: 'none (analyst judgement, as of 2024; no distance test)' },
+  { field: 'digital_i_and_c, digital_i_and_c_note', level: 'plant', source: 'none per field (inferred from reactor design)' },
+  { field: 'post_fukushima_policy_change, post_fukushima_trajectory', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'stress_test_conducted', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'evacuation_plan_status', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'community_consent_mechanism', level: 'country', source: 'none per field (country table, as of 2024-01-01)' },
+  { field: 'soviet_era_design, soviet_reactor_type, decommissioning_liability_status, bilateral_agreement_with_russia', level: 'plant', source: 'none per field' },
+  { field: 'governance_risk_score, governance_flags', level: 'plant', source: 'computed from the fields above (rule table on the Methodology page)' },
+  { field: 'cyber_incident, reported_cyber_incident', level: 'plant', source: 'per record (source attached to each incident)' },
+  { field: 'critical_infrastructure_overlap', level: 'country', source: 'generated from the Cyber Escalation Atlas case data' },
+];
+
 // ── Governance risk score computation ───────────────────────────────────────
 function computeGovernanceRisk(plant, cData) {
   let score = 1;
@@ -216,10 +255,9 @@ export const enrichedFacilities = commercialPlants.map(plant => {
 
   // Build governance flags
   const governanceFlags = [];
-  if (!cData.safeguards_status || cData.safeguards_status.includes('Facility-specific')) {
-    governanceFlags.push('Partial or no comprehensive safeguards agreement');
-  }
-  if (isConflictProximity) governanceFlags.push('Within 200km of active conflict zone');
+  const gapReason = safeguardsGapReason(cData);
+  if (gapReason) governanceFlags.push(`Safeguards gap: ${gapReason}`);
+  if (isConflictProximity) governanceFlags.push(CONFLICT_FLAG_LABEL);
   if (plant.status === 'suspended') governanceFlags.push('Facility currently suspended');
   if (plant.status === 'shutdown' || plant.status === 'decommissioned') {
     governanceFlags.push('In decommissioning');
@@ -248,6 +286,12 @@ export const enrichedFacilities = commercialPlants.map(plant => {
     treaty_obligations: cData.treaty_obligations || [],
     governance_risk_score: riskScore,
     governance_flags: governanceFlags,
+    safeguards_gap: Boolean(gapReason),
+    safeguards_gap_reason: gapReason,
+    // Every policy and safeguards field comes from the country tables, as of this date
+    country_data_as_of: COUNTRY_DATA_AS_OF,
+    pris_country_url: cData.iso_code ? `https://pris-stats.iaea.org/country-statistics/${cData.iso_code}` : null,
+    cnpp_profile_url: cData.iaea_profile || null,
     // Post-Fukushima
     post_fukushima_policy_change: cData.post_fukushima_policy_change || false,
     stress_test_conducted: cData.stress_test_conducted ?? null,
@@ -273,9 +317,7 @@ export const enrichedFacilities = commercialPlants.map(plant => {
 // ── Computed summary statistics ─────────────────────────────────────────────
 export const facilitySummary = {
   total: enrichedFacilities.length,
-  safeguardsGaps: enrichedFacilities.filter(f =>
-    f.safeguards_status && (f.safeguards_status.includes('Facility-specific') || !f.safeguards_status)
-  ).length,
+  safeguardsGaps: enrichedFacilities.filter(f => f.safeguards_gap).length,
   conflictProximity: enrichedFacilities.filter(f => f.proximity_conflict).length,
   decommissioning: enrichedFacilities.filter(f =>
     f.operational_status === 'decommissioning'

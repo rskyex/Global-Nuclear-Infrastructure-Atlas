@@ -1,8 +1,11 @@
 /**
  * Country-level nuclear governance data
  * Sources: IAEA, UNODA Treaty Database, national regulatory bodies, NTI Nuclear Security Index
- * Retrieved: 2024-01-01
+ * Retrieved: 2024-01-01 (all policy and safeguards fields are as of this date)
+ * CNPP profile links updated 2026-10-29: the old cnpp.iaea.org/countryprofiles/ pages
+ * return 404; the current pages are cnpp.iaea.org/public/countries/<ISO2>/profile/highlights.
  */
+export const COUNTRY_DATA_AS_OF = '2024-01-01';
 
 const countryGovernance = {
   'Argentina': {
@@ -17,7 +20,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Argentina/Argentina.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/AR/profile/highlights',
   },
   'Armenia': {
     iso_code: 'AM', flag: '\u{1F1E6}\u{1F1F2}', region: 'South Caucasus',
@@ -31,7 +34,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Armenia/Armenia.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/AM/profile/highlights',
   },
   'Bangladesh': {
     iso_code: 'BD', flag: '\u{1F1E7}\u{1F1E9}', region: 'South Asia',
@@ -45,7 +48,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Bangladesh/Bangladesh.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/BD/profile/highlights',
   },
   'Belarus': {
     iso_code: 'BY', flag: '\u{1F1E7}\u{1F1FE}', region: 'Eastern Europe',
@@ -59,7 +62,7 @@ const countryGovernance = {
     community_consent_mechanism: 'disputed',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Belarus/Belarus.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/BY/profile/highlights',
   },
   'Belgium': {
     iso_code: 'BE', flag: '\u{1F1E7}\u{1F1EA}', region: 'Western Europe',
@@ -73,7 +76,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'policy_reversal',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Belgium/Belgium.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/BE/profile/highlights',
   },
   'Brazil': {
     iso_code: 'BR', flag: '\u{1F1E7}\u{1F1F7}', region: 'South America',
@@ -87,7 +90,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Brazil/Brazil.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/BR/profile/highlights',
   },
   'Canada': {
     iso_code: 'CA', flag: '\u{1F1E8}\u{1F1E6}', region: 'North America',
@@ -101,7 +104,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Canada/Canada.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/CA/profile/highlights',
   },
   'China': {
     iso_code: 'CN', flag: '\u{1F1E8}\u{1F1F3}', region: 'East Asia',
@@ -115,7 +118,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/China/China.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/CN/profile/highlights',
   },
   'Czech Republic': {
     iso_code: 'CZ', flag: '\u{1F1E8}\u{1F1FF}', region: 'Central Europe',
@@ -129,7 +132,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/CzechRepublic/CzechRepublic.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/CZ/profile/highlights',
   },
   'Egypt': {
     iso_code: 'EG', flag: '\u{1F1EA}\u{1F1EC}', region: 'North Africa',
@@ -143,7 +146,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Egypt/Egypt.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/EG/profile/highlights',
   },
   'Finland': {
     iso_code: 'FI', flag: '\u{1F1EB}\u{1F1EE}', region: 'Northern Europe',
@@ -157,7 +160,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Finland/Finland.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/FI/profile/highlights',
   },
   'France': {
     iso_code: 'FR', flag: '\u{1F1EB}\u{1F1F7}', region: 'Western Europe',
@@ -171,7 +174,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/France/France.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/FR/profile/highlights',
   },
   'Germany': {
     iso_code: 'DE', flag: '\u{1F1E9}\u{1F1EA}', region: 'Western Europe',
@@ -185,7 +188,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'accelerated_phase_out',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Germany/Germany.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/DE/profile/highlights',
   },
   'Hungary': {
     iso_code: 'HU', flag: '\u{1F1ED}\u{1F1FA}', region: 'Central Europe',
@@ -199,7 +202,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Hungary/Hungary.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/HU/profile/highlights',
   },
   'India': {
     iso_code: 'IN', flag: '\u{1F1EE}\u{1F1F3}', region: 'South Asia',
@@ -213,7 +216,7 @@ const countryGovernance = {
     community_consent_mechanism: 'disputed',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/India/India.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/IN/profile/highlights',
   },
   'Iran': {
     iso_code: 'IR', flag: '\u{1F1EE}\u{1F1F7}', region: 'Middle East',
@@ -227,7 +230,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Iran/Iran.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/IR/profile/highlights',
   },
   'Japan': {
     iso_code: 'JP', flag: '\u{1F1EF}\u{1F1F5}', region: 'East Asia',
@@ -241,7 +244,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'policy_reversal',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Japan/Japan.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/JP/profile/highlights',
   },
   'Mexico': {
     iso_code: 'MX', flag: '\u{1F1F2}\u{1F1FD}', region: 'North America',
@@ -255,7 +258,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Mexico/Mexico.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/MX/profile/highlights',
   },
   'Netherlands': {
     iso_code: 'NL', flag: '\u{1F1F3}\u{1F1F1}', region: 'Western Europe',
@@ -269,7 +272,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Netherlands/Netherlands.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/NL/profile/highlights',
   },
   'Pakistan': {
     iso_code: 'PK', flag: '\u{1F1F5}\u{1F1F0}', region: 'South Asia',
@@ -283,7 +286,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Pakistan/Pakistan.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/PK/profile/highlights',
   },
   'Romania': {
     iso_code: 'RO', flag: '\u{1F1F7}\u{1F1F4}', region: 'Eastern Europe',
@@ -297,7 +300,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Romania/Romania.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/RO/profile/highlights',
   },
   'Russia': {
     iso_code: 'RU', flag: '\u{1F1F7}\u{1F1FA}', region: 'Europe / Asia',
@@ -311,7 +314,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Russia/Russia.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/RU/profile/highlights',
   },
   'Slovenia': {
     iso_code: 'SI', flag: '\u{1F1F8}\u{1F1EE}', region: 'Central Europe',
@@ -325,7 +328,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Slovenia/Slovenia.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/SI/profile/highlights',
   },
   'South Africa': {
     iso_code: 'ZA', flag: '\u{1F1FF}\u{1F1E6}', region: 'Africa',
@@ -339,7 +342,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/SouthAfrica/SouthAfrica.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/ZA/profile/highlights',
   },
   'South Korea': {
     iso_code: 'KR', flag: '\u{1F1F0}\u{1F1F7}', region: 'East Asia',
@@ -353,7 +356,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'policy_reversal',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Korea/Korea.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/KR/profile/highlights',
   },
   'Spain': {
     iso_code: 'ES', flag: '\u{1F1EA}\u{1F1F8}', region: 'Western Europe',
@@ -367,7 +370,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'partial_moratorium',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Spain/Spain.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/ES/profile/highlights',
   },
   'Sweden': {
     iso_code: 'SE', flag: '\u{1F1F8}\u{1F1EA}', region: 'Northern Europe',
@@ -381,7 +384,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'policy_reversal',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Sweden/Sweden.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/SE/profile/highlights',
   },
   'Switzerland': {
     iso_code: 'CH', flag: '\u{1F1E8}\u{1F1ED}', region: 'Western Europe',
@@ -395,7 +398,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'partial_moratorium',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Switzerland/Switzerland.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/CH/profile/highlights',
   },
   'Turkey': {
     iso_code: 'TR', flag: '\u{1F1F9}\u{1F1F7}', region: 'Middle East / Europe',
@@ -409,7 +412,7 @@ const countryGovernance = {
     community_consent_mechanism: 'disputed',
     seismic_zone_default: 'High',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Turkey/Turkey.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/TR/profile/highlights',
   },
   'Ukraine': {
     iso_code: 'UA', flag: '\u{1F1FA}\u{1F1E6}', region: 'Eastern Europe',
@@ -423,7 +426,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/Ukraine/Ukraine.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/UA/profile/highlights',
   },
   'United Arab Emirates': {
     iso_code: 'AE', flag: '\u{1F1E6}\u{1F1EA}', region: 'Middle East',
@@ -437,7 +440,7 @@ const countryGovernance = {
     community_consent_mechanism: 'absent',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/UnitedArabEmirates/UnitedArabEmirates.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/AE/profile/highlights',
   },
   'United Kingdom': {
     iso_code: 'GB', flag: '\u{1F1EC}\u{1F1E7}', region: 'Western Europe',
@@ -451,7 +454,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Low',
     post_fukushima_trajectory: 'new_build_programme',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/UnitedKingdom/UnitedKingdom.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/GB/profile/highlights',
   },
   'United States': {
     iso_code: 'US', flag: '\u{1F1FA}\u{1F1F8}', region: 'North America',
@@ -465,7 +468,7 @@ const countryGovernance = {
     community_consent_mechanism: 'exists',
     seismic_zone_default: 'Moderate',
     post_fukushima_trajectory: 'no_change',
-    iaea_profile: 'https://cnpp.iaea.org/countryprofiles/UnitedStates/UnitedStates.htm',
+    iaea_profile: 'https://cnpp.iaea.org/public/countries/US/profile/highlights',
   },
 };
 

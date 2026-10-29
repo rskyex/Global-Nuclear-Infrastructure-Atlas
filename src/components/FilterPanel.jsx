@@ -34,7 +34,7 @@ export default function FilterPanel({
     <div className="p-3 space-y-3">
       {/* Search */}
       <div className="relative">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="text"
           placeholder="Search by name, country, type, operator..."
@@ -48,7 +48,7 @@ export default function FilterPanel({
         />
         {searchQuery && (
           <button onClick={() => setSearchQuery('')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300">
             <X size={13} />
           </button>
         )}
@@ -57,7 +57,7 @@ export default function FilterPanel({
       {/* Layer toggles */}
       <div>
         <div className="flex items-center gap-1.5 mb-2">
-          <Layers size={12} className="text-slate-500" />
+          <Layers size={12} className="text-slate-400" />
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Map Layers</span>
         </div>
         <div className="grid grid-cols-1 gap-1.5">
@@ -104,7 +104,7 @@ export default function FilterPanel({
             className="space-y-2 overflow-hidden">
             {/* Status filter */}
             <div>
-              <label className="text-xs text-slate-500 mb-1 block">Status</label>
+              <label className="text-xs text-slate-400 mb-1 block">Status</label>
               <select
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(e.target.value)}
@@ -117,7 +117,7 @@ export default function FilterPanel({
             </div>
             {/* Country filter */}
             <div>
-              <label className="text-xs text-slate-500 mb-1 block">Country</label>
+              <label className="text-xs text-slate-400 mb-1 block">Country</label>
               <select
                 value={selectedCountry}
                 onChange={e => setSelectedCountry(e.target.value)}

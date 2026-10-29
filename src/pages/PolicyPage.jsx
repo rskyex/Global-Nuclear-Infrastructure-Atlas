@@ -67,11 +67,11 @@ export default function PolicyPage() {
         <span className="text-sm font-semibold text-slate-200">Policy Intelligence</span>
         <div className="flex-1" />
         <div className="relative flex-shrink-0">
-          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input type="text" placeholder="Search country..." value={search} onChange={e => setSearch(e.target.value)}
             className="pl-7 pr-3 py-1.5 text-xs rounded-lg text-slate-200 placeholder-slate-500 outline-none w-40"
             style={{ background: 'rgba(10,20,40,0.9)', border: '1px solid rgba(30,50,80,0.8)' }} />
-          {search && <button onClick={() => setSearch('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"><X size={11} /></button>}
+          {search && <button onClick={() => setSearch('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"><X size={11} /></button>}
         </div>
         <select value={postureFilter} onChange={e => setPostureFilter(e.target.value)}
           className="text-xs rounded-lg text-slate-200 px-2 py-1.5 outline-none"
@@ -95,11 +95,11 @@ export default function PolicyPage() {
 
       {/* Summary */}
       <div className="flex-shrink-0 px-4 py-2 flex gap-4 border-b overflow-x-auto" style={{ borderColor: 'rgba(30,50,80,0.4)' }}>
-        <div className="text-xs text-slate-500"><span className="font-bold text-blue-400" style={{ fontFamily: 'JetBrains Mono' }}>{filtered.length}</span> countries</div>
+        <div className="text-xs text-slate-400"><span className="font-bold text-blue-400" style={{ fontFamily: 'JetBrains Mono' }}>{filtered.length}</span> countries</div>
         {Object.entries(POSTURE_LABELS).map(([k, label]) => {
           const c = filtered.filter(p => p.policy_posture === k).length;
           if (c === 0) return null;
-          return <div key={k} className="text-xs text-slate-500"><span className="font-bold" style={{ color: POSTURE_COLORS[k], fontFamily: 'JetBrains Mono' }}>{c}</span> {label.toLowerCase()}</div>;
+          return <div key={k} className="text-xs text-slate-400"><span className="font-bold" style={{ color: POSTURE_COLORS[k], fontFamily: 'JetBrains Mono' }}>{c}</span> {label.toLowerCase()}</div>;
         })}
       </div>
 
@@ -116,8 +116,9 @@ export default function PolicyPage() {
                 { key: 'enrichment_capability', label: 'Enrichment' },
                 { key: 'export_policy', label: 'Export' },
                 { key: 'recent_policy_shift', label: 'Recent Shift' },
+                { key: 'policy_last_verified', label: 'As of' },
               ].map(col => (
-                <th key={col.key} className="px-3 py-2 text-left text-slate-500 font-medium cursor-pointer hover:text-slate-300 select-none"
+                <th key={col.key} className="px-3 py-2 text-left text-slate-400 font-medium cursor-pointer hover:text-slate-300 select-none"
                   onClick={() => toggleSort(col.key)}>
                   <span className="flex items-center gap-1">{col.label} <SortIcon k={col.key} /></span>
                 </th>
@@ -137,10 +138,11 @@ export default function PolicyPage() {
                   </span>
                 </td>
                 <td className="px-3 py-2 text-slate-400 capitalize">{(c.current_policy_driver || '').replace(/_/g, ' ')}</td>
-                <td className="px-3 py-2">{c.smr_programme ? <span className="text-green-400">Yes</span> : <span className="text-slate-600">No</span>}</td>
+                <td className="px-3 py-2">{c.smr_programme ? <span className="text-green-400">Yes</span> : <span className="text-slate-400">No</span>}</td>
                 <td className="px-3 py-2 text-slate-400 capitalize">{c.enrichment_capability}</td>
                 <td className="px-3 py-2 text-slate-400 capitalize">{c.export_policy}</td>
                 <td className="px-3 py-2 text-slate-400 max-w-xs truncate" title={c.recent_policy_shift}>{c.recent_policy_shift}</td>
+                <td className="px-3 py-2 text-slate-400 whitespace-nowrap font-mono">{c.policy_last_verified}</td>
               </tr>
             ))}
           </tbody>

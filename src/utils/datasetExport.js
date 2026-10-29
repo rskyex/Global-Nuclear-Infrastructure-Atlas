@@ -1,11 +1,14 @@
 // Versioned, client-side dataset exports for verifiers.
 // Files are generated in the browser from the same data modules the site uses.
 import { commercialPlants } from '../data/commercialPlants';
+import { enrichedFacilities, SAFEGUARDS_GAP_DEFINITION } from '../data/enrichedFacilities';
+import { COUNTRY_DATA_AS_OF } from '../data/countryGovernance';
 
 // Bump DATASET_VERSION and DATASET_LAST_UPDATED whenever plant records change.
-// DATASET_LAST_UPDATED is the date of the last change to src/data/commercialPlants.js.
-export const DATASET_VERSION = '1.1.0';
-export const DATASET_LAST_UPDATED = '2026-10-28';
+// DATASET_LAST_UPDATED is the date of the last change to the data or code (codeLastChanged in the
+// export metadata). When each record was last reviewed is a separate date (recordsLastReviewed).
+export const DATASET_VERSION = '1.2.0';
+export const DATASET_LAST_UPDATED = '2026-10-29';
 export const SITE_URL = 'https://globalnuclearinfrastructureatlas.vercel.app';
 
 export const PLANT_COLUMNS = [
@@ -27,6 +30,21 @@ export const PLANT_COLUMNS = [
   { key: 'source_urls', description: 'Source URLs in the same order, separated by " | ".' },
   { key: 'source_types', description: 'Source types in the same order, separated by " | ".' },
   { key: 'overview', description: 'Short descriptive note.' },
+  { key: 'governance_risk_score', description: 'Rule-based score 1-5; rules on the Methodology page (under review).' },
+  { key: 'governance_flags', description: 'Flags behind the score, separated by " | ".' },
+  { key: 'safeguards_status', description: 'Host-state safeguards agreement (country level, as of country_data_as_of).' },
+  { key: 'safeguards_gap', description: 'true when facility-specific safeguards only, or a CSA without an Additional Protocol in force.' },
+  { key: 'safeguards_gap_reason', description: 'Which of the two conditions applies.' },
+  { key: 'proximity_conflict', description: 'Analyst-flagged conflict exposure (as of 2024); no distance test.' },
+  { key: 'seismic_zone', description: 'Seismic zone (facility override or country default; uncited).' },
+  { key: 'digital_i_and_c', description: 'Digital instrumentation and control (inferred from design).' },
+  { key: 'reported_cyber_incident', description: 'A documented cyber incident names this site.' },
+  { key: 'critical_infrastructure_overlap', description: 'Host state is a target in the Cyber Escalation Atlas.' },
+  { key: 'post_fukushima_policy_change', description: 'Host-state policy change since 2011 (country level).' },
+  { key: 'evacuation_plan_status', description: 'Host-state evacuation planning (country level).' },
+  { key: 'country_data_as_of', description: 'Date of the country-level policy and safeguards fields.' },
+  { key: 'pris_country_url', description: 'IAEA PRIS country statistics page.' },
+  { key: 'cnpp_profile_url', description: 'IAEA Country Nuclear Power Profile.' },
 ];
 
 function plantRow(p) {
@@ -50,6 +68,21 @@ function plantRow(p) {
     source_urls: sources.map((s) => s.url || '').join(' | '),
     source_types: sources.map((s) => s.type || '').join(' | '),
     overview: p.overview,
+    governance_risk_score: p.governance_risk_score,
+    governance_flags: (p.governance_flags || []).join(' | '),
+    safeguards_status: p.safeguards_status,
+    safeguards_gap: p.safeguards_gap,
+    safeguards_gap_reason: p.safeguards_gap_reason,
+    proximity_conflict: p.proximity_conflict,
+    seismic_zone: p.seismic_zone,
+    digital_i_and_c: p.digital_i_and_c,
+    reported_cyber_incident: Boolean(p.reported_cyber_incident),
+    critical_infrastructure_overlap: p.critical_infrastructure_overlap,
+    post_fukushima_policy_change: p.post_fukushima_policy_change,
+    evacuation_plan_status: p.evacuation_plan_status,
+    country_data_as_of: p.country_data_as_of,
+    pris_country_url: p.pris_country_url,
+    cnpp_profile_url: p.cnpp_profile_url,
   };
 }
 
@@ -63,7 +96,7 @@ export function buildMeta(dataset, recordCount, extra = {}) {
   return {
     dataset,
     version: DATASET_VERSION,
-    lastUpdated: DATASET_LAST_UPDATED,
+    codeLastChanged: DATASET_LAST_UPDATED,
     recordCount,
     source: `${SITE_URL}/data`,
     ...extra,
@@ -80,14 +113,21 @@ function csvWithMeta(meta, columns, rows) {
 export const plantsMeta = buildMeta(
   'Global Nuclear Infrastructure Atlas: commercial nuclear power plants',
   commercialPlants.length,
+  {
+    recordsLastReviewed: commercialPlants.map((p) => p.lastUpdated).filter(Boolean).sort().at(-1),
+    countryDataAsOf: COUNTRY_DATA_AS_OF,
+    safeguardsGapDefinition: SAFEGUARDS_GAP_DEFINITION,
+  },
 );
 
 export function plantsCsv() {
-  return csvWithMeta(plantsMeta, PLANT_COLUMNS, commercialPlants.map(plantRow));
+  return csvWithMeta(plantsMeta, PLANT_COLUMNS, enrichedFacilities.map(plantRow));
 }
 
 export function plantsJson() {
-  return JSON.stringify({ meta: plantsMeta, records: commercialPlants }, null, 2);
+  // Full enriched records, without the nested copy of the country table.
+  const records = enrichedFacilities.map(({ country_governance, ...rest }) => rest); // eslint-disable-line no-unused-vars
+  return JSON.stringify({ meta: plantsMeta, records }, null, 2);
 }
 
 export function downloadText(filename, content, mime) {

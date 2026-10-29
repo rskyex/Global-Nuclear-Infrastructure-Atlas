@@ -123,12 +123,12 @@ function UnitCard({ unit }) {
         </div>
         <div>
           <div className="text-sm font-bold text-white">{unit.name}</div>
-          <div className="text-xs text-slate-500">({unit.symbol})</div>
+          <div className="text-xs text-slate-400">({unit.symbol})</div>
         </div>
       </div>
       <p className="text-xs text-slate-300 leading-relaxed mb-2">{unit.def}</p>
       <p className="text-xs text-slate-400 leading-relaxed mb-2"><strong className="text-slate-300">Used for:</strong> {unit.use}</p>
-      <p className="text-xs italic text-slate-500 leading-relaxed">{unit.example}</p>
+      <p className="text-xs italic text-slate-400 leading-relaxed">{unit.example}</p>
     </div>
   );
 }
@@ -140,7 +140,7 @@ function FaqItem({ q, a }) {
       <button onClick={() => setOpen(v => !v)}
         className="w-full text-left px-4 py-3 flex items-center justify-between gap-3">
         <span className="text-sm font-medium text-slate-200">{q}</span>
-        {open ? <ChevronUp size={14} className="text-slate-500 flex-shrink-0" /> : <ChevronDown size={14} className="text-slate-500 flex-shrink-0" />}
+        {open ? <ChevronUp size={14} className="text-slate-400 flex-shrink-0" /> : <ChevronDown size={14} className="text-slate-400 flex-shrink-0" />}
       </button>
       {open && (
         <div className="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t" style={{ borderColor: 'rgba(30,50,80,0.5)' }}>
@@ -200,7 +200,7 @@ export default function RadiationHealthPage() {
               </div>
             ))}
           </div>
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-slate-400 mt-2">
             Note: Non-ionizing radiation (visible light, radio waves, microwaves) does not have enough energy to ionize atoms and works by different mechanisms. This page covers ionizing radiation only.
           </p>
         </div>
@@ -217,7 +217,7 @@ export default function RadiationHealthPage() {
       {/* Dose comparison */}
       <section className="mb-10">
         <h2 className="text-lg font-bold text-white mb-2">Dose in Context</h2>
-        <p className="text-xs text-slate-500 mb-5">Bar lengths are scaled logarithmically to show the full range. Doses in millisieverts (mSv) unless noted.</p>
+        <p className="text-xs text-slate-400 mb-5">Bar lengths are scaled logarithmically to show the full range. Doses in millisieverts (mSv) unless noted.</p>
         <div className="rounded-xl border p-5 space-y-2" style={{ background: 'rgba(10,20,40,0.6)', borderColor: 'rgba(30,50,80,0.6)' }}>
           {DOSE_COMPARISONS.map((item, i) => {
             const pct = Math.log10(item.dose + 0.0001) / Math.log10(maxDose + 0.0001);
@@ -235,7 +235,7 @@ export default function RadiationHealthPage() {
               </div>
             );
           })}
-          <p className="text-xs text-slate-600 pt-2">Sources: UNSCEAR, IAEA, ICRP, WHO, NRC.</p>
+          <p className="text-xs text-slate-400 pt-2">Sources: UNSCEAR, IAEA, ICRP, WHO, NRC.</p>
         </div>
       </section>
 
@@ -256,7 +256,7 @@ export default function RadiationHealthPage() {
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-500 mt-3">
+        <p className="text-xs text-slate-400 mt-3">
           Note: Health effects listed are for acute (short-duration) whole-body doses. Chronic low-dose exposures,
           partial-body exposures, and internal emitters are assessed differently. Source: UNSCEAR, ICRP, WHO.
         </p>

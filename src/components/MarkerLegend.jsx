@@ -66,7 +66,7 @@ export default function MarkerLegend() {
           </div>
         ))}
       </div>
-      <div className="mt-3 pt-2 border-t border-slate-800 text-xs text-slate-600 leading-snug">
+      <div className="mt-3 pt-2 border-t border-slate-800 text-xs text-slate-400 leading-snug">
         Based on officially published public information. Last updated: 2024.
       </div>
     </motion.div>

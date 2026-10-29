@@ -36,9 +36,9 @@ const CHART_CARD = {
   padding: '20px',
 };
 
-const SECTION_LABEL = "text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1";
+const SECTION_LABEL = "text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1";
 const CHART_TITLE = "text-sm font-semibold text-white mb-1";
-const CHART_SUB = "text-xs text-slate-500 mb-4";
+const CHART_SUB = "text-xs text-slate-400 mb-4";
 
 export default function RadarPage() {
   // ── derived data ──────────────────────────────────────────────
@@ -151,7 +151,7 @@ export default function RadarPage() {
                 <div className="text-xl font-bold leading-none" style={{ color: s.color, fontFamily: 'JetBrains Mono, monospace' }}>
                   {s.value}{s.suffix}
                 </div>
-                <div className="text-xs text-slate-500 leading-tight">{s.label}</div>
+                <div className="text-xs text-slate-400 leading-tight">{s.label}</div>
               </motion.div>
             );
           })}
@@ -287,7 +287,7 @@ export default function RadarPage() {
             <div className="mt-3 space-y-1">
               {accidentTimelineData.map((a, i) => (
                 <div key={i} className="flex items-center gap-2 text-xs">
-                  <span className="font-mono text-slate-500 w-10 flex-shrink-0">{a.year}</span>
+                  <span className="font-mono text-slate-400 w-10 flex-shrink-0">{a.year}</span>
                   <div className="h-1.5 rounded-full" style={{ width: a.ines * 28, background: '#ef4444', opacity: 0.6 + (a.ines - 4) * 0.1 }} />
                   <span className="text-slate-400">{a.name}</span>
                   <span className="ml-auto text-red-400 font-mono font-bold text-xs">INES {a.ines}</span>
@@ -298,7 +298,7 @@ export default function RadarPage() {
         </div>
 
         {/* Footer note */}
-        <div className="text-xs text-slate-600 border-t border-slate-800/50 pt-4 leading-relaxed">
+        <div className="text-xs text-slate-400 border-t border-slate-800/50 pt-4 leading-relaxed">
           All figures are derived from officially published public information (IAEA PRIS, NRC, operator disclosures).
           Dataset reflects entries currently in the atlas; it is not a comprehensive global registry.
           "Latest Publicly Available Status" — not real-time monitoring.

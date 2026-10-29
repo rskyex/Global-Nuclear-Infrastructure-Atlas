@@ -1,12 +1,13 @@
 import { Shield, Target, AlertTriangle, Cpu, Activity, Globe } from 'lucide-react';
+import { SAFEGUARDS_GAP_DEFINITION, CONFLICT_FLAG_LABEL } from '../data/enrichedFacilities';
 
 export default function GlobalRiskBar({ summary, policyFluxCount }) {
   const items = [
     { label: 'Total Mapped', value: summary.total, icon: Globe, color: '#3b82f6' },
-    { label: 'Safeguards Gaps', value: summary.safeguardsGaps, icon: Shield, color: '#f59e0b' },
-    { label: 'Conflict Proximity', value: summary.conflictProximity, icon: Target, color: '#ef4444' },
+    { label: 'Safeguards Gaps', value: summary.safeguardsGaps, icon: Shield, color: '#f59e0b', title: SAFEGUARDS_GAP_DEFINITION },
+    { label: 'Conflict Exposure (analyst-flagged, 2024)', value: summary.conflictProximity, icon: Target, color: '#ef4444', title: `${CONFLICT_FLAG_LABEL}. An analyst judgement; no distance test was run.` },
     { label: 'Decommissioning', value: summary.decommissioning, icon: AlertTriangle, color: '#6b7280' },
-    { label: 'Digital I&C (no audit)', value: summary.digitalNoCyberAudit, icon: Cpu, color: '#8b5cf6' },
+    { label: 'Digital I&C, no reported incident', value: summary.digitalNoCyberAudit, icon: Cpu, color: '#8b5cf6' },
     { label: 'Policy Flux Countries', value: policyFluxCount, icon: Activity, color: '#ec4899' },
   ];
 
@@ -19,16 +20,16 @@ export default function GlobalRiskBar({ summary, policyFluxCount }) {
         backdropFilter: 'blur(8px)',
       }}
     >
-      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">
+      <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex-shrink-0">
         Global Risk
       </span>
-      {items.map(({ label, value, icon: Icon, color }) => (
-        <div key={label} className="flex items-center gap-1.5 flex-shrink-0">
+      {items.map(({ label, value, icon: Icon, color, title }) => (
+        <div key={label} className="flex items-center gap-1.5 flex-shrink-0" title={title}>
           <Icon size={11} style={{ color }} />
           <span className="text-sm font-bold" style={{ color, fontFamily: 'JetBrains Mono, monospace' }}>
             {value}
           </span>
-          <span className="text-xs text-slate-500">{label}</span>
+          <span className="text-xs text-slate-400">{label}</span>
         </div>
       ))}
     </div>

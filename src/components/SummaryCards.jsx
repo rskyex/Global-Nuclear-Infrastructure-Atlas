@@ -61,7 +61,7 @@ export default function SummaryCards({ summary }) {
           }}>
           <div className="flex items-center justify-between">
             <Icon size={14} style={{ color }} />
-            <Activity size={10} className="text-slate-600" />
+            <Activity size={10} className="text-slate-400" />
           </div>
           <div className="text-2xl font-bold" style={{ color, fontFamily: 'JetBrains Mono, monospace' }}>
             {summary[key] ?? 0}

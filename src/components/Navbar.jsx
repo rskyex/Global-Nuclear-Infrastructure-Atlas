@@ -27,7 +27,7 @@ export default function Navbar() {
       {/* Suite breadcrumb + Logo */}
       <div className="flex items-center gap-1.5 flex-shrink-0">
         <a href={suiteModules.landing.url} target="_blank" rel="noopener noreferrer"
-          className="text-xs text-slate-600 hover:text-slate-400 no-underline hidden lg:inline">Faultline</a>
+          className="text-xs text-slate-400 hover:text-slate-400 no-underline hidden lg:inline">Faultline</a>
         <ChevronRight size={10} className="text-slate-700 hidden lg:inline" />
       </div>
       <NavLink to="/" className="flex items-center gap-2 group no-underline flex-shrink-0">
@@ -69,7 +69,7 @@ export default function Navbar() {
         ))}
 
         {/* Data badge */}
-        <div className="ml-2 hidden 2xl:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-600 border border-slate-800/60 flex-shrink-0"
+        <div className="ml-2 hidden 2xl:flex items-center gap-1 px-2 py-1 rounded text-xs text-slate-400 border border-slate-800/60 flex-shrink-0"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           Public data only
         </div>

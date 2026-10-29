@@ -62,7 +62,7 @@ export default function TimelineSlider({ selectedYear, onYearChange, onEventSele
       {/* Slider row */}
       <div className="flex items-center gap-3 px-4 py-2">
         <button onClick={() => onYearChange(y => Math.max(MIN_YEAR, y - 1))}
-          className="text-slate-500 hover:text-slate-300"><ChevronLeft size={14} /></button>
+          className="text-slate-400 hover:text-slate-300"><ChevronLeft size={14} /></button>
 
         <button onClick={() => setPlaying(!playing)}
           className="w-7 h-7 rounded-full flex items-center justify-center border transition-all"
@@ -71,7 +71,7 @@ export default function TimelineSlider({ selectedYear, onYearChange, onEventSele
         </button>
 
         <button onClick={() => onYearChange(y => Math.min(MAX_YEAR, y + 1))}
-          className="text-slate-500 hover:text-slate-300"><ChevronRight size={14} /></button>
+          className="text-slate-400 hover:text-slate-300"><ChevronRight size={14} /></button>
 
         <span className="text-sm font-bold text-blue-400 w-12 text-center"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}>{selectedYear}</span>
@@ -87,7 +87,7 @@ export default function TimelineSlider({ selectedYear, onYearChange, onEventSele
 
         {/* Speed control */}
         <button onClick={() => setSpeedIdx((speedIdx + 1) % SPEEDS.length)}
-          className="text-xs text-slate-500 hover:text-slate-300 px-2 py-1 rounded border"
+          className="text-xs text-slate-400 hover:text-slate-300 px-2 py-1 rounded border"
           style={{ borderColor: 'rgba(30,50,80,0.5)' }}>
           {['Fast', 'Med', 'Slow'][speedIdx]}
         </button>

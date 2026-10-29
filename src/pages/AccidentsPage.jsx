@@ -33,7 +33,7 @@ function AccidentCard({ accident, isExpanded, onToggle }) {
           style={{ background: color + '15', border: `1px solid ${color}30` }}>
           {accident.inesLevel && (
             <>
-              <div className="text-xs text-slate-500">INES</div>
+              <div className="text-xs text-slate-400">INES</div>
               <div className="text-xl font-bold" style={{ color }}>{accident.inesLevel}</div>
             </>
           )}
@@ -44,11 +44,11 @@ function AccidentCard({ accident, isExpanded, onToggle }) {
         <div className="flex-1 min-w-0">
           <h3 className="text-sm font-bold text-white leading-snug">{accident.name}</h3>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
-            <div className="flex items-center gap-1 text-xs text-slate-500">
+            <div className="flex items-center gap-1 text-xs text-slate-400">
               <MapPin size={10} />
               {accident.country}
             </div>
-            <div className="flex items-center gap-1 text-xs text-slate-500">
+            <div className="flex items-center gap-1 text-xs text-slate-400">
               <Calendar size={10} />
               {accident.accidentDate}
             </div>
@@ -61,7 +61,7 @@ function AccidentCard({ accident, isExpanded, onToggle }) {
           </div>
           <p className="text-xs text-slate-400 mt-2 leading-relaxed line-clamp-2">{accident.overview?.substring(0, 180)}...</p>
         </div>
-        <div className="flex-shrink-0 text-slate-500 mt-1">
+        <div className="flex-shrink-0 text-slate-400 mt-1">
           {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </div>
       </button>
@@ -144,15 +144,15 @@ function HistoricalEventCard({ event }) {
         <div className="flex-1 min-w-0">
           <h3 className="text-sm font-bold text-white leading-snug">{event.name}</h3>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
-            <div className="flex items-center gap-1 text-xs text-slate-500">
+            <div className="flex items-center gap-1 text-xs text-slate-400">
               <MapPin size={10} /> {event.country}
             </div>
-            <div className="flex items-center gap-1 text-xs text-slate-500">
+            <div className="flex items-center gap-1 text-xs text-slate-400">
               <Calendar size={10} /> {event.eventDate}
             </div>
           </div>
         </div>
-        {expanded ? <ChevronUp size={14} className="text-slate-500 mt-1 flex-shrink-0" /> : <ChevronDown size={14} className="text-slate-500 mt-1 flex-shrink-0" />}
+        {expanded ? <ChevronUp size={14} className="text-slate-400 mt-1 flex-shrink-0" /> : <ChevronDown size={14} className="text-slate-400 mt-1 flex-shrink-0" />}
       </button>
       {expanded && (
         <div className="border-t px-4 pb-4 pt-4 space-y-4" style={{ borderColor: 'rgba(245,158,11,0.15)' }}>
@@ -219,7 +219,7 @@ export default function AccidentsPage() {
             <BookOpen size={13} className="text-slate-400" />
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">INES Scale Reference</span>
           </div>
-          <p className="text-xs text-slate-500 mb-3">
+          <p className="text-xs text-slate-400 mb-3">
             The International Nuclear and Radiological Event Scale (INES), developed by the IAEA, 
             is used to communicate the severity of nuclear events to the public. It runs from 0 (deviation) to 7 (major accident).
           </p>
@@ -232,7 +232,7 @@ export default function AccidentsPage() {
               </div>
             ))}
           </div>
-          <p className="text-xs text-slate-600 mt-2">Source: IAEA INES – iaea.org/topics/ines</p>
+          <p className="text-xs text-slate-400 mt-2">Source: IAEA INES – iaea.org/topics/ines</p>
         </div>
 
         {/* Tab navigation */}
@@ -263,7 +263,7 @@ export default function AccidentsPage() {
         {/* Content */}
         {activeTab === 'accidents' && (
           <div className="space-y-3">
-            <p className="text-xs text-slate-500 italic">
+            <p className="text-xs text-slate-400 italic">
               Civilian nuclear accident sites documented by the IAEA and national regulatory authorities. 
               All information from officially published public sources.
             </p>

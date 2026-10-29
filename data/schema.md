@@ -19,7 +19,7 @@
 | operational_status | string | operational / suspended / decommissioning / planned / under_construction | Derived |
 | grid_connectivity | boolean | Connected to electrical grid | Derived |
 | seismic_zone | string | High / Moderate / Low | USGS |
-| proximity_conflict | boolean | Within 200km of active conflict | ACLED |
+| proximity_conflict | boolean | Analyst-flagged conflict exposure (as of 2024). An analyst judgement; no distance test against conflict-event data was run | none |
 | treaty_obligations | string[] | Applicable treaties | UNODA |
 | governance_risk_score | number 1-5 | Composite governance risk | Computed |
 | governance_flags | string[] | Active governance flags | Computed |
@@ -56,3 +56,15 @@
 | npt_status | string | party / non_party / withdrew |
 | tpnw_status | string | signed / ratified / non_signatory |
 | additional_protocol | boolean | IAEA Additional Protocol in force |
+
+## Derived fields added to exports (dataset 1.2.0)
+
+| Field | Type | Description | Source |
+|---|---|---|---|
+| safeguards_gap | boolean | Facility-specific safeguards only, or a comprehensive safeguards agreement without an Additional Protocol in force | computed from the country table |
+| safeguards_gap_reason | string | Which of the two conditions applies | computed |
+| governance_risk_score | integer 1–5 | Rule-based score; rule table on the Methodology page | computed |
+| governance_flags | string list | Flags behind the score | computed |
+| country_data_as_of | date | Date of the country policy and safeguards data (2024-01-01) | country table |
+| pris_country_url | URL | IAEA PRIS country statistics page | iso_code |
+| cnpp_profile_url | URL | IAEA Country Nuclear Power Profile | iso_code |

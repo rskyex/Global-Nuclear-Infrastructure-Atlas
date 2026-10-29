@@ -58,14 +58,14 @@ function PlantDetailPanel({ plant, onClose }) {
             <h3 className="text-sm font-bold text-white leading-tight">{plant.name}</h3>
             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
               <span className="text-xs text-slate-400">{plant.country}</span>
-              <span className="text-slate-600">·</span>
+              <span className="text-slate-400">·</span>
               <span className="text-xs px-2 py-0.5 rounded-full font-medium"
                 style={{ background: statusColor + '20', color: statusColor, border: `1px solid ${statusColor}40` }}>
                 {getStatusLabel(plant.status)}
               </span>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-slate-300 flex-shrink-0">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-300 flex-shrink-0">
             <X size={16} />
           </button>
         </div>
@@ -82,7 +82,7 @@ function PlantDetailPanel({ plant, onClose }) {
               { label: 'Region', value: plant.region },
             ].map(({ label, value }) => (
               <div key={label} className="rounded-lg p-2.5" style={{ background: 'rgba(10,20,40,0.8)', border: '1px solid rgba(30,50,80,0.5)' }}>
-                <div className="text-xs text-slate-500 mb-0.5">{label}</div>
+                <div className="text-xs text-slate-400 mb-0.5">{label}</div>
                 <div className="text-xs font-semibold text-slate-200 leading-tight">{value ?? '—'}</div>
               </div>
             ))}
@@ -124,11 +124,11 @@ function PlantDetailPanel({ plant, onClose }) {
                     className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 no-underline break-all">
                     <ExternalLink size={11} className="flex-shrink-0" />
                     {s.name}
-                    <span className="text-slate-600 text-xs">({s.type})</span>
+                    <span className="text-slate-400 text-xs">({s.type})</span>
                   </a>
                 ))}
                 {plant.sources.every((s) => /pris/i.test(s.name)) && (
-                  <p className="text-xs text-slate-500 leading-relaxed pt-1">
+                  <p className="text-xs text-slate-400 leading-relaxed pt-1">
                     This link opens the IAEA PRIS home page. Search PRIS for this plant by name to see the reactor records.
                   </p>
                 )}
@@ -138,7 +138,7 @@ function PlantDetailPanel({ plant, onClose }) {
             )}
           </div>
 
-          <div className="text-xs text-slate-600 border-t pt-3" style={{ borderColor: 'rgba(30,50,80,0.5)' }}>
+          <div className="text-xs text-slate-400 border-t pt-3" style={{ borderColor: 'rgba(30,50,80,0.5)' }}>
             Last updated: {plant.lastUpdated}
           </div>
         </div>
@@ -159,7 +159,7 @@ function EmptyState() {
         style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)' }}>
         <Globe size={18} className="text-blue-400 opacity-50" />
       </div>
-      <div className="text-xs text-slate-500 leading-relaxed max-w-36">
+      <div className="text-xs text-slate-400 leading-relaxed max-w-36">
         Click a marker on the map to inspect plant details
       </div>
     </motion.div>
@@ -183,6 +183,7 @@ export default function InfrastructurePage() {
   const [showFilters, setShowFilters] = useState(false);
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [showConflictRadius, setShowConflictRadius] = useState(false);
+  const [showList, setShowList] = useState(false);
   const [timelineYear, setTimelineYear] = useState(2024);
   const [showTimeline, setShowTimeline] = useState(false);
   const [timelineEvent, setTimelineEvent] = useState(null);
@@ -252,12 +253,12 @@ export default function InfrastructurePage() {
         <div className="flex items-center gap-2">
           <Building2 size={15} className="text-blue-400" />
           <span className="text-sm font-semibold text-slate-200">Civil Nuclear Infrastructure</span>
-          <span className="text-xs text-slate-500 hidden sm:inline">· IAEA PRIS data</span>
+          <span className="text-xs text-slate-400 hidden sm:inline">· IAEA PRIS data</span>
         </div>
         <div className="flex-1" />
         {/* Search */}
         <div className="relative flex-shrink-0">
-          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
           <input
             type="text"
             placeholder="Search plants…"
@@ -267,7 +268,7 @@ export default function InfrastructurePage() {
             style={{ background: 'rgba(10,20,40,0.9)', border: '1px solid rgba(30,50,80,0.8)' }}
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+            <button onClick={() => setSearchQuery('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300">
               <X size={11} />
             </button>
           )}
@@ -282,7 +283,7 @@ export default function InfrastructurePage() {
           >
             {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
-          <ChevronDown size={11} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+          <ChevronDown size={11} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         </div>
         {/* Country filter */}
         <div className="relative flex-shrink-0">
@@ -294,7 +295,7 @@ export default function InfrastructurePage() {
           >
             {countries.map(c => <option key={c} value={c}>{c === 'all' ? 'All Countries' : c}</option>)}
           </select>
-          <ChevronDown size={11} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+          <ChevronDown size={11} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         </div>
         {/* Analytics toggle */}
         <button
@@ -318,10 +319,12 @@ export default function InfrastructurePage() {
         <button
           onClick={() => {
             const keys = ['id','name','country','status','reactorType','units','netCapacityMW','operator',
-              'governance_risk_score','safeguards_status','seismic_zone','proximity_conflict',
-              'digital_i_and_c','digital_i_and_c_note','reported_cyber_incident','post_fukushima_policy_change'];
+              'governance_risk_score','governance_flags','safeguards_status','safeguards_gap','safeguards_gap_reason',
+              'seismic_zone','proximity_conflict','digital_i_and_c','digital_i_and_c_note','reported_cyber_incident',
+              'post_fukushima_policy_change','country_data_as_of','lastUpdated','pris_country_url','cnpp_profile_url'];
             const rows = filteredPlants.map(p => keys.map(k => {
-              const v = p[k]; return `"${String(v ?? '').replace(/"/g,'""')}"`;
+              const v = Array.isArray(p[k]) ? p[k].join(' | ') : p[k];
+              return `"${String(v ?? '').replace(/"/g,'""')}"`;
             }).join(','));
             const csv = [keys.join(','), ...rows].join('\n');
             const blob = new Blob([csv], { type: 'text/csv' });
@@ -332,6 +335,14 @@ export default function InfrastructurePage() {
         >
           <Download size={12} />
           CSV
+        </button>
+        <button
+          onClick={() => setShowList(v => !v)}
+          aria-pressed={showList}
+          aria-controls="plant-table"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-slate-100 border border-slate-700 flex-shrink-0"
+        >
+          Plant list
         </button>
       </div>
 
@@ -347,7 +358,7 @@ export default function InfrastructurePage() {
         ].map(({ label, value, color }) => (
           <div key={label} className="flex items-center gap-1.5 text-xs flex-shrink-0">
             <span className="font-bold" style={{ color, fontFamily: 'JetBrains Mono, monospace' }}>{value}</span>
-            <span className="text-slate-500">{label}</span>
+            <span className="text-slate-400">{label}</span>
           </div>
         ))}
       </div>
@@ -358,7 +369,7 @@ export default function InfrastructurePage() {
       {/* Quick filters */}
       <div className="flex-shrink-0 px-4 py-1.5 flex items-center gap-2 border-b overflow-x-auto"
         style={{ borderColor: 'rgba(30,50,80,0.4)' }}>
-        <span className="text-xs text-slate-500 flex-shrink-0">Quick:</span>
+        <span className="text-xs text-slate-400 flex-shrink-0">Quick:</span>
         {[
           { key: null, label: 'All' },
           { key: 'highRisk', label: 'High Risk (4+)' },
@@ -367,7 +378,7 @@ export default function InfrastructurePage() {
         ].map(qf => (
           <button key={qf.key ?? 'all'} onClick={() => setQuickFilter(qf.key)}
             className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all border flex-shrink-0 ${
-              quickFilter === qf.key ? 'text-blue-400 bg-blue-950/50 border-blue-800/50' : 'text-slate-500 border-slate-800/40 hover:text-slate-300'
+              quickFilter === qf.key ? 'text-blue-400 bg-blue-950/50 border-blue-800/50' : 'text-slate-400 border-slate-800/40 hover:text-slate-300'
             }`}>
             {qf.label}
           </button>
@@ -387,10 +398,60 @@ export default function InfrastructurePage() {
 
         {/* Map */}
         <div className="flex-1 relative">
+          <a
+            href="#plant-table"
+            onClick={() => setShowList(true)}
+            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[1100] focus:px-3 focus:py-2 focus:rounded-lg focus:bg-slate-900 focus:text-slate-100 focus:border focus:border-blue-500 text-xs"
+          >
+            Skip the map: browse the plants as a table
+          </a>
+          {showList && (
+            <section
+              id="plant-table"
+              tabIndex={-1}
+              aria-label="Plants in the current filter"
+              className="absolute inset-y-2 right-2 z-[1000] w-[min(640px,calc(100%-1rem))] overflow-auto rounded-xl border"
+              style={{ background: 'rgba(7,13,26,0.97)', borderColor: 'rgba(30,50,80,0.8)' }}
+              ref={(el) => el && el.focus()}
+            >
+              <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: 'rgba(30,50,80,0.6)' }}>
+                <h2 className="text-xs font-semibold text-slate-200 uppercase tracking-wider">Plants ({filteredPlants.length})</h2>
+                <button onClick={() => setShowList(false)} className="text-xs text-slate-300 hover:text-slate-100" aria-label="Close plant list">Close</button>
+              </div>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="text-left text-slate-300">
+                    <th scope="col" className="px-3 py-2">Plant</th>
+                    <th scope="col" className="px-3 py-2">Country</th>
+                    <th scope="col" className="px-3 py-2">Status</th>
+                    <th scope="col" className="px-3 py-2">Safeguards gap</th>
+                    <th scope="col" className="px-3 py-2">Conflict flag</th>
+                    <th scope="col" className="px-3 py-2">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPlants.map(p => (
+                    <tr key={p.id} className="border-t" style={{ borderColor: 'rgba(30,50,80,0.4)' }}>
+                      <td className="px-3 py-1.5">
+                        <button onClick={() => setSelectedPlant(p)} className="text-left text-blue-300 hover:text-blue-200 underline underline-offset-2">
+                          {p.name}
+                        </button>
+                      </td>
+                      <td className="px-3 py-1.5 text-slate-300">{p.country}</td>
+                      <td className="px-3 py-1.5 text-slate-300">{getStatusLabel(p.status)}</td>
+                      <td className="px-3 py-1.5 text-slate-300">{p.safeguards_gap ? 'Yes' : 'No'}</td>
+                      <td className="px-3 py-1.5 text-slate-300">{p.proximity_conflict ? 'Yes' : 'No'}</td>
+                      <td className="px-3 py-1.5 text-slate-300">{p.governance_risk_score}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          )}
           {filteredPlants.length === 0 ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-slate-500 text-sm mb-2">No plants match current filters</div>
+                <div className="text-slate-400 text-sm mb-2">No plants match current filters</div>
                 <button onClick={() => { setSearchQuery(''); setSelectedStatus('all'); setSelectedCountry('all'); }}
                   className="text-xs text-blue-400 hover:text-blue-300">
                   Reset filters

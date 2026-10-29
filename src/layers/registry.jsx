@@ -131,7 +131,7 @@ function LegalPopup({ rec, regime }) {
       <div className="space-y-1">
         {rows.map(([key, k, v]) => (
           <div key={k} className="flex items-center justify-between gap-3" style={{ fontWeight: key === regime ? 600 : 400 }}>
-            <span className="text-slate-500">{k}</span>
+            <span className="text-slate-400">{k}</span>
             <span className="text-slate-200">{v}</span>
           </div>
         ))}
@@ -182,7 +182,7 @@ function OversightPopup({ rec }) {
   return (
     <div className="space-y-2 text-xs" style={{ minWidth: 230 }}>
       <div className="font-bold text-slate-100">{rec.name}</div>
-      <div className="text-slate-500">{rec.country}</div>
+      <div className="text-slate-400">{rec.country}</div>
       <div className="flex items-center gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: ramp.color }} />
         <span className="text-slate-200 font-medium">{ramp.label}</span>
@@ -328,7 +328,7 @@ function ContestationPopup({ rec }) {
   return (
     <div className="space-y-2 text-xs" style={{ minWidth: 250 }}>
       <div className="font-bold text-slate-100">{rec.name}</div>
-      <div className="text-slate-500">{rec.country}</div>
+      <div className="text-slate-400">{rec.country}</div>
       <div className="space-y-1.5">
         {rec.classifications.map((c, i) => (
           <div key={i} className="rounded p-1.5" style={{ background: 'rgba(234,179,8,0.07)', border: '1px solid rgba(234,179,8,0.2)' }}>
@@ -381,7 +381,7 @@ const fuelCycleLayer = {
           })}
         </div>
         <div className="flex flex-wrap gap-1 pt-1">
-          <span className="text-[9px] text-slate-600 self-center">Focus:</span>
+          <span className="text-[9px] text-slate-400 self-center">Focus:</span>
           {FUEL_STATES.map((s) => (
             <button key={s.id} onClick={() => setSetting('focusState', settings.focusState === s.id ? null : s.id)}
               className="px-1.5 py-0.5 rounded text-[9px] font-medium"
@@ -453,7 +453,7 @@ function FuelNodePopup({ node, meta }) {
         <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: meta.color }} />
         <span className="text-slate-200">{meta.label}{meta.sensitive ? ' · proliferation-sensitive' : ''}</span>
       </div>
-      <div className="text-slate-500">{node.country}</div>
+      <div className="text-slate-400">{node.country}</div>
       {node.capacity && <div className="text-slate-400">{node.capacity}</div>}
       <Provenance provenance={node.provenance} provisional={node.provisional} />
     </div>
@@ -490,7 +490,7 @@ const temporalLayer = {
           <Popup className="atlas-popup">
             <div className="text-xs space-y-0.5" style={{ minWidth: 170 }}>
               <div className="font-bold text-slate-100">{r.name}</div>
-              <div className="text-slate-500">{r.country}</div>
+              <div className="text-slate-400">{r.country}</div>
               <div className="text-slate-400">First power: {r.firstPower}{r.shutdownYear ? ` · shut down ${r.shutdownYear}` : ''}</div>
               {r.provisional && <Provenance provisional label="Shutdown year" />}
             </div>
@@ -567,7 +567,7 @@ function DiscoursePopup({ rec }) {
     <div className="space-y-2 text-xs" style={{ minWidth: 230 }}>
       <div className="font-bold text-violet-200">{rec.officialName}</div>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-[10px] uppercase tracking-wider text-slate-500">Function</span>
+        <span className="text-[10px] uppercase tracking-wider text-slate-400">Function</span>
         <span className="text-slate-300">{rec.descriptiveFunction}</span>
       </div>
       <div className="flex flex-wrap gap-1">
